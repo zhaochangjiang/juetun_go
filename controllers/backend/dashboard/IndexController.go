@@ -1,9 +1,9 @@
 package dashboard
 
 import (
-	"juetun/controllers/backend/common"
+	"juetun/controllers/backend/bcommon"
 )
 
 type IndexController struct {
-	CBCommon.BackendController
+	bcommon.BackendController
 }

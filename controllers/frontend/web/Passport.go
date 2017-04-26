@@ -1,11 +1,13 @@
 package web
 
 import (
-	"juetun/controllers/frontend/common"
+	"fmt"
+	"juetun/controllers/frontend/fcommon"
+	"juetun/models/user"
 )
 
 type PassportController struct {
-	CFCommon.WebController
+	fcommon.WebController
 }
 
 func (this *PassportController) Login() {
@@ -19,11 +21,18 @@ func (this *PassportController) Login() {
 
 //登录提交
 func (this *PassportController) IframeLogin() {
-	this.Data["Website"] = "beego.me"
-	this.Data["Email"] = "astaxie111111111@gmail.com"
+	this.Database.Using("default") // 默认使用 default，你可以指定为其他数据库
 
-	//渲染文件
-	this.Display("login.html")
+	userMain := new(user.UserMain)
+	userMain.Username = "长江"
+
+	fmt.Println(this.Database.Insert(userMain))
+
+	//	this.Data["Website"] = "beego.me"
+	//	this.Data["Email"] = "astaxie111111111@gmail.com"
+
+	//	//渲染文件
+	//	this.Display("login.html")
 
 }
 
