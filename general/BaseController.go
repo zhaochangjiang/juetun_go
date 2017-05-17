@@ -28,18 +28,25 @@ type BaseController struct {
 	Database orm.Ormer //数据库操作对象
 }
 
+func (this *BaseController) DisplayIframe(message string) {
+	this.Data["Message"] = message
+	this.TplName = "iframe.html"
+}
+
 // Prepare implemented Prepare method for baseRouter.
 func (this *BaseController) Prepare() {
 
 	this.Database = orm.NewOrm()
 	// Setting properties.
-	this.Data["AppVer"] = AppVer
-	this.Data["IsPro"] = IsPro
-
-	y := time.Now().Year()
-	this.Data["Copyright"] = "Copyright 2016-" + strconv.Itoa(y) + " " + beego.AppConfig.String("appname") + " Corporation. All Rights Reserved."
-
+	//	this.Data["AppVer"] = AppVer
+	//	this.Data["IsPro"] = IsPro
 	this.Data["PageStartTime"] = time.Now()
+	//this.Data["Title"] = ""
+	this.Data["Keyword"] = ""
+	this.Data["Description"] = ""
+	this.Data["Author"] = ""
+	y := time.Now().Year()
+	this.Data["Copyright"] = "Copyright " + strconv.Itoa(y-1) + "-" + strconv.Itoa(y) + " " + beego.AppConfig.String("appname") + " Corporation. All Rights Reserved."
 
 	// Redirect to make URL clean.
 	if this.setLangVer() {
