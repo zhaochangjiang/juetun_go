@@ -1,0 +1,102 @@
+ <aside class="left-side sidebar-offcanvas">
+    <section class="sidebar">
+        <!-- Sidebar user panel -->
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src="{{.Avater}}" class="img-circle" alt="User Image"/>
+            </div>
+            <div class="pull-left info">
+                <p>{{.Username}}</p>
+                <a href="{{urlfor "MainController.Logout"}}"><i class="fa fa-circle text-success"></i> 在线</a>
+            </div>
+        </div>
+        <!-- search form
+        <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search..."/>
+                <span class="input-group-btn">
+                    <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </form>
+        /.search form -->
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+
+        <ul class="sidebar-menu">
+		 {{range .Items}}
+		     {{with .ChildList}}　
+ 				    {{with .Active}}　
+                     <li class=" treeview active "> 
+                        <a href="">
+                           <i class="fa fa-gear"></i><span>asdfasdfsdf </span>
+                        <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu" style="display: block;"> 
+              {{else}}
+                     <li class=" treeview"> 
+                        <a href="">
+                          <i class="fa fa-gear"></i> <span>fdsgsdfgsdfg </span>
+                        <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu" style="display: none;"> 
+               {{end}}
+		     {{range .ChildList}}
+			<li class="active"><a href="" style="margin-left: 10px;"><i class="fa fa-angle-double-right"></i>safdsafsdf</a></li>
+			{{end}}
+                </ul></li>
+			{{else}}
+			 <li class="active"> 
+                        <a href="javascript:void(0)">
+                          <i class="fa fa-gear"></i> <span>测试</span>
+                        </a>
+                    </li>
+			{{end}}
+		{{end}}
+        
+        </ul>
+
+        <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"><i class="fa fa-envelope-o"></i> 信息提示</h4>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer clearfix">
+
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+
+    </section>
+    <script type="text/javascript">
+        //        var loadShow = {
+        //
+        //            loading: function () {
+        //            },
+        //            loadClose: function () {
+        //            }
+        //        };
+
+        function showerror(message) {
+            $('#compose-modal .modal-body').html(message);
+            $('#compose-modal').modal('show');
+        }
+        function doAjaxDelete(u1, u2) {
+            if (confirm("你确定要删除该信息？")) {
+                $.post(u1, null, function (r) {
+                    if (r === 'ok') {
+                        location.href = u2;
+                        return;
+                    }
+                    $('#compose-modal .modal-body').html(r);
+                    $('#compose-modal').modal('show');
+
+                });
+            }
+            return;
+        }
+
+    </script>
+</aside>

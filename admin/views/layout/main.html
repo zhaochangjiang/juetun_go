@@ -1,39 +1,33 @@
-<?php
-use framework\App;
-
-?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title><?php echo App::base()->params['sitename'] . ' 后台管理中心' ?></title>
+    <title>{{.PageTitle}}</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <?php
-    echo $this->getCssFile();
-    echo $this->getJsFileBefore();
-    ?>
+  {{range $index, $elem := .CssFile}}<link rel="stylesheet" href="/assets/css/{{$elem}}?v={{$.PageVersion}}" />{{end}}
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
+  {{range $index, $elem := .JsFileBefore}} <script type="text/javascript" src="/assets/js/{{$elem}}?v={{$.PageVersion}}"></script> {{end}}
 </head>
+
 <body class="skin-blue">
-{{template "layout/header.html" .}}
+{{.HtmlHead}}
  <div class="wrapper row-offcanvas row-offcanvas-left">
-{{template "layout/left.html" .}}
+{{.SideBar}}
     <aside class="right-side">
         <section class="content-header">
-            <h1>
-                <?php echo $this->pageTitle; ?>
-                <small><?php echo $this->pageSmallTitle; ?></small>
-            </h1>
-            <?php echo $this->getBreadcrumbs(); ?>
-        </section>
+            <h1>{{.UserId}}
+                {{.PageTitle}}
+                <small> {{.PageSmallTitle}}</small>
+            </h1>{{.Breadcrumbs}}
+         </section>
         <section class="content">
           {{.LayoutContent}}
         </section>
     </aside>
 </div>
-<?php echo $this->getJsFileAfter(); ?>
-</body>
+    {{.ScriptsAfter}}
+ </body>
 </html>

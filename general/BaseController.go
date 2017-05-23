@@ -28,6 +28,20 @@ type BaseController struct {
 	Database orm.Ormer //数据库操作对象
 }
 
+//公共的
+//func (this *BaseController) Common() {
+//	w := this.Ctx.ResponseWriter
+//	//Origin := this.Header.Get("Origin")
+//	Origin := "*.test.com"
+//	if Origin != "" {
+//		w.Header().Add("Access-Control-Allow-Origin", Origin)
+//		w.Header().Add("Access-Control-Allow-Methods", "POST,GET,OPTIONS,DELETE")
+//		w.Header().Add("Access-Control-Allow-Headers", "x-requested-with,content-type")
+//		w.Header().Add("Access-Control-Allow-Credentials", "true")
+
+//		fmt.Println("safasdfsdf")
+//	}
+//}
 func (this *BaseController) DisplayIframe(message string) {
 	this.Data["Message"] = message
 	this.TplName = "iframe.html"
@@ -41,10 +55,11 @@ func (this *BaseController) Prepare() {
 	//	this.Data["AppVer"] = AppVer
 	//	this.Data["IsPro"] = IsPro
 	this.Data["PageStartTime"] = time.Now()
-	//this.Data["Title"] = ""
-	this.Data["Keyword"] = ""
-	this.Data["Description"] = ""
-	this.Data["Author"] = ""
+	this.Data["PageTitle"] = ""
+	this.Data["PageKeyword"] = ""
+	this.Data["PageDescription"] = ""
+	this.Data["PageAuthor"] = ""
+	this.Data["SiteName"] = beego.AppConfig.String("sitename")
 	y := time.Now().Year()
 	this.Data["Copyright"] = "Copyright " + strconv.Itoa(y-1) + "-" + strconv.Itoa(y) + " " + beego.AppConfig.String("appname") + " Corporation. All Rights Reserved."
 
