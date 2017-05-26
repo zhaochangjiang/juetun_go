@@ -2,7 +2,7 @@ package main
 
 import (
 	_ "juetun/admin/routers"
-	"juetun/general"
+	"juetun/common/general"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"

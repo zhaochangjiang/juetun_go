@@ -1,7 +1,7 @@
 package common
 
 import (
-	"juetun/general"
+	"juetun/common/general"
 
 	//"github.com/astaxie/beego"
 )

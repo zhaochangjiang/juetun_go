@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"juetun/general"
+	"juetun/common/general"
+	"juetun/common/models/user"
 	fcommon "juetun/web/common"
-	"juetun/web/models/user"
 )
 
 type Passport struct {
