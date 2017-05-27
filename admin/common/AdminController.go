@@ -2,6 +2,8 @@ package common
 
 import (
 	"juetun/common/general"
+
+	modelsAdmin "juetun/common/models/admin"
 )
 
 type AdminController struct {
@@ -12,6 +14,7 @@ type AdminController struct {
 func (this *AdminController) InitPermitItem() {
 
 	this.Data["PermitList"] = this.getAllShowPermit()
+
 	//如果不是超级管理员
 	if !this.authSuperAdmin() {
 		//获得当前不是超级管理员的权限列表。
@@ -20,99 +23,105 @@ func (this *AdminController) InitPermitItem() {
 	}
 
 }
-func(this * AdminController)getNowPermitData() * {
-	
-}
-//获得当前地址对应的数据库存储的权限及所有上级权限
-func (this *AdminController)getNowAndAllUponPermit()[]interface{}{
-	 item := make([]interface{}, 0)
-	
-	nowPermitData:= this.getNowPermitData();
-	 $permitIdArray[] = array(
-            'id' => $permit['id'],
-            'uppermit_id' => $permit['uppermit_id']
-        );
 
-        while (true) {
-            //如果上级ID为空
-            if (empty($permit['uppermit_id'])) {
-                break;
-            }
-            $permit = $this->find(array(
-                'id' => $permit['uppermit_id']));
-            array_unshift($permitIdArray, array(
-                'id' => $permit['id'],
-                'uppermit_id' => $permit['uppermit_id']
-            ));
-        }
-	
-	
-	
+//获得当前的权限
+func (this *AdminController) getNowPermitData() {
+
+	permitModel := new(modelsAdmin.Permit)
+	permitModel.Controller = this.Controller
+	permitModel.Action = this.Action
+	umain, message := permitModel.FetchPermit(permitModel)
+
+	if "" != message {
+		this.DisplayIframe(message)
+		return
+	}
+}
+
+//获得当前地址对应的数据库存储的权限及所有上级权限
+func (this *AdminController) getNowAndAllUponPermit() []interface{} {
+	item := make([]interface{}, 0)
+
+	nowPermitData := this.getNowPermitData()
+	//	 $permitIdArray[] = array(
+	//            'id' => $permit['id'],
+	//            'uppermit_id' => $permit['uppermit_id']
+	//        );
+
+	//        while (true) {
+	//            //如果上级ID为空
+	//            if (empty($permit['uppermit_id'])) {
+	//                break;
+	//            }
+	//            $permit = $this->find(array(
+	//                'id' => $permit['uppermit_id']));
+	//            array_unshift($permitIdArray, array(
+	//                'id' => $permit['id'],
+	//                'uppermit_id' => $permit['uppermit_id']
+	//            ));
+	//        }
+
 	return item
-} 
+}
+
 //获得超级管理员具备的页面展示权限
 func (this *AdminController) getAllShowPermit() {
 	item := make([]interface{}, 0)
-	
 
-	     
-         // 获得当前页面的权限ID
-        permit= this.getNowAndAllUponPermit();
+	// 获得当前页面的权限ID
+	permit = this.getNowAndAllUponPermit()
 
-        $permitIdArray = $this->getNowPermitLink($permit);
+	//        $permitIdArray = $this->getNowPermitLink($permit);
 
+	//        if (!empty($permit['id'])) {
+	//            $permitData ['childPermit'] = $this->findAll(array(
+	//                'uppermit_id' => array(
+	//                    'doType' => 'in',
+	//                    'value' => $permit['id'])));
+	//        }
 
-        if (!empty($permit['id'])) {
-            $permitData ['childPermit'] = $this->findAll(array(
-                'uppermit_id' => array(
-                    'doType' => 'in',
-                    'value' => $permit['id'])));
-        }
+	//        $permitData ['header'] = $this->findAll(array(
+	//            'uppermit_id' => array(
+	//                'doType' => 'in',
+	//                'value' => 0)), '', '`obyid` asc');
+	//        $headerActive = array_shift($permitIdArray);
+	//        $uppermitIdArray = array();
+	//        foreach ($permitData ['header'] as $key => $value) {
+	//            if (($value['id'] == $headerActive['id'])) {
+	//                $permitData['header'][$key]['active'] = true;
+	//                $uppermitIdArray[] = $value['id'];
+	//            } else {
+	//                $permitData['header'][$key]['active'] = false;
+	//            }
+	//        }
 
+	//        $uppermitIdData = array();
 
-        $permitData ['header'] = $this->findAll(array(
-            'uppermit_id' => array(
-                'doType' => 'in',
-                'value' => 0)), '', '`obyid` asc');
-        $headerActive = array_shift($permitIdArray);
-        $uppermitIdArray = array();
-        foreach ($permitData ['header'] as $key => $value) {
-            if (($value['id'] == $headerActive['id'])) {
-                $permitData['header'][$key]['active'] = true;
-                $uppermitIdArray[] = $value['id'];
-            } else {
-                $permitData['header'][$key]['active'] = false;
-            }
-        }
+	//        //   stop($permitIdArray);
 
-        $uppermitIdData = array();
+	//        $i = 0;
+	//        while (true) {
+	//            $temp = $this->findAll(array(
+	//                'uppermit_id' => array(
+	//                    'doType' => 'in',
+	//                    'value' => $uppermitIdArray)), '', '`obyid` asc');
+	//            $uppermitIdArray = array();
+	//            $permitList = array();
 
+	//            foreach ($temp as $value) {
+	//                $permitList[$value['uppermit_id']][] = $value;
+	//                $uppermitIdArray[] = $value['id'];
+	//            }
+	//            $uppermitIdData[] = $permitList;
+	//            if ($i > 1) {
+	//                break;
+	//            }
+	//            $i++;
+	//        }
 
-        //   stop($permitIdArray);
-
-        $i = 0;
-        while (true) {
-            $temp = $this->findAll(array(
-                'uppermit_id' => array(
-                    'doType' => 'in',
-                    'value' => $uppermitIdArray)), '', '`obyid` asc');
-            $uppermitIdArray = array();
-            $permitList = array();
-
-            foreach ($temp as $value) {
-                $permitList[$value['uppermit_id']][] = $value;
-                $uppermitIdArray[] = $value['id'];
-            }
-            $uppermitIdData[] = $permitList;
-            if ($i > 1) {
-                break;
-            }
-            $i++;
-        }
-
-        $permitData['left'] = $this->organizationPermit($uppermitIdData, $permitIdArray);
-        //    stop($permitData['left']);
-        return $permitData;
+	//        $permitData['left'] = $this->organizationPermit($uppermitIdData, $permitIdArray);
+	//        //    stop($permitData['left']);
+	//        return $permitData;
 	return item
 }
 
