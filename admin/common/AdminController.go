@@ -25,24 +25,47 @@ func (this *AdminController) InitPermitItem() {
 }
 
 //获得当前的权限
-func (this *AdminController) getNowPermitData() {
-
+func (this *AdminController) getNowPermitData() (*modelsAdmin.Permit, string) {
+	errorMessage := ""
 	permitModel := new(modelsAdmin.Permit)
-	permitModel.Controller = this.Controller
-	permitModel.Action = this.Action
-	umain, message := permitModel.FetchPermit(permitModel)
+
+	fetchParams := make(map[string]string)
+	fetchParams["Controller"], fetchParams["Action"] = this.GetControllerAndAction()
+
+	var permitModelList []*modelsAdmin.Permit
+	permitModelList, message := permitModel.FetchPermit(fetchParams)
 
 	if "" != message {
-		this.DisplayIframe(message)
-		return
+		//	this.DisplayIframe(message)
+		return permitModel, message
 	}
+	if nil != permitModelList[0] {
+		permitModel = permitModelList[0]
+	}
+	return permitModel, errorMessage
 }
 
 //获得当前地址对应的数据库存储的权限及所有上级权限
-func (this *AdminController) getNowAndAllUponPermit() []interface{} {
-	item := make([]interface{}, 0)
+func (this *AdminController) getNowAndAllUponPermit()  ([]interface{},message){
+	
+	permitData, message := this.getNowPermitData()
+	permitModel:=new modelsAdmin.Permitgroup
+	
+	result:=make([]interface{},0)
+	
+	while{
+		if 0==permitData.UppermitId
+			break
+		fetchParams := make([]interface{}, 0)	
+		fetchParams["UppermitId"] = permitData.UppermitId
+	    permitModelList, message := permitModel.FetchPermit(fetchParams)
+		if(nil!=permitModelList[0]){
+			permitData=permitModelList[0]
+		}
+		result=append(result,permitData)
 
-	nowPermitData := this.getNowPermitData()
+	}
+	
 	//	 $permitIdArray[] = array(
 	//            'id' => $permit['id'],
 	//            'uppermit_id' => $permit['uppermit_id']
@@ -61,15 +84,15 @@ func (this *AdminController) getNowAndAllUponPermit() []interface{} {
 	//            ));
 	//        }
 
-	return item
+	return &result
 }
 
 //获得超级管理员具备的页面展示权限
-func (this *AdminController) getAllShowPermit() {
-	item := make([]interface{}, 0)
+func (this *AdminController) getAllShowPermit() *modelsAdmin.Permit {
+	//item := make([]interface{}, 0)
 
 	// 获得当前页面的权限ID
-	permit = this.getNowAndAllUponPermit()
+	permit := this.getNowAndAllUponPermit()
 
 	//        $permitIdArray = $this->getNowPermitLink($permit);
 
@@ -122,7 +145,7 @@ func (this *AdminController) getAllShowPermit() {
 	//        $permitData['left'] = $this->organizationPermit($uppermitIdData, $permitIdArray);
 	//        //    stop($permitData['left']);
 	//        return $permitData;
-	return item
+	return &permit
 }
 
 //获得普通账号具备的账号展示权限
@@ -132,7 +155,7 @@ func (this *AdminController) getListNotSuperAdmin() []interface{} {
 }
 
 //判断是否为超级管理员
-func (this *AdminController) authSuperAdmin() {
+func (this *AdminController) authSuperAdmin() bool {
 	return true
 }
 func (this *AdminController) InitPageScript() {
