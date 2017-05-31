@@ -1,0 +1,52 @@
+package admin
+
+import (
+	"github.com/astaxie/beego/orm"
+)
+
+type Permit struct {
+	Id         int    `orm:"column(id);pk;auto" json:"id"`
+	Name       string `orm:varchar(50)`
+	Module     string `orm:varchar(30)`
+	Controller string `orm:varchar(30)`
+	Action     string `orm:varchar(30)`
+	UppermitId string `orm:varchar(10)`
+	Obyid      int
+	Csscode    string `orm:varchar(500)`
+}
+
+func init() {
+	orm.RegisterModelWithPrefix("admin_", new(Permit))
+}
+func (u *Permit) TableName() string {
+	return "permit"
+}
+func (this *Permit) getOrm() orm.Ormer {
+	o := orm.NewOrm()
+	o.Using("db_admin") // 默认使用 default，你可以指定为其他数据库
+	return o
+}
+func (this *Permit) FetchPermit(argument map[string]string) ([]*Permit, string) {
+
+	var permitList []*Permit
+	var message string
+	var querySeter orm.QuerySeter
+
+	o := this.getOrm()
+
+	ob := o.QueryTable(this)
+
+	for k, v := range argument {
+		querySeter = ob.Filter(k, v)
+	}
+	//num, err := o.QueryTable("user").Filter("name", "slene").All(&users)
+
+	_, err := querySeter.All(&permitList)
+	//	err := o.QueryTable(this).Filter("username", userName).Filter("flag_del", "no").All(&permitList)
+	if err == orm.ErrMultiRows {
+		// 多条的时候报错
+		message = "data exception,please cotact the administrator!"
+		return nil, message
+	}
+	return permitList, message
+}
