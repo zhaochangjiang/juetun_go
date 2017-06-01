@@ -26,6 +26,28 @@ func (this *Permit) getOrm() orm.Ormer {
 	o.Using("db_admin") // 默认使用 default，你可以指定为其他数据库
 	return o
 }
+
+//根据上级权限，查询所有下级权限
+func (this *Permit) FetchPermitListByUponId(uponid []interface{}) (*[]Permit, int64, string) {
+	var permitList []Permit
+	var message string
+	var querySeter orm.QuerySeter
+
+	o := this.getOrm()
+
+	ob := o.QueryTable(this)
+	querySeter = ob.Filter("uppermit__id__in", uponid...)
+
+	num, err := querySeter.All(&permitList)
+	//	err := o.QueryTable(this).Filter("username", userName).Filter("flag_del", "no").All(&permitList)
+	if err == orm.ErrMultiRows {
+		// 多条的时候报错
+		message = "data exception,please cotact the administrator!"
+		return nil, num, message
+	}
+	return &permitList, num, message
+}
+
 func (this *Permit) FetchPermit(argument map[string]string) ([]*Permit, string) {
 
 	var permitList []*Permit

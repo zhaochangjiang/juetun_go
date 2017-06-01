@@ -19,6 +19,13 @@ type UtilsInterface interface {
 type Utils struct {
 }
 
+//切片的头追加数据
+func (this *Utils) Slice_unshift(oSlice []interface{}, content interface{}) *[]interface{} {
+	slice := []interface{}{content}
+	slice = append(slice, oSlice...)
+	return &slice
+}
+
 //生成32位md5字串
 func (this *Utils) GetMd5String(s string) string {
 	h := md5.New()

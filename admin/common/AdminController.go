@@ -2,7 +2,6 @@ package common
 
 import (
 	"juetun/common/general"
-
 	modelsAdmin "juetun/common/models/admin"
 )
 
@@ -19,7 +18,6 @@ func (this *AdminController) InitPermitItem() {
 	if !this.authSuperAdmin() {
 		//获得当前不是超级管理员的权限列表。
 		this.Data["PermitList"] = this.getListNotSuperAdmin()
-
 	}
 
 }
@@ -46,54 +44,51 @@ func (this *AdminController) getNowPermitData() (*modelsAdmin.Permit, string) {
 }
 
 //获得当前地址对应的数据库存储的权限及所有上级权限
-func (this *AdminController) getNowAndAllUponPermit()  ([]interface{},message){
-	
+func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, *[]interface{}, string) {
+
 	permitData, message := this.getNowPermitData()
-	permitModel:=new modelsAdmin.Permitgroup
-	
-	result:=make([]interface{},0)
-	
-	while{
-		if 0==permitData.UppermitId
+	permitModel := new(modelsAdmin.Permit)
+
+	result := make([]interface{}, 0)
+	utils := new(general.Utils)
+	uponPermitId := make([]interface{}, 0)
+	for {
+		if "" == permitData.UppermitId {
 			break
-		fetchParams := make([]interface{}, 0)	
-		fetchParams["UppermitId"] = permitData.UppermitId
-	    permitModelList, message := permitModel.FetchPermit(fetchParams)
-		if(nil!=permitModelList[0]){
-			permitData=permitModelList[0]
 		}
-		result=append(result,permitData)
+		fetchParams := make(map[string]string)
+		fetchParams["UppermitId"] = permitData.UppermitId
+		uponPermitId = *utils.Slice_unshift(uponPermitId, permitData.UppermitId)
+		permitModelList, msg := permitModel.FetchPermit(fetchParams)
+		if "" != msg {
+			message = msg
+		}
+		if nil != permitModelList[0] {
+			permitData = permitModelList[0]
+			//往队列的队首添加数据
+			result = *utils.Slice_unshift(result, permitData)
+		}
 
 	}
-	
-	//	 $permitIdArray[] = array(
-	//            'id' => $permit['id'],
-	//            'uppermit_id' => $permit['uppermit_id']
-	//        );
-
-	//        while (true) {
-	//            //如果上级ID为空
-	//            if (empty($permit['uppermit_id'])) {
-	//                break;
-	//            }
-	//            $permit = $this->find(array(
-	//                'id' => $permit['uppermit_id']));
-	//            array_unshift($permitIdArray, array(
-	//                'id' => $permit['id'],
-	//                'uppermit_id' => $permit['uppermit_id']
-	//            ));
-	//        }
-
-	return &result
+	return &result, &uponPermitId, message
 }
 
 //获得超级管理员具备的页面展示权限
-func (this *AdminController) getAllShowPermit() *modelsAdmin.Permit {
-	//item := make([]interface{}, 0)
+func (this *AdminController) getAllShowPermit() *[]interface{} {
+	item := make([]interface{}, 0)
 
-	// 获得当前页面的权限ID
-	permit := this.getNowAndAllUponPermit()
+	// 获得当前页面的所有上级权限
+	permitUpon, arrayUponId, errorMessage := this.getNowAndAllUponPermit()
 
+	if "" != errorMessage {
+		this.DisplayIframe(errorMessage)
+	}
+	permitModel := new(modelsAdmin.Permit)
+	uponIdList, _, msg := permitModel.FetchPermitListByUponId(arrayUponId)
+
+	if "" != msg {
+		this.DisplayIframe(msg)
+	}
 	//        $permitIdArray = $this->getNowPermitLink($permit);
 
 	//        if (!empty($permit['id'])) {
@@ -145,7 +140,7 @@ func (this *AdminController) getAllShowPermit() *modelsAdmin.Permit {
 	//        $permitData['left'] = $this->organizationPermit($uppermitIdData, $permitIdArray);
 	//        //    stop($permitData['left']);
 	//        return $permitData;
-	return &permit
+	return &item
 }
 
 //获得普通账号具备的账号展示权限
