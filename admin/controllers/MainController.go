@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	acommon "juetun/admin/common"
 )
 
@@ -18,6 +17,5 @@ func (this *MainController) Get() {
 	this.Data["PageTitle"] = " 后台管理中心"
 	this.Data["Avater"] = "/assets/img/user.jpg"
 	this.Data["Username"] = "长江"
-	this.Data["Items"] = this.GetPermitItem()
 	this.LoadCommon("default/index.html")
 }

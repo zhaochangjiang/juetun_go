@@ -1,6 +1,8 @@
 package admin
 
 import (
+	"fmt"
+
 	"github.com/astaxie/beego/orm"
 )
 
@@ -10,7 +12,7 @@ type Permit struct {
 	Module     string `orm:varchar(30)`
 	Controller string `orm:varchar(30)`
 	Action     string `orm:varchar(30)`
-	UppermitId string `orm:varchar(10)`
+	UppermitId int    `orm:int(10)`
 	Obyid      int
 	Csscode    string `orm:varchar(500)`
 }
@@ -18,7 +20,7 @@ type Permit struct {
 func init() {
 	orm.RegisterModelWithPrefix("admin_", new(Permit))
 }
-func (u *Permit) TableName() string {
+func (this *Permit) TableName() string {
 	return "permit"
 }
 func (this *Permit) getOrm() orm.Ormer {
@@ -36,7 +38,8 @@ func (this *Permit) FetchPermitListByUponId(uponid []interface{}) (*[]Permit, in
 	o := this.getOrm()
 
 	ob := o.QueryTable(this)
-	querySeter = ob.Filter("uppermit__id__in", uponid...)
+
+	querySeter = ob.Filter("uppermit_id__in", uponid...)
 
 	num, err := querySeter.All(&permitList)
 	//	err := o.QueryTable(this).Filter("username", userName).Filter("flag_del", "no").All(&permitList)
@@ -48,7 +51,8 @@ func (this *Permit) FetchPermitListByUponId(uponid []interface{}) (*[]Permit, in
 	return &permitList, num, message
 }
 
-func (this *Permit) FetchPermit(argument map[string]string) ([]*Permit, string) {
+//查询单个权限
+func (this *Permit) FetchPermit(argument map[string]interface{}) ([]*Permit, string) {
 
 	var permitList []*Permit
 	var message string
@@ -57,8 +61,10 @@ func (this *Permit) FetchPermit(argument map[string]string) ([]*Permit, string) 
 	o := this.getOrm()
 
 	ob := o.QueryTable(this)
+	fmt.Println("fdafdasd:")
 
 	for k, v := range argument {
+		fmt.Println(v)
 		querySeter = ob.Filter(k, v)
 	}
 	//num, err := o.QueryTable("user").Filter("name", "slene").All(&users)

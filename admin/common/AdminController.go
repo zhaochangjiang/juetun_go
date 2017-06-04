@@ -1,6 +1,7 @@
 package common
 
 import (
+	"fmt"
 	"juetun/common/general"
 	modelsAdmin "juetun/common/models/admin"
 )
@@ -12,7 +13,7 @@ type AdminController struct {
 //返回当前后台的权限列表
 func (this *AdminController) InitPermitItem() {
 
-	this.Data["PermitList"] = this.getAllShowPermit()
+	this.initAllShowPermit()
 
 	//如果不是超级管理员
 	if !this.authSuperAdmin() {
@@ -21,15 +22,21 @@ func (this *AdminController) InitPermitItem() {
 	}
 
 }
+func (this *AdminController) DefaultControllerAndAction() (string, string) {
+	return "MainController", "GET"
+}
 
 //获得当前的权限
 func (this *AdminController) getNowPermitData() (*modelsAdmin.Permit, string) {
 	errorMessage := ""
 	permitModel := new(modelsAdmin.Permit)
 
-	fetchParams := make(map[string]string)
+	fetchParams := make(map[string]interface{})
 	fetchParams["Controller"], fetchParams["Action"] = this.GetControllerAndAction()
-
+	defaultController, actionString := this.DefaultControllerAndAction()
+	if defaultController == fetchParams["Controller"] && actionString == fetchParams["Action"] {
+		return permitModel, ""
+	}
 	var permitModelList []*modelsAdmin.Permit
 	permitModelList, message := permitModel.FetchPermit(fetchParams)
 
@@ -37,14 +44,14 @@ func (this *AdminController) getNowPermitData() (*modelsAdmin.Permit, string) {
 		//	this.DisplayIframe(message)
 		return permitModel, message
 	}
-	if nil != permitModelList[0] {
+	if nil != permitModelList {
 		permitModel = permitModelList[0]
 	}
 	return permitModel, errorMessage
 }
 
 //获得当前地址对应的数据库存储的权限及所有上级权限
-func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, *[]interface{}, string) {
+func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []interface{}, string) {
 
 	permitData, message := this.getNowPermitData()
 	permitModel := new(modelsAdmin.Permit)
@@ -52,30 +59,33 @@ func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, *[]interf
 	result := make([]interface{}, 0)
 	utils := new(general.Utils)
 	uponPermitId := make([]interface{}, 0)
+
+	//默认的上级机构必须查询
+	uponPermitId = *utils.Slice_unshift(uponPermitId, 0)
 	for {
-		if "" == permitData.UppermitId {
+		if 0 == permitData.UppermitId {
 			break
 		}
-		fetchParams := make(map[string]string)
+		fetchParams := make(map[string]interface{})
 		fetchParams["UppermitId"] = permitData.UppermitId
 		uponPermitId = *utils.Slice_unshift(uponPermitId, permitData.UppermitId)
 		permitModelList, msg := permitModel.FetchPermit(fetchParams)
 		if "" != msg {
 			message = msg
 		}
-		if nil != permitModelList[0] {
+		if nil != permitModelList {
 			permitData = permitModelList[0]
 			//往队列的队首添加数据
 			result = *utils.Slice_unshift(result, permitData)
 		}
 
 	}
-	return &result, &uponPermitId, message
+	return &result, uponPermitId, message
 }
 
 //获得超级管理员具备的页面展示权限
-func (this *AdminController) getAllShowPermit() *[]interface{} {
-	item := make([]interface{}, 0)
+func (this *AdminController) initAllShowPermit() {
+	//	item := make([]interface{}, 0)
 
 	// 获得当前页面的所有上级权限
 	permitUpon, arrayUponId, errorMessage := this.getNowAndAllUponPermit()
@@ -89,6 +99,10 @@ func (this *AdminController) getAllShowPermit() *[]interface{} {
 	if "" != msg {
 		this.DisplayIframe(msg)
 	}
+	this.Data["Header"] = *uponIdList
+	fmt.Println("dasfa:")
+	fmt.Println(permitUpon)
+
 	//        $permitIdArray = $this->getNowPermitLink($permit);
 
 	//        if (!empty($permit['id'])) {
@@ -140,7 +154,7 @@ func (this *AdminController) getAllShowPermit() *[]interface{} {
 	//        $permitData['left'] = $this->organizationPermit($uppermitIdData, $permitIdArray);
 	//        //    stop($permitData['left']);
 	//        return $permitData;
-	return &item
+
 }
 
 //获得普通账号具备的账号展示权限

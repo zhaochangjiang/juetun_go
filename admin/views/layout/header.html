@@ -11,12 +11,11 @@
         </a>
         <div class="navbar-right">
             <ul class="nav navbar-nav">
-			
 			{{range .Header}}
 			<li class="dropdown user user-menu open">
 			<a href = "" class = "dropdown-toggle" >
-			<i class="glyphicon ' . $value['csscode'] . '"></i>
-			<span><?php echo $value['name']; ?></span>
+			<i class="glyphicon {{.Csscode}}"></i>
+			<span>{{.Name}} </span>
 			</a>
 			</li>
 			{{end}}            

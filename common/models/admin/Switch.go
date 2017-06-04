@@ -5,7 +5,7 @@ import (
 )
 
 type Switch struct {
-	id             string `orm:"column(id);varchar(32);pk;auto" json:"id"`
+	Id             string `orm:"column(id);varchar(32);pk" json:"id"`
 	Name           string `orm:"varchar(20)"`
 	Status         string
 	HeigherLevelId string `orm:varchar(32)`
@@ -17,7 +17,7 @@ func init() {
 	orm.RegisterModelWithPrefix("admin_", new(Switch))
 }
 func (u *Switch) TableName() string {
-	return "picture_category"
+	return "switch"
 }
 func (this *Switch) getOrm() orm.Ormer {
 	o := orm.NewOrm()
