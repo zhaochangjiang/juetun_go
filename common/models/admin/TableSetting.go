@@ -9,14 +9,14 @@ type TableSetting struct {
 	Id string `orm:"column(id);varchar(32);pk" json:"id"`
 
 	//字段名称
-	FieldName string `orm:"varchar(100)";orm:"column(field_name)`
+	FieldName string `orm:"varchar(40)";orm:"column(field_name)`
 	//字段类型、
-	Type string `orm:"varchar(100)";orm:"column(type)`
+	Type string `orm:"varchar(40)";orm:"column(type)`
 	//所属表格类型,每个展示表格以本字段做标记
-	LabelType string `orm:"varchar(100)";orm:"column(label_type)`
+	LabelType string `orm:"varchar(40)";orm:"column(label_type)`
 
 	//所属模块（当前主要ENUM("admin","web","user")
-	ModuleType string `orm:"varchar(100)";orm:"column(module_type)`
+	ModuleType string `orm:"varchar(40)";orm:"column(module_type)`
 
 	//表头样式class
 	CssClass string `orm:"varchar(100)";orm:"column(css_class)`

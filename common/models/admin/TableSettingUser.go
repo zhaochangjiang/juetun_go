@@ -6,7 +6,7 @@ import (
 
 //表头信息存储表,用户偏好设置表头信息表
 type TableSettingUser struct {
-	Id string `orm:"column(id);varchar(32);pk" json:"id"`
+	Id string `orm:"column(id);varchar(40);pk" json:"id"`
 	//用户ID
 	User_Id string `orm:"varchar(40)";orm:"column(user_id)"`
 	//table_setting 表ID
@@ -16,7 +16,7 @@ type TableSettingUser struct {
 func init() {
 	orm.RegisterModelWithPrefix("admin_", new(TableSettingUser))
 }
-func (u *TableSettingUser) TableName() string {
+func (this *TableSettingUser) TableName() string {
 	return "table_setting_user"
 }
 func (this *TableSettingUser) getOrm() orm.Ormer {

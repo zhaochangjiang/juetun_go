@@ -22,7 +22,7 @@ func (this *Permitgroup) getOrm() orm.Ormer {
 	return o
 }
 
-func (this *Permitgroup) DeleteByGroupIds(groupId []string) {
+func (this *Permitgroup) DeleteByGroupIds(groupId []string) (bool, error) {
 	//删除表头信息
 	_, err := this.getOrm().QueryTable(this.TableName()).Filter("GroupId__in", groupId).Delete()
 	if nil != err {

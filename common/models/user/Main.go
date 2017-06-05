@@ -41,7 +41,7 @@ func (this *Main) FetchUserByUserName(userName string) (Main, string) {
 	if err == orm.ErrMultiRows {
 		// 多条的时候报错
 		message = "data exception,please cotact the administrator!"
-		return nil, message
+		return umain, message
 	}
 	return umain, message
 }

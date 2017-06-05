@@ -94,4 +94,5 @@ func (this *Permit) DeletePermit(permitIds []int) (bool, error) {
 	if nil != err {
 		return false, err
 	}
+	return true, err
 }

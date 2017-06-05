@@ -24,7 +24,7 @@ func (this *GroupPermit) getOrm() orm.Ormer {
 }
 
 //通过权限ID 删除用户组的权限关系
-func (this *GroupPermit) DeleteByGroupIds(groupIds []int) {
+func (this *GroupPermit) DeleteByGroupIds(groupIds []int) (bool, error) {
 
 	//删除表头信息
 	_, err := this.getOrm().QueryTable(this.TableName()).Filter("permit_id__in", groupIds).Delete()
@@ -36,7 +36,7 @@ func (this *GroupPermit) DeleteByGroupIds(groupIds []int) {
 }
 
 //通过用户群权限ID 删除权限组的权限
-func (this *GroupPermit) DeleteByPermitIds(permitIds []int) {
+func (this *GroupPermit) DeleteByPermitIds(permitIds []int) (bool, error) {
 
 	//删除表头信息
 	_, err := this.getOrm().QueryTable(this.TableName()).Filter("group_id__in", permitIds).Delete()
