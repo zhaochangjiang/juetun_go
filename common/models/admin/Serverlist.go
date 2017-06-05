@@ -5,10 +5,10 @@ import (
 )
 
 type Serverlist struct {
-	Id          int `orm:"column(id);pk;auto" json:"id"`
-	IpAddr      string
-	MachineRoom string `orm:varchar(30)`
-	UniqueKey   string `orm:varchar(255)`
+	Id          int    `orm:"column(id);pk;auto" json:"id"`
+	IpAddr      string `orm:varchar(30);orm:"column(ip_addr);`
+	MachineRoom string `orm:varchar(30);orm:"column(machine_room);`
+	UniqueKey   string `orm:varchar(255);orm:"column(unique_key);`
 }
 
 func init() {

@@ -78,3 +78,20 @@ func (this *Permit) FetchPermit(argument map[string]interface{}) ([]*Permit, str
 	}
 	return permitList, message
 }
+
+//删除权限
+func (this *Permit) DeletePermit(permitIds []int) (bool, error) {
+
+	//删除相关的数据
+	groupPermit := new(GroupPermit)
+	_, err1 := groupPermit.DeleteByPermitIds(permitIds)
+	if nil != err1 {
+		return false, err1
+	}
+
+	//删除表头信息
+	_, err := this.getOrm().QueryTable(this.TableName()).Filter("id__in", permitIds).Delete()
+	if nil != err {
+		return false, err
+	}
+}

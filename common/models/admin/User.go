@@ -7,8 +7,8 @@ import (
 type User struct {
 	Uid        int    `orm:"column(uid);pk;"`
 	Name       string `orm:varchar(30)`
-	SuperAdmin string
-	Isdel      string
+	SuperAdmin string `orm:"column(super_admin)"`
+	Isdel      string `orm:"column(id_del)"`
 }
 
 func (u *User) TableName() string {
@@ -19,6 +19,7 @@ func init() {
 }
 func (this *User) getOrm() orm.Ormer {
 	o := orm.NewOrm()
-	o.Using("db_admin") // 默认使用 default，你可以指定为其他数据库
+	// 默认使用 default，你可以指定为其他数据库
+	o.Using("db_admin")
 	return o
 }
