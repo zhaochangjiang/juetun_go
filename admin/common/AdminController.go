@@ -18,7 +18,7 @@ func (this *AdminController) InitPermitItem() {
 	//如果不是超级管理员
 	if !this.authSuperAdmin() {
 		//获得当前不是超级管理员的权限列表。
-		this.Data["PermitList"] = this.getListNotSuperAdmin()
+		this.Data["Permit"] = this.getListNotSuperAdmin()
 	}
 
 }
@@ -44,7 +44,8 @@ func (this *AdminController) getNowPermitData() (*modelsAdmin.Permit, string) {
 		//	this.DisplayIframe(message)
 		return permitModel, message
 	}
-	if nil != permitModelList {
+	fmt.Println(permitModelList)
+	if len(permitModelList) > 0 {
 		permitModel = permitModelList[0]
 	}
 	return permitModel, errorMessage
@@ -99,9 +100,13 @@ func (this *AdminController) initAllShowPermit() {
 	if "" != msg {
 		this.DisplayIframe(msg)
 	}
-	this.Data["Header"] = *uponIdList
-	fmt.Println("dasfa:")
-	fmt.Println(permitUpon)
+
+	permit := make(map[string]interface{})
+	permit["Header"] = *uponIdList
+	permit["HeaderActive"] = "dashboard"
+	permit["Left"] = permitUpon
+
+	this.Data["Permit"] = permit
 
 	//        $permitIdArray = $this->getNowPermitLink($permit);
 

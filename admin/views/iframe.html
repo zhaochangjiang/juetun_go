@@ -1,0 +1,12 @@
+<html>
+<body>
+<script type="text/javascript">
+ {{if ne "" .Message }}
+parent.showMessage("{{.Message}}");
+{{end}}
+{{if ne "" .LocationHref }}
+parent.location.href={{.LocationHref}};
+{{end}}
+</script>
+</body>
+</html>

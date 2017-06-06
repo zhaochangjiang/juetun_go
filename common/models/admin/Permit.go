@@ -35,11 +35,7 @@ func (this *Permit) FetchPermitListByUponId(uponid []interface{}) (*[]Permit, in
 	var message string
 	var querySeter orm.QuerySeter
 
-	o := this.getOrm()
-
-	ob := o.QueryTable(this)
-
-	querySeter = ob.Filter("uppermit_id__in", uponid...)
+	querySeter = this.getOrm().QueryTable(this).Filter("uppermit_id__in", uponid...).OrderBy("-id")
 
 	num, err := querySeter.All(&permitList)
 	//	err := o.QueryTable(this).Filter("username", userName).Filter("flag_del", "no").All(&permitList)
