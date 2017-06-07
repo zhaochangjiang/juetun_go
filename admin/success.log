@@ -1,123 +1,34 @@
-2017/06/07 00:00:18 [D] [controller.go:217] template Execute err: template: layout/header.html:15:8: executing "layout/header.html" at <.Module>: Module has arguments but cannot be invoked as function
-2017/06/07 00:00:18 [E] [server.go:2568] template: layout/header.html:15:8: executing "layout/header.html" at <.Module>: Module has arguments but cannot be invoked as function
-2017/06/07 00:01:24 [D] [controller.go:217] template Execute err: template: layout/header.html:15:8: executing "layout/header.html" at <.Module>: Module has arguments but cannot be invoked as function
-2017/06/07 00:01:24 [E] [server.go:2568] template: layout/header.html:15:8: executing "layout/header.html" at <.Module>: Module has arguments but cannot be invoked as function
-2017/06/07 00:01:25 [D] [controller.go:217] template Execute err: template: layout/header.html:15:8: executing "layout/header.html" at <.Module>: Module has arguments but cannot be invoked as function
-2017/06/07 00:01:25 [E] [server.go:2568] template: layout/header.html:15:8: executing "layout/header.html" at <.Module>: Module has arguments but cannot be invoked as function
-2017/06/07 00:02:05 [I] [main.go:27] the server is starting... 
-2017/06/07 00:02:05 [I] [asm_amd64.s:2197] http server Running on http://:8082
-2017/06/07 00:02:09 [I] [main.go:27] the server is starting... 
-2017/06/07 00:02:09 [I] [asm_amd64.s:2197] http server Running on http://:8082
-2017/06/07 00:02:11 [D] [controller.go:217] template Execute err: template: layout/header.html:15:8: executing "layout/header.html" at <.Module>: Module has arguments but cannot be invoked as function
-2017/06/07 00:02:11 [E] [server.go:2568] template: layout/header.html:15:8: executing "layout/header.html" at <.Module>: Module has arguments but cannot be invoked as function
-2017/06/07 00:02:38 [I] [main.go:27] the server is starting... 
-2017/06/07 00:02:38 [I] [asm_amd64.s:2197] http server Running on http://:8082
-2017/06/07 00:02:59 [D] [controller.go:217] template Execute err: template: layout/header.html:15:9: executing "layout/header.html" at <$.Module>: Module is not a method but has arguments
-2017/06/07 00:02:59 [E] [server.go:2568] template: layout/header.html:15:9: executing "layout/header.html" at <$.Module>: Module is not a method but has arguments
-2017/06/07 00:04:33 [I] [main.go:27] the server is starting... 
-2017/06/07 00:04:33 [I] [asm_amd64.s:2197] http server Running on http://:8082
-2017/06/07 00:04:41 [I] [main.go:27] the server is starting... 
-2017/06/07 00:04:41 [I] [asm_amd64.s:2197] http server Running on http://:8082
-2017/06/07 00:04:42 [D] [controller.go:217] template Execute err: template: layout/header.html:15:9: executing "layout/header.html" at <$.Module>: Module is not a method but has arguments
-2017/06/07 00:04:42 [E] [server.go:2568] template: layout/header.html:15:9: executing "layout/header.html" at <$.Module>: Module is not a method but has arguments
-2017/06/07 00:06:00 [I] [main.go:27] the server is starting... 
-2017/06/07 00:06:00 [I] [asm_amd64.s:2197] http server Running on http://:8082
-2017/06/07 00:06:01 [D] [controller.go:217] template Execute err: template: layout/header.html:15:9: executing "layout/header.html" at <$.Module>: Module is not a method but has arguments
-2017/06/07 00:06:01 [E] [server.go:2568] template: layout/header.html:15:9: executing "layout/header.html" at <$.Module>: Module is not a method but has arguments
-2017/06/07 00:06:39 [I] [main.go:27] the server is starting... 
-2017/06/07 00:06:39 [I] [asm_amd64.s:2197] http server Running on http://:8082
-2017/06/07 00:06:42 [D] [controller.go:217] template Execute err: template: layout/header.html:15:8: executing "layout/header.html" at <.Module>: Module has arguments but cannot be invoked as function
-2017/06/07 00:06:42 [E] [server.go:2568] template: layout/header.html:15:8: executing "layout/header.html" at <.Module>: Module has arguments but cannot be invoked as function
-2017/06/07 00:07:38 [I] [main.go:27] the server is starting... 
-2017/06/07 00:07:38 [I] [asm_amd64.s:2197] http server Running on http://:8082
-2017/06/07 00:08:27 [I] [main.go:27] the server is starting... 
-2017/06/07 00:08:27 [I] [asm_amd64.s:2197] http server Running on http://:8082
-2017/06/07 00:09:24 [D] [controller.go:252] parse template err: layout/header.html template: layout/header.html:22: unexpected <.> in operand
-2017/06/07 00:09:25 [D] [controller.go:252] parse template err: layout/header.html template: layout/header.html:22: unexpected <.> in operand
-2017/06/07 00:09:26 [I] [main.go:27] the server is starting... 
-2017/06/07 00:09:26 [D] [template.go:171] parse template err: layout/header.html template: layout/header.html:22: unexpected <.> in operand
-2017/06/07 00:09:26 [I] [asm_amd64.s:2197] http server Running on http://:8082
-2017/06/07 00:09:26 [D] [controller.go:252] parse template err: layout/header.html template: layout/header.html:22: unexpected <.> in operand
-2017/06/07 00:09:26 [C] [asm_amd64.s:514] the request url is  /
-2017/06/07 00:09:26 [C] [asm_amd64.s:514] Handler crashed with error can't find templatefile in the path:views/layout/header.html
-2017/06/07 00:09:26 [C] [asm_amd64.s:514] D:/Go/src/runtime/asm_amd64.s:514
-2017/06/07 00:09:26 [C] [asm_amd64.s:514] D:/Go/src/runtime/panic.go:489
-2017/06/07 00:09:26 [C] [asm_amd64.s:514] E:/app_go/src/github.com/astaxie/beego/template.go:73
-2017/06/07 00:09:26 [C] [asm_amd64.s:514] E:/app_go/src/github.com/astaxie/beego/controller.go:217
-2017/06/07 00:09:26 [C] [asm_amd64.s:514] E:/app_go/src/github.com/astaxie/beego/controller.go:185
-2017/06/07 00:09:26 [C] [asm_amd64.s:514] E:/app_go/src/github.com/astaxie/beego/router.go:816
-2017/06/07 00:09:26 [C] [asm_amd64.s:514] D:/Go/src/net/http/server.go:2568
-2017/06/07 00:09:26 [C] [asm_amd64.s:514] D:/Go/src/net/http/server.go:1825
-2017/06/07 00:09:26 [C] [asm_amd64.s:514] D:/Go/src/runtime/asm_amd64.s:2197
-2017/06/07 00:09:26 [D] [controller.go:252] parse template err: layout/header.html template: layout/header.html:22: unexpected <.> in operand
-2017/06/07 00:09:26 [C] [asm_amd64.s:514] the request url is  /
-2017/06/07 00:09:26 [C] [asm_amd64.s:514] Handler crashed with error can't find templatefile in the path:views/layout/header.html
-2017/06/07 00:09:26 [C] [asm_amd64.s:514] D:/Go/src/runtime/asm_amd64.s:514
-2017/06/07 00:09:26 [C] [asm_amd64.s:514] D:/Go/src/runtime/panic.go:489
-2017/06/07 00:09:26 [C] [asm_amd64.s:514] E:/app_go/src/github.com/astaxie/beego/template.go:73
-2017/06/07 00:09:26 [C] [asm_amd64.s:514] E:/app_go/src/github.com/astaxie/beego/controller.go:217
-2017/06/07 00:09:26 [C] [asm_amd64.s:514] E:/app_go/src/github.com/astaxie/beego/controller.go:185
-2017/06/07 00:09:26 [C] [asm_amd64.s:514] E:/app_go/src/github.com/astaxie/beego/router.go:816
-2017/06/07 00:09:26 [C] [asm_amd64.s:514] D:/Go/src/net/http/server.go:2568
-2017/06/07 00:09:26 [C] [asm_amd64.s:514] D:/Go/src/net/http/server.go:1825
-2017/06/07 00:09:26 [C] [asm_amd64.s:514] D:/Go/src/runtime/asm_amd64.s:2197
-2017/06/07 00:09:29 [D] [controller.go:252] parse template err: layout/header.html template: layout/header.html:22: unexpected <.> in operand
-2017/06/07 00:09:29 [C] [asm_amd64.s:514] the request url is  /
-2017/06/07 00:09:29 [C] [asm_amd64.s:514] Handler crashed with error can't find templatefile in the path:views/layout/header.html
-2017/06/07 00:09:29 [C] [asm_amd64.s:514] D:/Go/src/runtime/asm_amd64.s:514
-2017/06/07 00:09:29 [C] [asm_amd64.s:514] D:/Go/src/runtime/panic.go:489
-2017/06/07 00:09:29 [C] [asm_amd64.s:514] E:/app_go/src/github.com/astaxie/beego/template.go:73
-2017/06/07 00:09:29 [C] [asm_amd64.s:514] E:/app_go/src/github.com/astaxie/beego/controller.go:217
-2017/06/07 00:09:29 [C] [asm_amd64.s:514] E:/app_go/src/github.com/astaxie/beego/controller.go:185
-2017/06/07 00:09:29 [C] [asm_amd64.s:514] E:/app_go/src/github.com/astaxie/beego/router.go:816
-2017/06/07 00:09:29 [C] [asm_amd64.s:514] D:/Go/src/net/http/server.go:2568
-2017/06/07 00:09:29 [C] [asm_amd64.s:514] D:/Go/src/net/http/server.go:1825
-2017/06/07 00:09:29 [C] [asm_amd64.s:514] D:/Go/src/runtime/asm_amd64.s:2197
-2017/06/07 00:09:47 [D] [controller.go:217] template Execute err: template: layout/header.html:22:27: executing "layout/header.html" at <.Permit.Header>: can't evaluate field Permit in type admin.Permit
-2017/06/07 00:09:47 [E] [server.go:2568] template: layout/header.html:22:27: executing "layout/header.html" at <.Permit.Header>: can't evaluate field Permit in type admin.Permit
-2017/06/07 00:09:48 [D] [controller.go:217] template Execute err: template: layout/header.html:22:27: executing "layout/header.html" at <.Permit.Header>: can't evaluate field Permit in type admin.Permit
-2017/06/07 00:09:48 [E] [server.go:2568] template: layout/header.html:22:27: executing "layout/header.html" at <.Permit.Header>: can't evaluate field Permit in type admin.Permit
-2017/06/07 00:09:48 [D] [controller.go:217] template Execute err: template: layout/header.html:22:27: executing "layout/header.html" at <.Permit.Header>: can't evaluate field Permit in type admin.Permit
-2017/06/07 00:09:48 [E] [server.go:2568] template: layout/header.html:22:27: executing "layout/header.html" at <.Permit.Header>: can't evaluate field Permit in type admin.Permit
-2017/06/07 00:10:02 [D] [controller.go:217] template Execute err: template: layout/header.html:22:27: executing "layout/header.html" at <.Permit.HeaderActive>: can't evaluate field Permit in type admin.Permit
-2017/06/07 00:10:02 [E] [server.go:2568] template: layout/header.html:22:27: executing "layout/header.html" at <.Permit.HeaderActive>: can't evaluate field Permit in type admin.Permit
-2017/06/07 00:10:03 [D] [controller.go:217] template Execute err: template: layout/header.html:22:27: executing "layout/header.html" at <.Permit.HeaderActive>: can't evaluate field Permit in type admin.Permit
-2017/06/07 00:10:03 [E] [server.go:2568] template: layout/header.html:22:27: executing "layout/header.html" at <.Permit.HeaderActive>: can't evaluate field Permit in type admin.Permit
-2017/06/07 00:10:35 [D] [controller.go:252] parse template err: layout/header.html template: layout/header.html:22: missing value for command
-2017/06/07 00:10:35 [D] [controller.go:252] parse template err: layout/header.html template: layout/header.html:22: missing value for command
-2017/06/07 00:10:44 [D] [controller.go:217] template Execute err: template: layout/header.html:15:8: executing "layout/header.html" at <.Module>: Module has arguments but cannot be invoked as function
-2017/06/07 00:10:44 [E] [server.go:2568] template: layout/header.html:15:8: executing "layout/header.html" at <.Module>: Module has arguments but cannot be invoked as function
-2017/06/07 00:10:45 [D] [controller.go:217] template Execute err: template: layout/header.html:15:8: executing "layout/header.html" at <.Module>: Module has arguments but cannot be invoked as function
-2017/06/07 00:10:45 [E] [server.go:2568] template: layout/header.html:15:8: executing "layout/header.html" at <.Module>: Module has arguments but cannot be invoked as function
-2017/06/07 00:10:45 [D] [controller.go:217] template Execute err: template: layout/header.html:15:8: executing "layout/header.html" at <.Module>: Module has arguments but cannot be invoked as function
-2017/06/07 00:10:45 [E] [server.go:2568] template: layout/header.html:15:8: executing "layout/header.html" at <.Module>: Module has arguments but cannot be invoked as function
-2017/06/07 00:10:46 [I] [main.go:27] the server is starting... 
-2017/06/07 00:10:46 [I] [asm_amd64.s:2197] http server Running on http://:8082
-2017/06/07 00:11:10 [D] [controller.go:217] template Execute err: template: layout/header.html:15:9: executing "layout/header.html" at <$.Module>: Module is not a method but has arguments
-2017/06/07 00:11:10 [E] [server.go:2568] template: layout/header.html:15:9: executing "layout/header.html" at <$.Module>: Module is not a method but has arguments
-2017/06/07 00:11:11 [D] [controller.go:217] template Execute err: template: layout/header.html:15:9: executing "layout/header.html" at <$.Module>: Module is not a method but has arguments
-2017/06/07 00:11:11 [E] [server.go:2568] template: layout/header.html:15:9: executing "layout/header.html" at <$.Module>: Module is not a method but has arguments
-2017/06/07 00:11:17 [D] [controller.go:217] template Execute err: template: layout/header.html:15:9: executing "layout/header.html" at <$.Module>: Module is not a method but has arguments
-2017/06/07 00:11:17 [E] [server.go:2568] template: layout/header.html:15:9: executing "layout/header.html" at <$.Module>: Module is not a method but has arguments
-2017/06/07 00:11:17 [D] [controller.go:217] template Execute err: template: layout/header.html:15:9: executing "layout/header.html" at <$.Module>: Module is not a method but has arguments
-2017/06/07 00:11:17 [E] [server.go:2568] template: layout/header.html:15:9: executing "layout/header.html" at <$.Module>: Module is not a method but has arguments
-2017/06/07 00:11:18 [D] [controller.go:217] template Execute err: template: layout/header.html:15:9: executing "layout/header.html" at <$.Module>: Module is not a method but has arguments
-2017/06/07 00:11:18 [E] [server.go:2568] template: layout/header.html:15:9: executing "layout/header.html" at <$.Module>: Module is not a method but has arguments
-2017/06/07 00:11:19 [I] [main.go:27] the server is starting... 
-2017/06/07 00:11:19 [I] [asm_amd64.s:2197] http server Running on http://:8082
-2017/06/07 00:11:31 [D] [controller.go:217] template Execute err: template: layout/header.html:15:9: executing "layout/header.html" at <$.Module>: Module is not a method but has arguments
-2017/06/07 00:11:31 [E] [server.go:2568] template: layout/header.html:15:9: executing "layout/header.html" at <$.Module>: Module is not a method but has arguments
-2017/06/07 00:11:32 [D] [controller.go:217] template Execute err: template: layout/header.html:15:9: executing "layout/header.html" at <$.Module>: Module is not a method but has arguments
-2017/06/07 00:11:32 [E] [server.go:2568] template: layout/header.html:15:9: executing "layout/header.html" at <$.Module>: Module is not a method but has arguments
-2017/06/07 00:11:44 [I] [main.go:27] the server is starting... 
-2017/06/07 00:11:45 [I] [asm_amd64.s:2197] http server Running on http://:8082
-2017/06/07 00:11:50 [D] [controller.go:217] template Execute err: template: layout/header.html:15:8: executing "layout/header.html" at <.Module>: Module has arguments but cannot be invoked as function
-2017/06/07 00:11:50 [E] [server.go:2568] template: layout/header.html:15:8: executing "layout/header.html" at <.Module>: Module has arguments but cannot be invoked as function
-2017/06/07 00:11:51 [D] [controller.go:217] template Execute err: template: layout/header.html:15:8: executing "layout/header.html" at <.Module>: Module has arguments but cannot be invoked as function
-2017/06/07 00:11:51 [E] [server.go:2568] template: layout/header.html:15:8: executing "layout/header.html" at <.Module>: Module has arguments but cannot be invoked as function
-2017/06/07 00:13:08 [I] [main.go:27] the server is starting... 
-2017/06/07 00:13:08 [I] [asm_amd64.s:2197] http server Running on http://:8082
-2017/06/07 00:15:33 [I] [main.go:27] the server is starting... 
-2017/06/07 00:15:33 [I] [asm_amd64.s:2197] http server Running on http://:8082
-2017/06/07 00:16:11 [I] [main.go:27] the server is starting... 
-2017/06/07 00:16:11 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:00:10 [I] [main.go:27] the server is starting... 
+2017/06/08 00:00:10 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:05:10 [I] [main.go:27] the server is starting... 
+2017/06/08 00:05:10 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:05:34 [I] [main.go:27] the server is starting... 
+2017/06/08 00:05:34 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:05:47 [I] [main.go:27] the server is starting... 
+2017/06/08 00:05:47 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:05:55 [I] [main.go:27] the server is starting... 
+2017/06/08 00:05:55 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:09:41 [I] [main.go:27] the server is starting... 
+2017/06/08 00:09:41 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:10:16 [I] [main.go:27] the server is starting... 
+2017/06/08 00:10:16 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:10:44 [I] [main.go:27] the server is starting... 
+2017/06/08 00:10:44 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:10:46 [I] [main.go:27] the server is starting... 
+2017/06/08 00:10:46 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:10:50 [I] [main.go:27] the server is starting... 
+2017/06/08 00:10:50 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:11:17 [I] [main.go:27] the server is starting... 
+2017/06/08 00:11:17 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:11:19 [I] [main.go:27] the server is starting... 
+2017/06/08 00:11:19 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:11:32 [I] [main.go:27] the server is starting... 
+2017/06/08 00:11:32 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:12:45 [I] [main.go:27] the server is starting... 
+2017/06/08 00:12:45 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:13:31 [I] [main.go:27] the server is starting... 
+2017/06/08 00:13:31 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:13:50 [I] [main.go:27] the server is starting... 
+2017/06/08 00:13:50 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:14:21 [I] [main.go:27] the server is starting... 
+2017/06/08 00:14:21 [I] [asm_amd64.s:2197] http server Running on http://:8082

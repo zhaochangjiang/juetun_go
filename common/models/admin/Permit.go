@@ -32,7 +32,6 @@ func (this *Permit) getOrm() orm.Ormer {
 //根据上级权限，查询所有下级权限
 func (this *Permit) FetchPermitListByUponId(uponid []interface{}) (*[]Permit, int64, error) {
 	var permitList []Permit
-	var message string
 	var querySeter orm.QuerySeter
 
 	querySeter = this.getOrm().QueryTable(this).Filter("uppermit_id__in", uponid...).OrderBy("-id")
@@ -45,7 +44,6 @@ func (this *Permit) FetchPermitListByUponId(uponid []interface{}) (*[]Permit, in
 func (this *Permit) FetchPermit(argument map[string]interface{}) ([]*Permit, error) {
 
 	var permitList []*Permit
-	var message string
 	var querySeter orm.QuerySeter
 
 	o := this.getOrm()
