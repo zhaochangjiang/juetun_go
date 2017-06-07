@@ -84,6 +84,22 @@ func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []interfa
 	return &result, uponPermitId, message
 }
 
+//获得header默认的Type
+func (this *AdminController) getHeaderDefaultActive(permitUpon *[]interface{}) string {
+	headerActive := "dashboard"
+	length := len(permitUpon)
+	if length > 0 {
+		permit := permitUpon[length-1]
+		switch t := permit.(type) {
+		case modelsAdmin.Permit: //如果是Permit类型
+			headerActive = permit.Module
+		default:
+			panic("permitUpon type is error!")
+		}
+	}
+	return headerActive
+}
+
 //获得超级管理员具备的页面展示权限
 func (this *AdminController) initAllShowPermit() {
 	//	item := make([]interface{}, 0)
@@ -102,9 +118,10 @@ func (this *AdminController) initAllShowPermit() {
 	}
 
 	permit := make(map[string]interface{})
+
+	permit["HeaderActive"] = this.getHeaderDefaultActive(&permitUpon)
 	permit["Header"] = *uponIdList
-	permit["HeaderActive"] = "dashboard"
-	permit["Left"] = permitUpon
+	permit["Left"] = *permitUpon
 
 	this.Data["Permit"] = permit
 
