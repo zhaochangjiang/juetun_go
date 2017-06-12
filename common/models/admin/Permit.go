@@ -1,8 +1,6 @@
 package admin
 
 import (
-	"fmt"
-
 	"github.com/astaxie/beego/orm"
 )
 
@@ -41,9 +39,10 @@ func (this *Permit) FetchPermitListByUponId(uponid []interface{}) (*[]Permit, in
 }
 
 //查询单个权限
-func (this *Permit) FetchPermit(argument map[string]interface{}) ([]*Permit, error) {
+func (this *Permit) FetchPermit(argument map[string]interface{}) (*[]Permit, error) {
 
-	var permitList []*Permit
+	var permitList []Permit
+
 	var querySeter orm.QuerySeter
 
 	o := this.getOrm()
@@ -51,12 +50,11 @@ func (this *Permit) FetchPermit(argument map[string]interface{}) ([]*Permit, err
 	ob := o.QueryTable(this)
 
 	for k, v := range argument {
-		fmt.Println(v)
 		querySeter = ob.Filter(k, v)
 	}
 	_, err := querySeter.All(&permitList)
 
-	return permitList, err
+	return &permitList, err
 }
 
 //删除权限
