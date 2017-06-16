@@ -2,3 +2,6 @@
 /web/juetun.exe~
 /admin/admin.exe
 /admin/admin.exe~
+/admin/*.log
+/user/*.log
+/web/*.log
