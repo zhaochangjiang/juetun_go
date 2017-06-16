@@ -7,8 +7,8 @@ import (
 type PictureCategory struct {
 	PictureCategoryId   int    `orm:"column(picture_category_id);pk;auto" json:"picture_category_id"`
 	PictureCategoryname string `orm:"column(picture_categoryname)"`
-	PictureCategorykey  string
-	PictureSavepath     string
+	PictureCategorykey  string `orm:"column(picture_category_key)"`
+	PictureSavepath     string `orm:"column(picture_savepath)"`
 }
 
 func init() {

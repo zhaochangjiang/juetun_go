@@ -1,8 +1,6 @@
 package admin
 
 import (
-	"fmt"
-
 	"github.com/astaxie/beego/orm"
 )
 
@@ -30,51 +28,49 @@ func (this *Permit) getOrm() orm.Ormer {
 }
 
 //根据上级权限，查询所有下级权限
-func (this *Permit) FetchPermitListByUponId(uponid []interface{}) (*[]Permit, int64, string) {
+func (this *Permit) FetchPermitListByUponId(uponid []interface{}) (*[]Permit, int64, error) {
 	var permitList []Permit
-	var message string
 	var querySeter orm.QuerySeter
 
-	o := this.getOrm()
-
-	ob := o.QueryTable(this)
-
-	querySeter = ob.Filter("uppermit_id__in", uponid...)
-
+	querySeter = this.getOrm().QueryTable(this).Filter("uppermit_id__in", uponid...).OrderBy("-id")
 	num, err := querySeter.All(&permitList)
-	//	err := o.QueryTable(this).Filter("username", userName).Filter("flag_del", "no").All(&permitList)
-	if err == orm.ErrMultiRows {
-		// 多条的时候报错
-		message = "data exception,please cotact the administrator!"
-		return nil, num, message
-	}
-	return &permitList, num, message
+
+	return &permitList, num, err
 }
 
 //查询单个权限
-func (this *Permit) FetchPermit(argument map[string]interface{}) ([]*Permit, string) {
+func (this *Permit) FetchPermit(argument map[string]interface{}) (*[]Permit, error) {
 
-	var permitList []*Permit
-	var message string
+	var permitList []Permit
+
 	var querySeter orm.QuerySeter
 
 	o := this.getOrm()
 
 	ob := o.QueryTable(this)
-	fmt.Println("fdafdasd:")
 
 	for k, v := range argument {
-		fmt.Println(v)
 		querySeter = ob.Filter(k, v)
 	}
-	//num, err := o.QueryTable("user").Filter("name", "slene").All(&users)
-
 	_, err := querySeter.All(&permitList)
-	//	err := o.QueryTable(this).Filter("username", userName).Filter("flag_del", "no").All(&permitList)
-	if err == orm.ErrMultiRows {
-		// 多条的时候报错
-		message = "data exception,please cotact the administrator!"
-		return nil, message
+
+	return &permitList, err
+}
+
+//删除权限
+func (this *Permit) DeletePermit(permitIds []int) (bool, error) {
+
+	//删除相关的数据
+	groupPermit := new(GroupPermit)
+	_, err1 := groupPermit.DeleteByPermitIds(permitIds)
+	if nil != err1 {
+		return false, err1
 	}
-	return permitList, message
+
+	//删除表头信息
+	_, err := this.getOrm().QueryTable(this.TableName()).Filter("id__in", permitIds).Delete()
+	if nil != err {
+		return false, err
+	}
+	return true, err
 }

@@ -6,11 +6,11 @@ import (
 
 type Switch struct {
 	Id             string `orm:"column(id);varchar(32);pk" json:"id"`
-	Name           string `orm:"varchar(20)"`
-	Status         string
-	HeigherLevelId string `orm:varchar(32)`
-	IsShow         string
-	Desc           string `orm:varchar(300)`
+	Name           string `orm:"varchar(20)";orm:"column(name)"`
+	Status         string `orm:"column(status)"`
+	HeigherLevelId string `orm:varchar(32);orm:"column(heigher_level_id)"`
+	IsShow         string `orm:varchar(15);orm:"column(is_show)"`
+	Desc           string `orm:varchar(300);orm:"column(desc)"`
 }
 
 func init() {

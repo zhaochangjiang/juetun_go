@@ -1,0 +1,140 @@
+2017/06/08 00:00:10 [I] [main.go:27] the server is starting... 
+2017/06/08 00:00:10 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:05:10 [I] [main.go:27] the server is starting... 
+2017/06/08 00:05:10 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:05:34 [I] [main.go:27] the server is starting... 
+2017/06/08 00:05:34 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:05:47 [I] [main.go:27] the server is starting... 
+2017/06/08 00:05:47 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:05:55 [I] [main.go:27] the server is starting... 
+2017/06/08 00:05:55 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:09:41 [I] [main.go:27] the server is starting... 
+2017/06/08 00:09:41 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:10:16 [I] [main.go:27] the server is starting... 
+2017/06/08 00:10:16 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:10:44 [I] [main.go:27] the server is starting... 
+2017/06/08 00:10:44 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:10:46 [I] [main.go:27] the server is starting... 
+2017/06/08 00:10:46 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:10:50 [I] [main.go:27] the server is starting... 
+2017/06/08 00:10:50 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:11:17 [I] [main.go:27] the server is starting... 
+2017/06/08 00:11:17 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:11:19 [I] [main.go:27] the server is starting... 
+2017/06/08 00:11:19 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:11:32 [I] [main.go:27] the server is starting... 
+2017/06/08 00:11:32 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:12:45 [I] [main.go:27] the server is starting... 
+2017/06/08 00:12:45 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:13:31 [I] [main.go:27] the server is starting... 
+2017/06/08 00:13:31 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:13:50 [I] [main.go:27] the server is starting... 
+2017/06/08 00:13:50 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 00:14:21 [I] [main.go:27] the server is starting... 
+2017/06/08 00:14:21 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 23:11:09 [I] [main.go:27] the server is starting... 
+2017/06/08 23:11:12 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 23:11:35 [I] [main.go:27] the server is starting... 
+2017/06/08 23:11:35 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 23:17:09 [I] [main.go:27] the server is starting... 
+2017/06/08 23:17:09 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 23:17:48 [I] [main.go:27] the server is starting... 
+2017/06/08 23:17:48 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 23:18:11 [I] [main.go:27] the server is starting... 
+2017/06/08 23:18:11 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 23:18:17 [I] [main.go:27] the server is starting... 
+2017/06/08 23:18:17 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 23:18:29 [I] [main.go:27] the server is starting... 
+2017/06/08 23:18:29 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 23:18:45 [I] [main.go:27] the server is starting... 
+2017/06/08 23:18:45 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 23:20:10 [I] [main.go:27] the server is starting... 
+2017/06/08 23:20:10 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 23:20:15 [C] [asm_amd64.s:514] the request url is  /data/list
+2017/06/08 23:20:15 [C] [asm_amd64.s:514] Handler crashed with error data type is error
+2017/06/08 23:20:15 [C] [asm_amd64.s:514] D:/Go/src/runtime/asm_amd64.s:514
+2017/06/08 23:20:15 [C] [asm_amd64.s:514] D:/Go/src/runtime/panic.go:489
+2017/06/08 23:20:15 [C] [asm_amd64.s:514] E:/app_go/src/juetun/admin/common/AdminController.go:100
+2017/06/08 23:20:15 [C] [asm_amd64.s:514] E:/app_go/src/juetun/admin/common/AdminController.go:122
+2017/06/08 23:20:15 [C] [asm_amd64.s:514] E:/app_go/src/juetun/admin/common/AdminController.go:18
+2017/06/08 23:20:15 [C] [asm_amd64.s:514] E:/app_go/src/juetun/admin/common/AdminController.go:235
+2017/06/08 23:20:15 [C] [asm_amd64.s:514] E:/app_go/src/github.com/astaxie/beego/router.go:775
+2017/06/08 23:20:15 [C] [asm_amd64.s:514] D:/Go/src/net/http/server.go:2568
+2017/06/08 23:20:15 [C] [asm_amd64.s:514] D:/Go/src/net/http/server.go:1825
+2017/06/08 23:20:15 [C] [asm_amd64.s:514] D:/Go/src/runtime/asm_amd64.s:2197
+2017/06/08 23:20:53 [I] [main.go:27] the server is starting... 
+2017/06/08 23:20:53 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 23:20:58 [C] [asm_amd64.s:514] the request url is  /data/list
+2017/06/08 23:20:58 [C] [asm_amd64.s:514] Handler crashed with error data type is error
+2017/06/08 23:20:58 [C] [asm_amd64.s:514] D:/Go/src/runtime/asm_amd64.s:514
+2017/06/08 23:20:58 [C] [asm_amd64.s:514] D:/Go/src/runtime/panic.go:489
+2017/06/08 23:20:58 [C] [asm_amd64.s:514] E:/app_go/src/juetun/admin/common/AdminController.go:101
+2017/06/08 23:20:58 [C] [asm_amd64.s:514] E:/app_go/src/juetun/admin/common/AdminController.go:123
+2017/06/08 23:20:58 [C] [asm_amd64.s:514] E:/app_go/src/juetun/admin/common/AdminController.go:18
+2017/06/08 23:20:58 [C] [asm_amd64.s:514] E:/app_go/src/juetun/admin/common/AdminController.go:236
+2017/06/08 23:20:58 [C] [asm_amd64.s:514] E:/app_go/src/github.com/astaxie/beego/router.go:775
+2017/06/08 23:20:58 [C] [asm_amd64.s:514] D:/Go/src/net/http/server.go:2568
+2017/06/08 23:20:58 [C] [asm_amd64.s:514] D:/Go/src/net/http/server.go:1825
+2017/06/08 23:20:58 [C] [asm_amd64.s:514] D:/Go/src/runtime/asm_amd64.s:2197
+2017/06/08 23:21:58 [I] [main.go:27] the server is starting... 
+2017/06/08 23:21:58 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 23:22:18 [C] [asm_amd64.s:514] the request url is  /data/list
+2017/06/08 23:22:18 [C] [asm_amd64.s:514] Handler crashed with error data type is error
+2017/06/08 23:22:18 [C] [asm_amd64.s:514] D:/Go/src/runtime/asm_amd64.s:514
+2017/06/08 23:22:18 [C] [asm_amd64.s:514] D:/Go/src/runtime/panic.go:489
+2017/06/08 23:22:18 [C] [asm_amd64.s:514] E:/app_go/src/juetun/admin/common/AdminController.go:101
+2017/06/08 23:22:18 [C] [asm_amd64.s:514] E:/app_go/src/juetun/admin/common/AdminController.go:123
+2017/06/08 23:22:18 [C] [asm_amd64.s:514] E:/app_go/src/juetun/admin/common/AdminController.go:18
+2017/06/08 23:22:18 [C] [asm_amd64.s:514] E:/app_go/src/juetun/admin/common/AdminController.go:236
+2017/06/08 23:22:18 [C] [asm_amd64.s:514] E:/app_go/src/github.com/astaxie/beego/router.go:775
+2017/06/08 23:22:18 [C] [asm_amd64.s:514] D:/Go/src/net/http/server.go:2568
+2017/06/08 23:22:18 [C] [asm_amd64.s:514] D:/Go/src/net/http/server.go:1825
+2017/06/08 23:22:18 [C] [asm_amd64.s:514] D:/Go/src/runtime/asm_amd64.s:2197
+2017/06/08 23:23:04 [I] [main.go:27] the server is starting... 
+2017/06/08 23:23:04 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 23:23:07 [C] [asm_amd64.s:514] the request url is  /data/list
+2017/06/08 23:23:07 [C] [asm_amd64.s:514] Handler crashed with error data type is error
+2017/06/08 23:23:07 [C] [asm_amd64.s:514] D:/Go/src/runtime/asm_amd64.s:514
+2017/06/08 23:23:07 [C] [asm_amd64.s:514] D:/Go/src/runtime/panic.go:489
+2017/06/08 23:23:07 [C] [asm_amd64.s:514] E:/app_go/src/juetun/admin/common/AdminController.go:102
+2017/06/08 23:23:07 [C] [asm_amd64.s:514] E:/app_go/src/juetun/admin/common/AdminController.go:124
+2017/06/08 23:23:07 [C] [asm_amd64.s:514] E:/app_go/src/juetun/admin/common/AdminController.go:18
+2017/06/08 23:23:07 [C] [asm_amd64.s:514] E:/app_go/src/juetun/admin/common/AdminController.go:237
+2017/06/08 23:23:07 [C] [asm_amd64.s:514] E:/app_go/src/github.com/astaxie/beego/router.go:775
+2017/06/08 23:23:07 [C] [asm_amd64.s:514] D:/Go/src/net/http/server.go:2568
+2017/06/08 23:23:07 [C] [asm_amd64.s:514] D:/Go/src/net/http/server.go:1825
+2017/06/08 23:23:07 [C] [asm_amd64.s:514] D:/Go/src/runtime/asm_amd64.s:2197
+2017/06/08 23:23:59 [I] [main.go:27] the server is starting... 
+2017/06/08 23:23:59 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 23:27:27 [I] [main.go:27] the server is starting... 
+2017/06/08 23:27:27 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 23:27:33 [D] [controller.go:254] template Execute err: html/template:data/list.html: "\"" in unquoted attr: "\\\"{$val}\\\""
+2017/06/08 23:27:33 [E] [server.go:2568] html/template:data/list.html: "\"" in unquoted attr: "\\\"{$val}\\\""
+2017/06/08 23:32:42 [I] [main.go:27] the server is starting... 
+2017/06/08 23:32:42 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 23:32:45 [D] [controller.go:254] template Execute err: html/template:data/list.html: "\"" in unquoted attr: "\\\"{$val}\\\""
+2017/06/08 23:32:45 [E] [server.go:2568] html/template:data/list.html: "\"" in unquoted attr: "\\\"{$val}\\\""
+2017/06/08 23:33:31 [I] [main.go:27] the server is starting... 
+2017/06/08 23:33:31 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 23:35:15 [I] [main.go:27] the server is starting... 
+2017/06/08 23:35:15 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 23:44:11 [I] [main.go:27] the server is starting... 
+2017/06/08 23:44:11 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 23:44:19 [I] [main.go:27] the server is starting... 
+2017/06/08 23:44:19 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 23:44:31 [D] [controller.go:254] template Execute err: html/template:data/list.html: "\"" in unquoted attr: "\\\"{$val}\\\""
+2017/06/08 23:44:31 [E] [server.go:2568] html/template:data/list.html: "\"" in unquoted attr: "\\\"{$val}\\\""
+2017/06/08 23:46:06 [I] [main.go:27] the server is starting... 
+2017/06/08 23:46:06 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 23:46:08 [D] [controller.go:254] template Execute err: html/template:data/list.html: "\"" in unquoted attr: "\\\"{$val}\\\""
+2017/06/08 23:46:08 [E] [server.go:2568] html/template:data/list.html: "\"" in unquoted attr: "\\\"{$val}\\\""
+2017/06/08 23:46:42 [I] [main.go:27] the server is starting... 
+2017/06/08 23:46:42 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 23:46:48 [D] [controller.go:254] template Execute err: html/template:data/list.html: "\"" in unquoted attr: "\\\"{$val}\\\""
+2017/06/08 23:46:48 [E] [server.go:2568] html/template:data/list.html: "\"" in unquoted attr: "\\\"{$val}\\\""
+2017/06/08 23:47:12 [I] [main.go:27] the server is starting... 
+2017/06/08 23:47:12 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 23:47:53 [I] [main.go:27] the server is starting... 
+2017/06/08 23:47:53 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/08 23:48:03 [D] [controller.go:254] template Execute err: html/template:data/list.html: "\"" in unquoted attr: "\\\"{$val}\\\""
+2017/06/08 23:48:03 [E] [server.go:2568] html/template:data/list.html: "\"" in unquoted attr: "\\\"{$val}\\\""

@@ -1,7 +1,7 @@
 package common
 
 import (
-	"fmt"
+	"errors"
 	"juetun/common/general"
 	modelsAdmin "juetun/common/models/admin"
 )
@@ -18,7 +18,7 @@ func (this *AdminController) InitPermitItem() {
 	//如果不是超级管理员
 	if !this.authSuperAdmin() {
 		//获得当前不是超级管理员的权限列表。
-		this.Data["PermitList"] = this.getListNotSuperAdmin()
+		this.Data["Permit"] = this.getListNotSuperAdmin()
 	}
 
 }
@@ -27,60 +27,70 @@ func (this *AdminController) DefaultControllerAndAction() (string, string) {
 }
 
 //获得当前的权限
-func (this *AdminController) getNowPermitData() (*modelsAdmin.Permit, string) {
-	errorMessage := ""
-	permitModel := new(modelsAdmin.Permit)
+func (this *AdminController) getNowPermitData() (*modelsAdmin.Permit, error) {
+	//permitModel := new(modelsAdmin.Permit)
+	var permitModel modelsAdmin.Permit
 
 	fetchParams := make(map[string]interface{})
 	fetchParams["Controller"], fetchParams["Action"] = this.GetControllerAndAction()
 	defaultController, actionString := this.DefaultControllerAndAction()
 	if defaultController == fetchParams["Controller"] && actionString == fetchParams["Action"] {
-		return permitModel, ""
+		return &permitModel, errors.New("")
 	}
-	var permitModelList []*modelsAdmin.Permit
-	permitModelList, message := permitModel.FetchPermit(fetchParams)
-
-	if "" != message {
-		//	this.DisplayIframe(message)
-		return permitModel, message
+	permitModelList, err := permitModel.FetchPermit(fetchParams)
+	permitList := *permitModelList
+	if len(permitList) > 0 {
+		permitModel = permitList[0]
 	}
-	if nil != permitModelList {
-		permitModel = permitModelList[0]
-	}
-	return permitModel, errorMessage
+	return &permitModel, err
 }
 
 //获得当前地址对应的数据库存储的权限及所有上级权限
-func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []interface{}, string) {
+func (this *AdminController) getNowAndAllUponPermit() (*[]*modelsAdmin.Permit, []interface{}, error) {
 
-	permitData, message := this.getNowPermitData()
 	permitModel := new(modelsAdmin.Permit)
 
-	result := make([]interface{}, 0)
+	result := make([]*modelsAdmin.Permit, 0)
 	utils := new(general.Utils)
 	uponPermitId := make([]interface{}, 0)
+	permitData, _ := this.getNowPermitData()
 
 	//默认的上级机构必须查询
+
 	uponPermitId = *utils.Slice_unshift(uponPermitId, 0)
+
+	var permitModelList *[]modelsAdmin.Permit
+	i := 0
+
 	for {
-		if 0 == permitData.UppermitId {
+		i++
+		if i > 15 || 0 == permitData.UppermitId {
 			break
 		}
 		fetchParams := make(map[string]interface{})
-		fetchParams["UppermitId"] = permitData.UppermitId
+		fetchParams["Id"] = permitData.UppermitId
 		uponPermitId = *utils.Slice_unshift(uponPermitId, permitData.UppermitId)
-		permitModelList, msg := permitModel.FetchPermit(fetchParams)
-		if "" != msg {
-			message = msg
-		}
-		if nil != permitModelList {
-			permitData = permitModelList[0]
+		permitModelList, _ = permitModel.FetchPermit(fetchParams)
+		p := *permitModelList
+		if len(p) > 0 {
+			permitData = &(p[0])
 			//往队列的队首添加数据
-			result = *utils.Slice_unshift(result, permitData)
+			slice := []*modelsAdmin.Permit{(permitData)}
+			result = append(slice, result...)
 		}
 
 	}
-	return &result, uponPermitId, message
+	return &result, uponPermitId, errors.New("")
+}
+
+//获得header默认的Type
+func (this *AdminController) getHeaderDefaultActive(permitUpon []*modelsAdmin.Permit) string {
+	headerActive := "dashboard" //默认的选中地址
+	length := len(permitUpon)
+	if length > 0 {
+		headerActive = (*(permitUpon[0])).Module
+	}
+	return headerActive
 }
 
 //获得超级管理员具备的页面展示权限
@@ -88,20 +98,18 @@ func (this *AdminController) initAllShowPermit() {
 	//	item := make([]interface{}, 0)
 
 	// 获得当前页面的所有上级权限
-	permitUpon, arrayUponId, errorMessage := this.getNowAndAllUponPermit()
+	permitUpon, arrayUponId, _ := this.getNowAndAllUponPermit()
 
-	if "" != errorMessage {
-		this.DisplayIframe(errorMessage)
-	}
 	permitModel := new(modelsAdmin.Permit)
-	uponIdList, _, msg := permitModel.FetchPermitListByUponId(arrayUponId)
+	uponIdList, _, _ := permitModel.FetchPermitListByUponId(arrayUponId)
 
-	if "" != msg {
-		this.DisplayIframe(msg)
-	}
-	this.Data["Header"] = *uponIdList
-	fmt.Println("dasfa:")
-	fmt.Println(permitUpon)
+	permit := make(map[string]interface{})
+
+	permit["HeaderActive"] = this.getHeaderDefaultActive(*permitUpon)
+	permit["Header"] = *uponIdList
+	permit["Left"] = *permitUpon
+
+	this.Data["Permit"] = permit
 
 	//        $permitIdArray = $this->getNowPermitLink($permit);
 
