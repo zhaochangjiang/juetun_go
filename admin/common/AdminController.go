@@ -3,30 +3,36 @@ package common
 import (
 	"errors"
 	"fmt"
-	modelsAdmin "juetun/common/models/admin"
-
-	serviceAdmin "juetun/admin/service"
 	"juetun/common/general"
+	modelsAdmin "juetun/common/models/admin"
 )
 
+//后台操作公用的结构体
 type AdminController struct {
 	general.BaseController
-	permitService permitService
+
+	//权限操作的Service
+	PermitService *modelsAdmin.Permit
 }
 
 //返回当前后台的权限列表
 //@return void
 func (this *AdminController) InitPermitItem() {
 
+	//初始化所有需要显示的权限,超级管理员的权限
 	this.initAllShowPermit()
 
-	//如果不是超级管理员
+	//如果是超级管理员
 	if !this.authSuperAdmin() {
-		//获得当前不是超级管理员的权限列表。
-		this.Data["Permit"] = this.getListNotSuperAdmin()
+		return
 	}
 
+	//获得当前不是超级管理员的权限列表。
+	this.Data["Permit"] = this.getListNotSuperAdmin()
+	return
 }
+
+//返回后台默认访问的界面地址
 func (this *AdminController) DefaultControllerAndAction() (string, string) {
 	return "MainController", "GET"
 }
@@ -44,7 +50,7 @@ func (this *AdminController) getNowPermitData() (*modelsAdmin.Permit, error) {
 	if defaultController == fetchParams["Controller"] && actionString == fetchParams["Action"] {
 		return &permitModel, errors.New("")
 	}
-	permitModelList, err := this.permitService.FetchPermit(fetchParams)
+	permitModelList, err := this.PermitService.FetchPermit(fetchParams)
 	permitList := *permitModelList
 	if len(permitList) > 0 {
 		permitModel = permitList[0]
@@ -81,7 +87,7 @@ func (this *AdminController) getNowAndAllUponPermit() (*[]*modelsAdmin.Permit, [
 
 		fetchParams := make(map[string]interface{})
 		fetchParams["Id"] = permitData.UppermitId
-		permitModelList, _ = this.permitService.FetchPermit(fetchParams)
+		permitModelList, _ = this.PermitService.FetchPermit(fetchParams)
 
 		//如果数据库查询的结果集不为空
 		if len(*permitModelList) > 0 {
@@ -104,6 +110,8 @@ func (this *AdminController) output(p interface{}) {
 }
 
 //获得header默认的Type
+//@author karl.zhao<zhaochangjiang@huoyunren.com>
+//@date 2017-06-09
 //@return string
 func (this *AdminController) getHeaderDefaultActive(permitUpon []*modelsAdmin.Permit) string {
 	headerActive := "dashboard" //默认的选中地址
@@ -119,7 +127,7 @@ func (this *AdminController) getHeaderDefaultActive(permitUpon []*modelsAdmin.Pe
 func (this *AdminController) initAllShowPermit() {
 
 	//初始化权限Service
-	this.permitService = new(serviceAdmin.PermitService)
+	this.PermitService = new(modelsAdmin.Permit)
 
 	//	item := make([]interface{}, 0)
 
@@ -127,7 +135,7 @@ func (this *AdminController) initAllShowPermit() {
 	permitUpon, arrayUponId, _ := this.getNowAndAllUponPermit()
 
 	//查询所有的上级ID的下级权限列表
-	uponIdList, _, _ := this.permitService.FetchPermitListByUponId(arrayUponId)
+	uponIdList, _, _ := this.PermitService.FetchPermitListByUponId(arrayUponId)
 
 	permit := make(map[string]interface{})
 
@@ -135,7 +143,7 @@ func (this *AdminController) initAllShowPermit() {
 	permit["HeaderActive"] = this.getHeaderDefaultActive(*permitUpon)
 	permit["Header"] = *uponIdList
 
-	permit["Left"] = this.permitService.OrgPermitLeftData(permitUpon)
+	permit["Left"] = this.PermitService.OrgPermitLeftData(permitUpon)
 
 	this.Data["Permit"] = permit
 

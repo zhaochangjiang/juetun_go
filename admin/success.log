@@ -62,3 +62,226 @@
 2017/06/09 00:35:01 [I] [asm_amd64.s:2197] http server Running on http://:8082
 2017/06/09 00:35:02 [I] [main.go:27] the server is starting... 
 2017/06/09 00:35:02 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/06/19 10:56:22 [I] [main.go:27] the server is starting... 
+2017/06/19 10:56:55 [I] [main.go:27] the server is starting... 
+2017/06/19 10:57:14 [I] [main.go:27] the server is starting... 
+2017/06/19 11:17:15 [I] [main.go:27] the server is starting... 
+2017/06/19 11:17:15 [I] [asm_amd64.s:1998] http server Running on http://:8082
+2017/06/19 11:17:30 [C] [asm_amd64.s:472] the request url is  /
+2017/06/19 11:17:30 [C] [asm_amd64.s:472] Handler crashed with error <Ormer.QueryTable> table name: `juetun/admin/service.PermitService` not exists
+2017/06/19 11:17:30 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:472
+2017/06/19 11:17:30 [C] [asm_amd64.s:472] C:/Go/src/runtime/panic.go:443
+2017/06/19 11:17:30 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/orm/orm.go:448
+2017/06/19 11:17:30 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/service/PermitService.go:23
+2017/06/19 11:17:30 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:132
+2017/06/19 11:17:30 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:21
+2017/06/19 11:17:30 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:251
+2017/06/19 11:17:30 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/router.go:775
+2017/06/19 11:17:30 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:2081
+2017/06/19 11:17:30 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:1472
+2017/06/19 11:17:30 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:1998
+2017/06/19 11:18:50 [C] [asm_amd64.s:472] the request url is  /
+2017/06/19 11:18:50 [C] [asm_amd64.s:472] Handler crashed with error <Ormer.QueryTable> table name: `juetun/admin/service.PermitService` not exists
+2017/06/19 11:18:50 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:472
+2017/06/19 11:18:50 [C] [asm_amd64.s:472] C:/Go/src/runtime/panic.go:443
+2017/06/19 11:18:50 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/orm/orm.go:448
+2017/06/19 11:18:50 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/service/PermitService.go:23
+2017/06/19 11:18:50 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:132
+2017/06/19 11:18:50 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:21
+2017/06/19 11:18:50 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:251
+2017/06/19 11:18:50 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/router.go:775
+2017/06/19 11:18:50 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:2081
+2017/06/19 11:18:50 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:1472
+2017/06/19 11:18:50 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:1998
+2017/06/19 11:18:52 [C] [asm_amd64.s:472] the request url is  /
+2017/06/19 11:18:52 [C] [asm_amd64.s:472] Handler crashed with error <Ormer.QueryTable> table name: `juetun/admin/service.PermitService` not exists
+2017/06/19 11:18:52 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:472
+2017/06/19 11:18:52 [C] [asm_amd64.s:472] C:/Go/src/runtime/panic.go:443
+2017/06/19 11:18:52 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/orm/orm.go:448
+2017/06/19 11:18:52 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/service/PermitService.go:23
+2017/06/19 11:18:52 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:132
+2017/06/19 11:18:52 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:21
+2017/06/19 11:18:52 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:251
+2017/06/19 11:18:52 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/router.go:775
+2017/06/19 11:18:52 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:2081
+2017/06/19 11:18:52 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:1472
+2017/06/19 11:18:52 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:1998
+2017/06/19 11:18:55 [I] [main.go:27] the server is starting... 
+2017/06/19 11:18:55 [I] [asm_amd64.s:1998] http server Running on http://:8082
+2017/06/19 11:18:56 [C] [asm_amd64.s:472] the request url is  /
+2017/06/19 11:18:56 [C] [asm_amd64.s:472] Handler crashed with error <Ormer.QueryTable> table name: `permit` not exists
+2017/06/19 11:18:56 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:472
+2017/06/19 11:18:56 [C] [asm_amd64.s:472] C:/Go/src/runtime/panic.go:443
+2017/06/19 11:18:56 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/orm/orm.go:448
+2017/06/19 11:18:56 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/service/PermitService.go:23
+2017/06/19 11:18:56 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:132
+2017/06/19 11:18:56 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:21
+2017/06/19 11:18:56 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:251
+2017/06/19 11:18:56 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/router.go:775
+2017/06/19 11:18:56 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:2081
+2017/06/19 11:18:56 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:1472
+2017/06/19 11:18:56 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:1998
+2017/06/19 11:19:32 [C] [asm_amd64.s:472] the request url is  /
+2017/06/19 11:19:32 [C] [asm_amd64.s:472] Handler crashed with error <Ormer.QueryTable> table name: `permit` not exists
+2017/06/19 11:19:32 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:472
+2017/06/19 11:19:32 [C] [asm_amd64.s:472] C:/Go/src/runtime/panic.go:443
+2017/06/19 11:19:32 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/orm/orm.go:448
+2017/06/19 11:19:32 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/service/PermitService.go:23
+2017/06/19 11:19:32 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:132
+2017/06/19 11:19:32 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:21
+2017/06/19 11:19:32 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:251
+2017/06/19 11:19:32 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/router.go:775
+2017/06/19 11:19:32 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:2081
+2017/06/19 11:19:32 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:1472
+2017/06/19 11:19:32 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:1998
+2017/06/19 11:21:07 [I] [main.go:27] the server is starting... 
+2017/06/19 11:21:07 [I] [asm_amd64.s:1998] http server Running on http://:8082
+2017/06/19 11:21:14 [I] [main.go:27] the server is starting... 
+2017/06/19 11:21:14 [I] [asm_amd64.s:1998] http server Running on http://:8082
+2017/06/19 11:21:15 [C] [asm_amd64.s:472] the request url is  /
+2017/06/19 11:21:15 [C] [asm_amd64.s:472] Handler crashed with error <Ormer.QueryTable> table name: `permit` not exists
+2017/06/19 11:21:15 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:472
+2017/06/19 11:21:15 [C] [asm_amd64.s:472] C:/Go/src/runtime/panic.go:443
+2017/06/19 11:21:15 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/orm/orm.go:448
+2017/06/19 11:21:15 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/service/PermitService.go:22
+2017/06/19 11:21:15 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:132
+2017/06/19 11:21:15 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:21
+2017/06/19 11:21:15 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:251
+2017/06/19 11:21:15 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/router.go:775
+2017/06/19 11:21:15 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:2081
+2017/06/19 11:21:15 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:1472
+2017/06/19 11:21:15 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:1998
+2017/06/19 11:22:15 [I] [main.go:27] the server is starting... 
+2017/06/19 11:22:15 [I] [asm_amd64.s:1998] http server Running on http://:8082
+2017/06/19 11:22:32 [I] [main.go:27] the server is starting... 
+2017/06/19 11:22:32 [I] [asm_amd64.s:1998] http server Running on http://:8082
+2017/06/19 11:22:46 [I] [main.go:27] the server is starting... 
+2017/06/19 11:22:46 [I] [asm_amd64.s:1998] http server Running on http://:8082
+2017/06/19 11:22:59 [I] [main.go:27] the server is starting... 
+2017/06/19 11:22:59 [I] [asm_amd64.s:1998] http server Running on http://:8082
+2017/06/19 11:23:57 [I] [main.go:27] the server is starting... 
+2017/06/19 11:23:57 [I] [asm_amd64.s:1998] http server Running on http://:8082
+2017/06/19 11:24:04 [I] [main.go:27] the server is starting... 
+2017/06/19 11:24:04 [I] [asm_amd64.s:1998] http server Running on http://:8082
+2017/06/19 11:24:17 [I] [main.go:27] the server is starting... 
+2017/06/19 11:24:17 [I] [asm_amd64.s:1998] http server Running on http://:8082
+2017/06/19 11:24:38 [I] [main.go:27] the server is starting... 
+2017/06/19 11:24:38 [I] [asm_amd64.s:1998] http server Running on http://:8082
+2017/06/19 11:24:49 [C] [asm_amd64.s:472] the request url is  /
+2017/06/19 11:24:49 [C] [asm_amd64.s:472] Handler crashed with error <Ormer.QueryTable> table name: `permit` not exists
+2017/06/19 11:24:49 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:472
+2017/06/19 11:24:49 [C] [asm_amd64.s:472] C:/Go/src/runtime/panic.go:443
+2017/06/19 11:24:49 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/orm/orm.go:448
+2017/06/19 11:24:49 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/service/PermitService.go:22
+2017/06/19 11:24:49 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:140
+2017/06/19 11:24:49 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:25
+2017/06/19 11:24:49 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:259
+2017/06/19 11:24:49 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/router.go:775
+2017/06/19 11:24:49 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:2081
+2017/06/19 11:24:49 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:1472
+2017/06/19 11:24:49 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:1998
+2017/06/19 11:25:27 [C] [asm_amd64.s:472] the request url is  /
+2017/06/19 11:25:27 [C] [asm_amd64.s:472] Handler crashed with error <Ormer.QueryTable> table name: `permit` not exists
+2017/06/19 11:25:27 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:472
+2017/06/19 11:25:27 [C] [asm_amd64.s:472] C:/Go/src/runtime/panic.go:443
+2017/06/19 11:25:27 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/orm/orm.go:448
+2017/06/19 11:25:27 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/service/PermitService.go:22
+2017/06/19 11:25:27 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:140
+2017/06/19 11:25:27 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:25
+2017/06/19 11:25:27 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:259
+2017/06/19 11:25:27 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/router.go:775
+2017/06/19 11:25:27 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:2081
+2017/06/19 11:25:27 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:1472
+2017/06/19 11:25:27 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:1998
+2017/06/19 11:30:18 [I] [main.go:27] the server is starting... 
+2017/06/19 11:30:18 [I] [asm_amd64.s:1998] http server Running on http://:8082
+2017/06/19 11:35:22 [I] [main.go:27] the server is starting... 
+2017/06/19 11:35:22 [I] [asm_amd64.s:1998] http server Running on http://:8082
+2017/06/19 11:35:27 [C] [asm_amd64.s:472] the request url is  /
+2017/06/19 11:35:27 [C] [asm_amd64.s:472] Handler crashed with error <Ormer.QueryTable> table name: `permit` not exists
+2017/06/19 11:35:27 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:472
+2017/06/19 11:35:27 [C] [asm_amd64.s:472] C:/Go/src/runtime/panic.go:443
+2017/06/19 11:35:27 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/orm/orm.go:448
+2017/06/19 11:35:27 [C] [asm_amd64.s:472] D:/app_go/src/juetun/common/models/admin/Permit.go:25
+2017/06/19 11:35:27 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/service/PermitService.go:21
+2017/06/19 11:35:27 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:140
+2017/06/19 11:35:27 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:25
+2017/06/19 11:35:27 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:259
+2017/06/19 11:35:27 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/router.go:775
+2017/06/19 11:35:27 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:2081
+2017/06/19 11:35:27 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:1472
+2017/06/19 11:35:27 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:1998
+2017/06/19 11:35:29 [C] [asm_amd64.s:472] the request url is  /
+2017/06/19 11:35:29 [C] [asm_amd64.s:472] Handler crashed with error <Ormer.QueryTable> table name: `permit` not exists
+2017/06/19 11:35:29 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:472
+2017/06/19 11:35:29 [C] [asm_amd64.s:472] C:/Go/src/runtime/panic.go:443
+2017/06/19 11:35:29 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/orm/orm.go:448
+2017/06/19 11:35:29 [C] [asm_amd64.s:472] D:/app_go/src/juetun/common/models/admin/Permit.go:25
+2017/06/19 11:35:29 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/service/PermitService.go:21
+2017/06/19 11:35:29 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:140
+2017/06/19 11:35:29 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:25
+2017/06/19 11:35:29 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:259
+2017/06/19 11:35:29 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/router.go:775
+2017/06/19 11:35:29 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:2081
+2017/06/19 11:35:29 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:1472
+2017/06/19 11:35:29 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:1998
+2017/06/19 11:35:30 [C] [asm_amd64.s:472] the request url is  /
+2017/06/19 11:35:30 [C] [asm_amd64.s:472] Handler crashed with error <Ormer.QueryTable> table name: `permit` not exists
+2017/06/19 11:35:30 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:472
+2017/06/19 11:35:30 [C] [asm_amd64.s:472] C:/Go/src/runtime/panic.go:443
+2017/06/19 11:35:30 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/orm/orm.go:448
+2017/06/19 11:35:30 [C] [asm_amd64.s:472] D:/app_go/src/juetun/common/models/admin/Permit.go:25
+2017/06/19 11:35:30 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/service/PermitService.go:21
+2017/06/19 11:35:30 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:140
+2017/06/19 11:35:30 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:25
+2017/06/19 11:35:30 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:259
+2017/06/19 11:35:30 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/router.go:775
+2017/06/19 11:35:30 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:2081
+2017/06/19 11:35:30 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:1472
+2017/06/19 11:35:30 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:1998
+2017/06/19 11:36:14 [C] [asm_amd64.s:472] the request url is  /
+2017/06/19 11:36:14 [C] [asm_amd64.s:472] Handler crashed with error <Ormer.QueryTable> table name: `permit` not exists
+2017/06/19 11:36:14 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:472
+2017/06/19 11:36:14 [C] [asm_amd64.s:472] C:/Go/src/runtime/panic.go:443
+2017/06/19 11:36:14 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/orm/orm.go:448
+2017/06/19 11:36:14 [C] [asm_amd64.s:472] D:/app_go/src/juetun/common/models/admin/Permit.go:25
+2017/06/19 11:36:14 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/service/PermitService.go:21
+2017/06/19 11:36:14 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:140
+2017/06/19 11:36:14 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:25
+2017/06/19 11:36:14 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:259
+2017/06/19 11:36:14 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/router.go:775
+2017/06/19 11:36:14 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:2081
+2017/06/19 11:36:14 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:1472
+2017/06/19 11:36:14 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:1998
+2017/06/19 11:36:15 [C] [asm_amd64.s:472] the request url is  /
+2017/06/19 11:36:15 [C] [asm_amd64.s:472] Handler crashed with error <Ormer.QueryTable> table name: `permit` not exists
+2017/06/19 11:36:15 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:472
+2017/06/19 11:36:15 [C] [asm_amd64.s:472] C:/Go/src/runtime/panic.go:443
+2017/06/19 11:36:15 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/orm/orm.go:448
+2017/06/19 11:36:15 [C] [asm_amd64.s:472] D:/app_go/src/juetun/common/models/admin/Permit.go:25
+2017/06/19 11:36:15 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/service/PermitService.go:21
+2017/06/19 11:36:15 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:140
+2017/06/19 11:36:15 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:25
+2017/06/19 11:36:15 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:259
+2017/06/19 11:36:15 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/router.go:775
+2017/06/19 11:36:15 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:2081
+2017/06/19 11:36:15 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:1472
+2017/06/19 11:36:15 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:1998
+2017/06/19 11:36:20 [I] [main.go:27] the server is starting... 
+2017/06/19 11:36:20 [I] [asm_amd64.s:1998] http server Running on http://:8082
+2017/06/19 11:36:23 [C] [asm_amd64.s:472] the request url is  /
+2017/06/19 11:36:23 [C] [asm_amd64.s:472] Handler crashed with error <Ormer.QueryTable> table name: `admin_permit` not exists
+2017/06/19 11:36:23 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:472
+2017/06/19 11:36:23 [C] [asm_amd64.s:472] C:/Go/src/runtime/panic.go:443
+2017/06/19 11:36:23 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/orm/orm.go:448
+2017/06/19 11:36:23 [C] [asm_amd64.s:472] D:/app_go/src/juetun/common/models/admin/Permit.go:25
+2017/06/19 11:36:23 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/service/PermitService.go:21
+2017/06/19 11:36:23 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:140
+2017/06/19 11:36:23 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:25
+2017/06/19 11:36:23 [C] [asm_amd64.s:472] D:/app_go/src/juetun/admin/common/AdminController.go:259
+2017/06/19 11:36:23 [C] [asm_amd64.s:472] D:/app_go/src/github.com/astaxie/beego/router.go:775
+2017/06/19 11:36:23 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:2081
+2017/06/19 11:36:23 [C] [asm_amd64.s:472] C:/Go/src/net/http/server.go:1472
+2017/06/19 11:36:23 [C] [asm_amd64.s:472] C:/Go/src/runtime/asm_amd64.s:1998
+2017/06/19 11:42:48 [I] [main.go:27] the server is starting... 
+2017/06/19 11:42:48 [I] [asm_amd64.s:1998] http server Running on http://:8082
