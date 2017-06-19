@@ -21,13 +21,13 @@ func init() {
 func (this *Permit) TableName() string {
 	return "permit"
 }
-func (this *Permit) GetQuerySelect() orm.QuerySeter {
-	return this.GetOrm().QueryTable(this.TableName())
-}
 func (this *Permit) GetOrm() orm.Ormer {
 	o := orm.NewOrm()
 	o.Using("db_admin") // 默认使用 default，你可以指定为其他数据库
 	return o
+}
+func (this *Permit) GetQuerySelect() orm.QuerySeter {
+	return this.GetOrm().QueryTable(this.TableName())
 }
 
 //根据上级权限，查询所有下级权限
