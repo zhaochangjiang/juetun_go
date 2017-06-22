@@ -3,3 +3,6 @@
 ./admin/admin.exe
 ./admin/admin.exe~
 
+/admin/*.exe
+/admin/admin.exe~
+/admin/*.log

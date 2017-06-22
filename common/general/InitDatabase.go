@@ -6,6 +6,8 @@ import (
 )
 
 type DataConfig struct {
+	Host         string
+	Port         string
 	DBName       string
 	DatabaseName string
 	Username     string
@@ -23,8 +25,13 @@ func (this *DataObject) InitConnect() {
 
 	//	beego.AppConfig.String(“dev::mysqluser”)
 	for _, dataConfig := range this.DataConfigParam {
+		//[username[:password]@][protocol[(address)]]/dbname[?param1=value1&...&paramN=valueN]
+		driverString := dataConfig.Username + ":" + dataConfig.Password + "@tcp(" + dataConfig.Host + ":" + dataConfig.Port + ")/" + dataConfig.DatabaseName + "?charset=utf8"
+
+		//		driverString := dataConfig.Username + ":" + dataConfig.Password + "@/" + dataConfig.DatabaseName + "?charset=utf8"
+
 		// 提示数据库连接初始化成功
-		orm.RegisterDataBase(dataConfig.DBName, "mysql", dataConfig.Username+":"+dataConfig.Password+"@/"+dataConfig.DatabaseName+"?charset=utf8", dataConfig.MaxIdle, dataConfig.MaxConn)
+		orm.RegisterDataBase(dataConfig.DBName, "mysql", driverString, dataConfig.MaxIdle, dataConfig.MaxConn)
 
 	}
 
@@ -46,6 +53,11 @@ func InitDatabase() {
 		dConfig.DBName = dataName
 		//		beego.Info(dConfig.DBName)
 		dConfig.DatabaseName = beego.AppConfig.String(dataName + "::databaseName")
+		dConfig.Host = beego.AppConfig.String(dataName + "::host")
+		dConfig.Port = beego.AppConfig.String(dataName + "::port")
+		if "" == dConfig.Port {
+			dConfig.Port = "3306"
+		}
 		dConfig.Username = beego.AppConfig.String(dataName + "::username")
 		dConfig.Password = beego.AppConfig.String(dataName + "::pwd")
 		dConfig.Prefix = beego.AppConfig.String(dataName + "::prefix")

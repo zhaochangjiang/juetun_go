@@ -1,8 +1,6 @@
 package admin
 
 import (
-	"fmt"
-
 	"github.com/astaxie/beego/orm"
 )
 
@@ -44,15 +42,10 @@ func (this *Permit) FetchPermitListByUponId(uponid []interface{}) (*[]Permit, in
 func (this *Permit) FetchPermit(argument map[string]interface{}) ([]*Permit, error) {
 
 	var permitList []*Permit
-	var querySeter orm.QuerySeter
-
 	o := this.getOrm()
-
-	ob := o.QueryTable(this)
-
+	querySeter := o.QueryTable(this)
 	for k, v := range argument {
-		fmt.Println(v)
-		querySeter = ob.Filter(k, v)
+		querySeter = querySeter.Filter(k, v)
 	}
 	_, err := querySeter.All(&permitList)
 
