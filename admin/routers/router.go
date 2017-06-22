@@ -8,7 +8,7 @@ import (
 
 func init() {
 	beego.AutoRouter(&controllers.Passport{})
-	beego.AutoRouter(&controllers.Data{})
+	beego.AutoRouter(&controllers.DataController{})
 
 	beego.Router("/", &controllers.MainController{})
 
