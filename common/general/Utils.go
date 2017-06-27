@@ -19,6 +19,22 @@ type UtilsInterface interface {
 type Utils struct {
 }
 
+//获得本机MAC地址
+func (this *Utils) getMacAddress() *[]string {
+
+	interfaces, err := net.Interfaces()
+	if err != nil {
+		panic("Error : " + err.Error())
+	}
+	mac := make([]string, 0)
+	for _, inter := range interfaces {
+		if len(inter.HardwareAddr) > 0 {
+			mac = append(mac, inter.HardwareAddr.String()) //获取本机MAC地址
+		}
+	}
+	return &mac
+}
+
 //切片的头追加数据
 func (this *Utils) Slice_unshift(oSlice []interface{}, content interface{}) *[]interface{} {
 	slice := []interface{}{content}
