@@ -10,12 +10,15 @@ import (
 )
 
 type AdminController struct {
+	PermitService *modelsAdmin.Permit
 	general.BaseController
 }
 
 //返回当前后台的权限列表
 func (this *AdminController) InitPermitItem() {
 
+	//初始化权限操作Service
+	this.PermitService = new(modelsAdmin.Permit)
 	this.initAllShowPermit()
 
 	//如果不是超级管理员
@@ -44,7 +47,7 @@ func (this *AdminController) getNowPermitData() (*modelsAdmin.Permit, error) {
 		return permitModel, errors.New("")
 	}
 	var permitModelList []*modelsAdmin.Permit
-	permitModelList, err := permitModel.FetchPermit(fetchParams)
+	permitModelList, err := this.PermitService.FetchPermit(fetchParams)
 	if len(permitModelList) > 0 {
 		permitModel = permitModelList[0]
 	}
@@ -89,14 +92,16 @@ func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []interfa
 }
 
 //获得header默认的Type
-func (this *AdminController) getHeaderDefaultActive(permitUpon []interface{}) string {
+func (this *AdminController) getHeaderDefaultActive(permitUpon []interface{}) (string, string) {
 	headerActive := "dashboard"
+	var activeId string
 	length := len(permitUpon)
 	if length > 0 {
 		permit := permitUpon[0].(*modelsAdmin.Permit)
 		headerActive = permit.Module
+		activeId = permit.Id
 	}
-	return headerActive
+	return headerActive, activeId
 }
 
 //获得超级管理员具备的页面展示权限
@@ -110,18 +115,18 @@ func (this *AdminController) initAllShowPermit() {
 	fmt.Println("==============================")
 
 	permitModel := new(modelsAdmin.Permit)
-	uponIdList, _, _ := permitModel.FetchPermitListByUponId(arrayUponId)
+	uponIdList, _, _ := this.PermitService.FetchPermitListByUponId(arrayUponId)
 	data := this.orgPermit(uponIdList)
 	fmt.Println("------------------------------")
 	fmt.Println(data)
 	fmt.Println(uponIdList)
 	fmt.Println("------------------------------")
 	permit := make(map[string]interface{})
-
-	permit["HeaderActive"] = this.getHeaderDefaultActive(*permitUpon)
+	var leftTopId string
+	permit["HeaderActive"], leftTopId = this.getHeaderDefaultActive(*permitUpon)
 
 	this.Data["Permit"] = permit
-
+	this.Data["Left"] = this.PermitService.getLeftPermit(leftTopId)
 	//        $permitIdArray = $this->getNowPermitLink($permit);
 
 	//        if (!empty($permit['id'])) {
@@ -175,6 +180,7 @@ func (this *AdminController) initAllShowPermit() {
 	//        return $permitData;
 
 }
+
 func (this *AdminController) orgPermit(uponIdList *[]modelsAdmin.Permit) *map[int][]modelsAdmin.Permit {
 	var result = make(map[int][]modelsAdmin.Permit)
 

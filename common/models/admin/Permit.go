@@ -5,13 +5,13 @@ import (
 )
 
 type Permit struct {
-	Id         int    `orm:"column(id);pk;auto" json:"id"`
+	Id         string `orm:"column(id);pk" json:"id"`
 	Name       string `orm:varchar(50)`
 	Module     string `orm:varchar(30)`
 	Controller string `orm:varchar(30)`
 	Action     string `orm:varchar(30)`
 	UppermitId int    `orm:int(10)`
-	Obyid      int
+	Obyid      string
 	Csscode    string `orm:varchar(500)`
 }
 
@@ -68,4 +68,14 @@ func (this *Permit) DeletePermit(permitIds []int) (bool, error) {
 		return false, err
 	}
 	return true, err
+}
+
+func (this *Permit) getLeftPermit(leftTopId string) {
+	var permitList []Permit
+	var querySeter orm.QuerySeter
+
+	querySeter = this.getOrm().QueryTable(this).qs.Filter("uppermit_id__gt", "").OrderBy("obyid")
+	num, err := querySeter.All(&permitList)
+
+	return &permitList, num, err
 }
