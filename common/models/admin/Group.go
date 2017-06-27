@@ -5,7 +5,7 @@ import (
 )
 
 type Group struct {
-	Id         int    `orm:"column(id);pk;auto" json:"id"`
+	Id         string `orm:"column(id);pk" json:"id"`
 	Name       string `orm:"column(name)"`
 	SuperAdmin string `orm:varchar(30);orm:"column(super_admin)"`
 	UpGroupid  int    `orm:"column(up_groupid)"`

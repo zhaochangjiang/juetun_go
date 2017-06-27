@@ -5,7 +5,7 @@ import (
 )
 
 type User struct {
-	Uid        int    `orm:"column(uid);pk;"`
+	Uid        string `orm:"column(uid);pk;"`
 	Name       string `orm:varchar(30)`
 	SuperAdmin string `orm:"column(super_admin)"`
 	Isdel      string `orm:"column(id_del)"`

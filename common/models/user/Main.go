@@ -5,7 +5,7 @@ import (
 )
 
 type Main struct {
-	User_id           int     `orm:"column(user_id);pk;auto" json:"user_id"`
+	User_id           string  `orm:"column(user_id);pk;auto" json:"user_id"`
 	Username          string  //用户名
 	Name              string  //姓名
 	Email             string  //邮箱

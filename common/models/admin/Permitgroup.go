@@ -5,9 +5,9 @@ import (
 )
 
 type Permitgroup struct {
-	Id       int `orm:"column(id);pk;auto" json:"id"`
-	PermitId int `orm:"column(permit_id);`
-	GroupId  int `orm:"column(group_id);`
+	Id       string `orm:"column(id);pk" json:"id"`
+	PermitId string `orm:"column(permit_id);`
+	GroupId  string `orm:"column(group_id);`
 }
 
 func init() {

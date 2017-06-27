@@ -5,8 +5,8 @@ import (
 )
 
 type Groupuser struct {
-	AdminUserid int `orm:"column(admin_userid);pk;auto" json:"admin_userid"`
-	GroupId     int `orm:"column(group_id)"`
+	AdminUserid string `orm:"column(admin_userid);pk" json:"admin_userid"`
+	GroupId     string `orm:"column(group_id)"`
 }
 
 func init() {

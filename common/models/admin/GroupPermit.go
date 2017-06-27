@@ -5,7 +5,7 @@ import (
 )
 
 type GroupPermit struct {
-	Id       int `orm:"column(id);pk;auto" json:"id"`
+	string   int `orm:"column(id);pk" json:"id"`
 	PermitId int `orm:"column(permit_id)"`
 	GroupId  int `orm:"column(group_id)"`
 }
