@@ -8,7 +8,7 @@ type Group struct {
 	Id         string `orm:"column(id);pk" json:"id"`
 	Name       string `orm:"column(name)"`
 	SuperAdmin string `orm:varchar(30);orm:"column(super_admin)"`
-	UpGroupid  int    `orm:"column(up_groupid)"`
+	UpGroupid  string `orm:"column(up_groupid)"`
 }
 
 func (u *Group) TableName() string {
@@ -24,7 +24,7 @@ func (this *Group) getOrm() orm.Ormer {
 }
 
 //根据group_id删除数据
-func (this *Group) DeleteGroup(id []int) (bool, error) {
+func (this *Group) DeleteGroup(id []string) (bool, error) {
 
 	//删除相关的数据
 	groupPermit := new(GroupPermit)

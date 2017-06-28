@@ -5,7 +5,7 @@ import (
 )
 
 type PictureCategory struct {
-	PictureCategoryId   string `orm:"column(picture_category_id);pk;auto" json:"picture_category_id"`
+	PictureCategoryId   string `orm:"column(picture_category_id);pk" json:"picture_category_id"`
 	PictureCategoryname string `orm:"column(picture_categoryname)"`
 	PictureCategorykey  string `orm:"column(picture_category_key)"`
 	PictureSavepath     string `orm:"column(picture_savepath)"`
@@ -14,7 +14,7 @@ type PictureCategory struct {
 func init() {
 	orm.RegisterModelWithPrefix("admin_", new(PictureCategory))
 }
-func (u *PictureCategory) TableName() string {
+func (this *PictureCategory) TableName() string {
 	return "picture_category"
 }
 func (this *PictureCategory) getOrm() orm.Ormer {

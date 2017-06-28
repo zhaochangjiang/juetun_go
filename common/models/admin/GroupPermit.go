@@ -5,9 +5,9 @@ import (
 )
 
 type GroupPermit struct {
-	string   int `orm:"column(id);pk" json:"id"`
-	PermitId int `orm:"column(permit_id)"`
-	GroupId  int `orm:"column(group_id)"`
+	Id       string `orm:"column(id);pk" json:"id"`
+	PermitId string `orm:"column(permit_id)"`
+	GroupId  string `orm:"column(group_id)"`
 }
 
 func (u *GroupPermit) TableName() string {
@@ -15,6 +15,9 @@ func (u *GroupPermit) TableName() string {
 }
 func init() {
 	orm.RegisterModelWithPrefix("admin_", new(GroupPermit))
+}
+func (this *GroupPermit) getQuerySeter() orm.QuerySeter {
+	return this.getOrm().QueryTable(this)
 }
 
 func (this *GroupPermit) getOrm() orm.Ormer {
@@ -24,10 +27,10 @@ func (this *GroupPermit) getOrm() orm.Ormer {
 }
 
 //通过权限ID 删除用户组的权限关系
-func (this *GroupPermit) DeleteByGroupIds(groupIds []int) (bool, error) {
+func (this *GroupPermit) DeleteByGroupIds(groupIds []string) (bool, error) {
 
 	//删除表头信息
-	_, err := this.getOrm().QueryTable(this.TableName()).Filter("permit_id__in", groupIds).Delete()
+	_, err := this.getQuerySeter().Filter("permit_id__in", groupIds).Delete()
 	if nil != err {
 		return false, err
 	}
@@ -36,10 +39,10 @@ func (this *GroupPermit) DeleteByGroupIds(groupIds []int) (bool, error) {
 }
 
 //通过用户群权限ID 删除权限组的权限
-func (this *GroupPermit) DeleteByPermitIds(permitIds []int) (bool, error) {
+func (this *GroupPermit) DeleteByPermitIds(permitIds []string) (bool, error) {
 
 	//删除表头信息
-	_, err := this.getOrm().QueryTable(this.TableName()).Filter("group_id__in", permitIds).Delete()
+	_, err := this.getQuerySeter().Filter("group_id__in", permitIds).Delete()
 	if nil != err {
 		return false, err
 	}

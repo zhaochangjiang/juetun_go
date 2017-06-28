@@ -2,7 +2,7 @@ package common
 
 import (
 	"errors"
-	"fmt"
+	"log"
 	"strings"
 	//	"fmt"
 	"juetun/common/general"
@@ -110,23 +110,17 @@ func (this *AdminController) initAllShowPermit() {
 
 	// 获得当前页面的所有上级权限
 	permitUpon, arrayUponId, _ := this.getNowAndAllUponPermit()
-	fmt.Println("==============================")
-	fmt.Println(arrayUponId)
-	fmt.Println("==============================")
 
-	permitModel := new(modelsAdmin.Permit)
 	uponIdList, _, _ := this.PermitService.FetchPermitListByUponId(arrayUponId)
-	data := this.orgPermit(uponIdList)
-	fmt.Println("------------------------------")
-	fmt.Println(data)
-	fmt.Println(uponIdList)
-	fmt.Println("------------------------------")
+	log.Println(uponIdList)
+	//data := this.orgPermit(uponIdList)
+
 	permit := make(map[string]interface{})
 	var leftTopId string
 	permit["HeaderActive"], leftTopId = this.getHeaderDefaultActive(*permitUpon)
-
 	this.Data["Permit"] = permit
-	this.Data["Left"] = this.PermitService.getLeftPermit(leftTopId)
+	this.Data["Left"] = this.PermitService.GetLeftPermit(leftTopId)
+	log.Println(this.Data)
 	//        $permitIdArray = $this->getNowPermitLink($permit);
 
 	//        if (!empty($permit['id'])) {
@@ -200,6 +194,7 @@ func (this *AdminController) getListNotSuperAdmin() []interface{} {
 func (this *AdminController) authSuperAdmin() bool {
 	return true
 }
+
 func (this *AdminController) InitPageScript() {
 
 	this.Data["PageVersion"] = "1.0"

@@ -27,12 +27,16 @@ func (this *Permit) getOrm() orm.Ormer {
 	return o
 }
 
+func (this *Permit) getQuerySeter() orm.QuerySeter {
+	return this.getOrm().QueryTable(this)
+}
+
 //根据上级权限，查询所有下级权限
 func (this *Permit) FetchPermitListByUponId(uponid []interface{}) (*[]Permit, int64, error) {
 	var permitList []Permit
 	var querySeter orm.QuerySeter
 
-	querySeter = this.getOrm().QueryTable(this).Filter("uppermit_id__in", uponid...).OrderBy("-id")
+	querySeter = this.getQuerySeter().Filter("uppermit_id__in", uponid...).OrderBy("-id")
 	num, err := querySeter.All(&permitList)
 
 	return &permitList, num, err
@@ -42,8 +46,7 @@ func (this *Permit) FetchPermitListByUponId(uponid []interface{}) (*[]Permit, in
 func (this *Permit) FetchPermit(argument map[string]interface{}) ([]*Permit, error) {
 
 	var permitList []*Permit
-	o := this.getOrm()
-	querySeter := o.QueryTable(this)
+	querySeter := this.getQuerySeter()
 	for k, v := range argument {
 		querySeter = querySeter.Filter(k, v)
 	}
@@ -53,7 +56,7 @@ func (this *Permit) FetchPermit(argument map[string]interface{}) ([]*Permit, err
 }
 
 //删除权限
-func (this *Permit) DeletePermit(permitIds []int) (bool, error) {
+func (this *Permit) DeletePermit(permitIds []string) (bool, error) {
 
 	//删除相关的数据
 	groupPermit := new(GroupPermit)
@@ -63,19 +66,41 @@ func (this *Permit) DeletePermit(permitIds []int) (bool, error) {
 	}
 
 	//删除表头信息
-	_, err := this.getOrm().QueryTable(this.TableName()).Filter("id__in", permitIds).Delete()
+	_, err := this.getQuerySeter().Filter("id__in", permitIds).Delete()
 	if nil != err {
 		return false, err
 	}
 	return true, err
 }
 
-func (this *Permit) getLeftPermit(leftTopId string) {
+//获得左边的权限列表
+func (this *Permit) GetLeftPermit(leftTopId string) *[](map[string]interface{}) {
 	var permitList []Permit
 	var querySeter orm.QuerySeter
 
-	querySeter = this.getOrm().QueryTable(this).qs.Filter("uppermit_id__gt", "").OrderBy("obyid")
-	num, err := querySeter.All(&permitList)
+	querySeter = this.getQuerySeter().Filter("uppermit_id__gt", leftTopId).OrderBy("obyid")
+	querySeter.All(&permitList)
 
-	return &permitList, num, err
+	leftPermitIdList := make([]string, 0)
+	for _, v := range permitList {
+		leftPermitIdList = append(leftPermitIdList, v.Id)
+	}
+
+	var childPermitList []Permit
+	this.getQuerySeter().Filter("uppermit_id__in", leftPermitIdList).OrderBy("obyid").All(&childPermitList)
+
+	childPermit := make(map[string][]Permit)
+	for _, v := range childPermitList {
+		childPermit[v.Id] = append(childPermit[v.Id], v)
+	}
+	result := make([]map[string]interface{}, 0)
+	//var result []map[string]Permit
+
+	for k, v := range permitList {
+		result[k]["Child"] = childPermit[v.Id]
+		result[k]["Permit"] = v
+		result[k]["Active"] = false //默认设置不为选中的状态
+	}
+
+	return &result
 }

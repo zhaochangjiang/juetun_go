@@ -7,6 +7,7 @@ import (
 	"encoding/hex"
 	"io"
 	"io/ioutil"
+	"net"
 	"os"
 	"os/exec"
 	"strings"
