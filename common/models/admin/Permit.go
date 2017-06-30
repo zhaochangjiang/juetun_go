@@ -75,8 +75,10 @@ func (this *Permit) DeletePermit(permitIds []string) (bool, error) {
 
 //获得左边的权限列表
 func (this *Permit) GetLeftPermit(leftTopId string) *[](map[string]interface{}) {
+
 	var permitList []Permit
 	var querySeter orm.QuerySeter
+	var childPermitList []Permit
 
 	querySeter = this.getQuerySeter().Filter("uppermit_id__gt", leftTopId).OrderBy("obyid")
 	querySeter.All(&permitList)
@@ -86,20 +88,27 @@ func (this *Permit) GetLeftPermit(leftTopId string) *[](map[string]interface{}) 
 		leftPermitIdList = append(leftPermitIdList, v.Id)
 	}
 
-	var childPermitList []Permit
 	this.getQuerySeter().Filter("uppermit_id__in", leftPermitIdList).OrderBy("obyid").All(&childPermitList)
 
 	childPermit := make(map[string][]Permit)
 	for _, v := range childPermitList {
 		childPermit[v.Id] = append(childPermit[v.Id], v)
 	}
-	result := make([]map[string]interface{}, 0)
-	//var result []map[string]Permit
 
-	for k, v := range permitList {
-		result[k]["Child"] = childPermit[v.Id]
-		result[k]["Permit"] = v
-		result[k]["Active"] = false //默认设置不为选中的状态
+	result := make([]map[string]interface{}, 0)
+
+	for _, v := range permitList {
+
+		everyData := make(map[string]interface{})
+		everyData["Permit"] = v
+		everyData["Active"] = false //默认设置不为选中的状态
+		everyData["ChildList"] = make([]Permit, 0)
+
+		//判断内容是否存在，相当于PHP中的isset函数
+		if _, ok := childPermit[v.Id]; ok {
+			everyData["ChildList"] = childPermit[v.Id]
+		}
+		result = append(result, everyData)
 	}
 
 	return &result

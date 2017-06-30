@@ -21,31 +21,35 @@
         </form>
         /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
-
         <ul class="sidebar-menu">
 		 {{range .Permit.Left}}
-		     {{with .ChildList}}　
- 				    {{with .Active}}　
+		
+		     {{$active:=.Active}}
+		     {{$nowPermit:=.Permit}}
+		     {{with .ChildList}} {{/* 如果不为空 */}}　
+ 				    {{if $active}}　
                      <li class=" treeview active "> 
                         <a href="">
-                           <i class="fa fa-gear"></i><span>asdfasdfsdf </span>
+                           <i class="fa fa-gear"></i><span>{{$nowPermit.Name}} </span>
                         <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu" style="display: block;"> 
-              {{else}}
+              		{{else}}
                      <li class=" treeview"> 
                         <a href="">
-                          <i class="fa fa-gear"></i> <span>fdsgsdfgsdfg </span>
+                          <i class="fa fa-gear"></i> <span>{{$nowPermit.Name}} </span>
                         <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu" style="display: none;"> 
-               {{end}}
-		     {{range .ChildList}}
-			<li class="active"><a href="" style="margin-left: 10px;"><i class="fa fa-angle-double-right"></i>safdsafsdf</a></li>
-			{{end}}
-                </ul></li>
+               	     {{end}}
+							
+				     {{range .ChildList}} {{/* 子列表 */}}
+					<li class="active"><a href="" style="margin-left: 10px;"><i class="fa fa-angle-double-right"></i>asdfsdf</a></li>
+					{{end}}
+                    </ul>
+			</li>
 			{{else}}
-			 <li class="active"> 
+			       <li class="active"> 
                         <a href="javascript:void(0)">
-                          <i class="fa fa-gear"></i> <span>测试</span>
+                          <i class="fa fa-gear"></i> <span>{{$nowPermit.Name}}</span>
                         </a>
                     </li>
 			{{end}}

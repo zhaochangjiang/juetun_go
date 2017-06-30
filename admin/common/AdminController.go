@@ -2,7 +2,6 @@ package common
 
 import (
 	"errors"
-	"log"
 	"strings"
 	//	"fmt"
 	"juetun/common/general"
@@ -106,73 +105,23 @@ func (this *AdminController) getHeaderDefaultActive(permitUpon []interface{}) (s
 
 //获得超级管理员具备的页面展示权限
 func (this *AdminController) initAllShowPermit() {
-	//	item := make([]interface{}, 0)
+	var leftTopId string
 
 	// 获得当前页面的所有上级权限
 	permitUpon, arrayUponId, _ := this.getNowAndAllUponPermit()
 
 	uponIdList, _, _ := this.PermitService.FetchPermitListByUponId(arrayUponId)
-	log.Println(uponIdList)
 	//data := this.orgPermit(uponIdList)
 
 	permit := make(map[string]interface{})
-	var leftTopId string
+
+	//Header信息列表
+	permit["Header"] = uponIdList
 	permit["HeaderActive"], leftTopId = this.getHeaderDefaultActive(*permitUpon)
+
+	//左侧边栏权限列表
+	permit["Left"] = this.PermitService.GetLeftPermit(leftTopId)
 	this.Data["Permit"] = permit
-	this.Data["Left"] = this.PermitService.GetLeftPermit(leftTopId)
-	log.Println(this.Data)
-	//        $permitIdArray = $this->getNowPermitLink($permit);
-
-	//        if (!empty($permit['id'])) {
-	//            $permitData ['childPermit'] = $this->findAll(array(
-	//                'uppermit_id' => array(
-	//                    'doType' => 'in',
-	//                    'value' => $permit['id'])));
-	//        }
-
-	//        $permitData ['header'] = $this->findAll(array(
-	//            'uppermit_id' => array(
-	//                'doType' => 'in',
-	//                'value' => 0)), '', '`obyid` asc');
-	//        $headerActive = array_shift($permitIdArray);
-	//        $uppermitIdArray = array();
-	//        foreach ($permitData ['header'] as $key => $value) {
-	//            if (($value['id'] == $headerActive['id'])) {
-	//                $permitData['header'][$key]['active'] = true;
-	//                $uppermitIdArray[] = $value['id'];
-	//            } else {
-	//                $permitData['header'][$key]['active'] = false;
-	//            }
-	//        }
-
-	//        $uppermitIdData = array();
-
-	//        //   stop($permitIdArray);
-
-	//        $i = 0;
-	//        while (true) {
-	//            $temp = $this->findAll(array(
-	//                'uppermit_id' => array(
-	//                    'doType' => 'in',
-	//                    'value' => $uppermitIdArray)), '', '`obyid` asc');
-	//            $uppermitIdArray = array();
-	//            $permitList = array();
-
-	//            foreach ($temp as $value) {
-	//                $permitList[$value['uppermit_id']][] = $value;
-	//                $uppermitIdArray[] = $value['id'];
-	//            }
-	//            $uppermitIdData[] = $permitList;
-	//            if ($i > 1) {
-	//                break;
-	//            }
-	//            $i++;
-	//        }
-
-	//        $permitData['left'] = $this->organizationPermit($uppermitIdData, $permitIdArray);
-	//        //    stop($permitData['left']);
-	//        return $permitData;
-
 }
 
 func (this *AdminController) orgPermit(uponIdList *[]modelsAdmin.Permit) *map[int][]modelsAdmin.Permit {

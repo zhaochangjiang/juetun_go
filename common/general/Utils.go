@@ -20,6 +20,15 @@ type UtilsInterface interface {
 type Utils struct {
 }
 
+//判断KEY 是否存在于Map中
+//@return bool
+func (this *Utils) Isset(key string, mapContent map[string]interface{}) bool {
+	if _, ok := mapContent[key]; ok {
+		return true
+	}
+	return false
+}
+
 //获得本机MAC地址
 func (this *Utils) getMacAddress() *[]string {
 
