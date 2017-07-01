@@ -1,6 +1,8 @@
 package admin
 
 import (
+	"log"
+
 	"github.com/astaxie/beego/orm"
 )
 
@@ -10,7 +12,7 @@ type Permit struct {
 	Module     string `orm:varchar(30)`
 	Controller string `orm:varchar(30)`
 	Action     string `orm:varchar(30)`
-	UppermitId int    `orm:int(10)`
+	UppermitId string `orm:int(10)`
 	Obyid      string
 	Csscode    string `orm:varchar(500)`
 }
@@ -73,14 +75,26 @@ func (this *Permit) DeletePermit(permitIds []string) (bool, error) {
 	return true, err
 }
 
+//左侧权限结构体
+type PermitLeft struct {
+	Permit,
+	ChildList []Permit
+	Active bool
+}
+
 //获得左边的权限列表
 func (this *Permit) GetLeftPermit(leftTopId string) *[](map[string]interface{}) {
+	result := make([]map[string]interface{}, 0)
+	if leftTopId == "" {
+		return &result
+	}
 
 	var permitList []Permit
 	var querySeter orm.QuerySeter
 	var childPermitList []Permit
 
-	querySeter = this.getQuerySeter().Filter("uppermit_id__gt", leftTopId).OrderBy("obyid")
+	//查询上级权限为leftTopId的权限列表
+	querySeter = this.getQuerySeter().Filter("uppermit_id__exact", leftTopId).OrderBy("obyid")
 	querySeter.All(&permitList)
 
 	leftPermitIdList := make([]string, 0)
@@ -92,10 +106,8 @@ func (this *Permit) GetLeftPermit(leftTopId string) *[](map[string]interface{}) 
 
 	childPermit := make(map[string][]Permit)
 	for _, v := range childPermitList {
-		childPermit[v.Id] = append(childPermit[v.Id], v)
+		childPermit[v.UppermitId] = append(childPermit[v.UppermitId], v)
 	}
-
-	result := make([]map[string]interface{}, 0)
 
 	for _, v := range permitList {
 
@@ -110,6 +122,8 @@ func (this *Permit) GetLeftPermit(leftTopId string) *[](map[string]interface{}) 
 		}
 		result = append(result, everyData)
 	}
-
+	log.Println("------result start------")
+	log.Println(result)
+	log.Println("--------result Over----------")
 	return &result
 }

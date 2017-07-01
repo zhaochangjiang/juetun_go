@@ -2,6 +2,7 @@ package common
 
 import (
 	"errors"
+
 	"strings"
 	//	"fmt"
 	"juetun/common/general"
@@ -70,7 +71,7 @@ func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []interfa
 	i := 0
 	for {
 		i++
-		if 0 == permitData.UppermitId || i > 5 {
+		if "" == permitData.UppermitId || i > 5 {
 			break
 		}
 		fetchParams := make(map[string]interface{})
@@ -124,8 +125,8 @@ func (this *AdminController) initAllShowPermit() {
 	this.Data["Permit"] = permit
 }
 
-func (this *AdminController) orgPermit(uponIdList *[]modelsAdmin.Permit) *map[int][]modelsAdmin.Permit {
-	var result = make(map[int][]modelsAdmin.Permit)
+func (this *AdminController) orgPermit(uponIdList *[]modelsAdmin.Permit) *map[string][]modelsAdmin.Permit {
+	var result = make(map[string][]modelsAdmin.Permit)
 
 	for _, v := range *uponIdList {
 		result[v.UppermitId] = append(result[v.UppermitId], v)

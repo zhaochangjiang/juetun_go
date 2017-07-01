@@ -40,7 +40,7 @@ func (this *DataObject) InitConnect() {
 //初始化所有的数据库
 func InitDatabase() {
 	//设置数据库调试模式
-	orm.Debug = false
+	orm.Debug = true
 	//beego.LoadAppConfig("ini", "../common/conf/database.conf")
 	orm.RegisterDriver("mysql", orm.DRMySQL)
 
