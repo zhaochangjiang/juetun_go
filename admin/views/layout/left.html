@@ -21,45 +21,56 @@
         </form>
         /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
-        <ul class="sidebar-menu">
-		 {{range .Permit.Left}}
-		
-		     {{$active:=.Active}}
-		     {{$nowPermit:=.Permit}}
-			 {{$childPermitList:=.ChildList}}
-		     {{with .ChildList}} {{/* 如果不为空 */}}　
-			
-			       {{if $active}}　
-                     <li class=" treeview active "> 
-                        <a href="">
-                           <i class="fa fa-gear"></i><span>{{$nowPermit.Name}} </span>
-                        <i class="fa fa-angle-left pull-right"></i></a>
-                        <ul class="treeview-menu" style="display: block;"> 
-              		{{else}}
-                     <li class=" treeview"> 
-                        <a href="">
-                          <i class="fa fa-gear"></i> <span>{{$nowPermit.Name}} </span>
-                        <i class="fa fa-angle-left pull-right"></i></a>
-                        <ul class="treeview-menu" style="display: none;"> 
-               	     {{end}}
-							
-					     {{range $childPermitList}} {{/* 子列表 */}}
-						<li class="active"><a href="" style="margin-left: 10px;"><i class="fa fa-angle-double-right"></i>{{.Name}}</a></li>
-						{{end}}
-                    </ul>
-					</li>    
+		<ul class="sidebar-menu">
+		    {{range .Permit.Left}}
+		    {{$active:=.Active}}
+			{{$nowPermit:=.Permit}}
+			{{$childPermitList:=.ChildList}}
+			{{/* 如果不为空 */}}
+			{{if $childPermitList}}
+			{{if $active}}
+			 <li class="treeview active">
 			{{else}}
-			
- 				   <li class="active"> 
-                        <a href="javascript:void(0)">
-                          <i class="fa fa-gear"></i> <span>{{$nowPermit.Name}}123123123</span>
-                        </a>
-                    </li>
+			<li class="treeview">
 			{{end}}
-		{{end}}
-        </ul>
+                    <a href="javascript:void(0);">
+                        <i class="fa fa-laptop"></i>
+                        <span>{{$nowPermit.Name}}</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+					{{range $key, $elem := $childPermitList}}
+					 <li><a href="{{CreateUrl $elem}}" style="margin-left: 10px;"><i class="fa fa-angle-double-right"></i> {{.Name}}</a></li>
+					{{end}}   
+                    </ul>
+                </li>
+			{{else}}
+			  {{if $active}} <li class="active"> {{else}}  <li>{{end}}
+			  
+                    <a href="{{CreateUrl $nowPermit}}">
+                        <i class="fa fa-envelope"></i> <span>{{$nowPermit.Name}}</span>
+                        <small class="badge pull-right bg-yellow">12</small>
+                    </a>
+                </li>
+			{{end}}
+		
+			{{end}}
+		
+                
+                
+				
+				
+		    
+            </ul>
+		
+		
+		
+		
+		
+		
+         
 
-        <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true">
+       <!--  <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -71,10 +82,10 @@
                     <div class="modal-footer clearfix">
 
                     </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
+                </div>
+            </div>
         </div>
-
+-->
     </section>
     <script type="text/javascript">
         //        var loadShow = {
