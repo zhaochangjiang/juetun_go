@@ -40,27 +40,19 @@
                     </a>
                     <ul class="treeview-menu">
 					{{range $key, $elem := $childPermitList}}
-					 <li><a href="{{CreateUrl $elem}}" style="margin-left: 10px;"><i class="fa fa-angle-double-right"></i> {{.Name}}</a></li>
+					 <li><a href="{{createurl $elem.Controller $elem.Action $elem.Params $elem.DomainMap}}" style="margin-left: 10px;"><i class="fa fa-angle-double-right"></i> {{.Name}}</a></li>
 					{{end}}   
                     </ul>
                 </li>
 			{{else}}
 			  {{if $active}} <li class="active"> {{else}}  <li>{{end}}
-			  
-                    <a href="{{CreateUrl $nowPermit}}">
+                    <a href="{{$nowPermit.Controller $nowPermit.Action $nowPermit.Params     $nowPermit.DomainMap}}">
                         <i class="fa fa-envelope"></i> <span>{{$nowPermit.Name}}</span>
                         <small class="badge pull-right bg-yellow">12</small>
                     </a>
                 </li>
 			{{end}}
-		
-			{{end}}
-		
-                
-                
-				
-				
-		    
+		{{end}}
             </ul>
 		
 		

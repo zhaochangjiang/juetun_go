@@ -8,13 +8,14 @@ import (
 
 type Permit struct {
 	Id         string `orm:"column(id);pk" json:"id"`
-	Name       string `orm:varchar(50)`
-	Module     string `orm:varchar(30)`
-	Controller string `orm:varchar(30)`
-	Action     string `orm:varchar(30)`
-	UppermitId string `orm:int(10)`
-	Obyid      string
-	Csscode    string `orm:varchar(500)`
+	Name       string `orm:varchar(50);orm:"column(name)"`
+	Module     string `orm:varchar(30);orm:"column(module)"`
+	Controller string `orm:varchar(30);orm:"column(controller)"`
+	Action     string `orm:varchar(30);orm:"column(action)"`
+	UppermitId string `orm:int(10);orm:"column(uppermit_id)"`
+	DomainMap  string `orm:"column(domain_map)"`
+	Obyid      string `orm:"column(obyid)"`
+	Csscode    string `orm:varchar(500);orm:"column(csscode)"`
 }
 
 func init() {
@@ -104,9 +105,12 @@ func (this *Permit) GetLeftPermit(leftTopId string) *[](map[string]interface{}) 
 
 	this.getQuerySeter().Filter("uppermit_id__in", leftPermitIdList).OrderBy("obyid").All(&childPermitList)
 
-	childPermit := make(map[string][]Permit)
+	childPermit := make(map[string][]PermitLeft)
+	var permitLeft = new(PermitLeft)
 	for _, v := range childPermitList {
-		childPermit[v.UppermitId] = append(childPermit[v.UppermitId], v)
+		permitLeft.Permit = v
+
+		childPermit[v.UppermitId] = append(childPermit[v.UppermitId], permitLeft)
 	}
 
 	for _, v := range permitList {
@@ -114,7 +118,7 @@ func (this *Permit) GetLeftPermit(leftTopId string) *[](map[string]interface{}) 
 		everyData := make(map[string]interface{})
 		everyData["Permit"] = v
 		everyData["Active"] = false //默认设置不为选中的状态
-		everyData["ChildList"] = make([]Permit, 0)
+		everyData["ChildList"] = make([]PermitLeft, 0)
 
 		//判断内容是否存在，相当于PHP中的isset函数
 		if _, ok := childPermit[v.Id]; ok {

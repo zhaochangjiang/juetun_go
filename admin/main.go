@@ -3,7 +3,6 @@ package main
 import (
 	_ "juetun/admin/routers"
 	"juetun/common/general"
-	"log"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
@@ -12,10 +11,6 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-func CreateUrl(params interface{}) string {
-	log.Println(params)
-	return ""
-}
 func main() {
 
 	logs.SetLogger(logs.AdapterFile, `{"filename":"success.log","level":7,"maxlines":10000,"maxsize":0,"daily":true,"maxdays":10}`)
@@ -34,7 +29,10 @@ func main() {
 	general.InitLanguage()
 	//初始化数据库
 	general.InitDatabase()
+
 	general.InitSession()
+	//初始化模板函数
+	general.InitAddFuncMap()
 
 	beego.SetStaticPath("/assets", "static/assets")
 	beego.Run()
