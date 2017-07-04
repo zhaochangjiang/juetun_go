@@ -17,7 +17,7 @@
 			{{else}}
 			  <li class="dropdown user user-menu">
 			{{end}}
-			<a href = "" class = "dropdown-toggle" >
+			<a href = "{{createurl .Controller .Action .Params .DomainMap}}" class = "dropdown-toggle" >
 			<i class="glyphicon {{.Csscode}}"></i>
 			<span>{{.Name}} </span>
 			</a> 

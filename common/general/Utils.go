@@ -5,6 +5,7 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"encoding/hex"
+	"errors"
 	"io"
 	"io/ioutil"
 	"net"
@@ -18,6 +19,18 @@ type UtilsInterface interface {
 }
 
 type Utils struct {
+}
+
+func (this *Utils) ConvertInterfaceToString(p interface{}) (string, error) {
+	var c string
+	var e error
+	switch p.(type) {
+	case string:
+		c = p.(string)
+	default:
+		e = errors.New("you send params type must be string")
+	}
+	return c, e
 }
 
 //判断KEY 是否存在于Map中

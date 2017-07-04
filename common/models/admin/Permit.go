@@ -1,8 +1,6 @@
 package admin
 
 import (
-	"log"
-
 	"github.com/astaxie/beego/orm"
 )
 
@@ -35,14 +33,18 @@ func (this *Permit) getQuerySeter() orm.QuerySeter {
 }
 
 //根据上级权限，查询所有下级权限
-func (this *Permit) FetchPermitListByUponId(uponid []interface{}) (*[]Permit, int64, error) {
+func (this *Permit) FetchPermitListByUponId(uponid []interface{}) (*[]PermitAdmin, int64, error) {
 	var permitList []Permit
 	var querySeter orm.QuerySeter
 
 	querySeter = this.getQuerySeter().Filter("uppermit_id__in", uponid...).OrderBy("-id")
 	num, err := querySeter.All(&permitList)
 
-	return &permitList, num, err
+	result := make([]PermitAdmin, 0)
+	for _, v := range permitList {
+		result = append(result, *this.orgAdminPermit(v))
+	}
+	return &result, num, err
 }
 
 //查询单个权限
@@ -130,9 +132,7 @@ func (this *Permit) GetLeftPermit(leftTopId string) *[](map[string]interface{}) 
 		}
 		result = append(result, everyData)
 	}
-	log.Println("------result start------")
-	log.Println(result)
-	log.Println("--------result Over----------")
+
 	return &result
 }
 

@@ -46,7 +46,7 @@
                 </li>
 			{{else}}
 			  {{if $active}} <li class="active"> {{else}}  <li>{{end}}
-                    <a href="{{$nowPermit.Controller $nowPermit.Action $nowPermit.Params     $nowPermit.DomainMap}}">
+                    <a href="{{createurl $nowPermit.Controller $nowPermit.Action $nowPermit.Params $nowPermit.DomainMap}}">
                         <i class="fa fa-envelope"></i> <span>{{$nowPermit.Name}}</span>
                         <small class="badge pull-right bg-yellow">12</small>
                     </a>
