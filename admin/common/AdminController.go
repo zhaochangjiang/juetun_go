@@ -2,6 +2,7 @@ package common
 
 import (
 	"errors"
+	"log"
 
 	"strings"
 	//	"fmt"
@@ -111,9 +112,11 @@ func (this *AdminController) initAllShowPermit() {
 	// 获得当前页面的所有上级权限
 	permitUpon, arrayUponId, _ := this.getNowAndAllUponPermit()
 
-	uponIdList, _, _ := this.PermitService.FetchPermitListByUponId(arrayUponId)
-	//data := this.orgPermit(uponIdList)
-
+	upid := make([]interface{}, 0)
+	upid = append(upid, 0)
+	uponIdList, _, _ := this.PermitService.FetchPermitListByUponId(upid)
+	//data := this.orgPermit(up onIdList)
+	log.Println(arrayUponId)
 	permit := make(map[string]interface{})
 
 	//Header信息列表

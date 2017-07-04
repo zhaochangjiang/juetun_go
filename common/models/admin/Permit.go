@@ -78,9 +78,16 @@ func (this *Permit) DeletePermit(permitIds []string) (bool, error) {
 
 //左侧权限结构体
 type PermitLeft struct {
-	Permit,
+	Permit
 	ChildList []Permit
-	Active bool
+	Active    bool
+}
+
+//后台结构体
+type PermitAdmin struct {
+	Permit
+	Params map[string]string
+	Domain string
 }
 
 //获得左边的权限列表
@@ -105,12 +112,9 @@ func (this *Permit) GetLeftPermit(leftTopId string) *[](map[string]interface{}) 
 
 	this.getQuerySeter().Filter("uppermit_id__in", leftPermitIdList).OrderBy("obyid").All(&childPermitList)
 
-	childPermit := make(map[string][]PermitLeft)
-	var permitLeft = new(PermitLeft)
+	childPermit := make(map[string][]PermitAdmin)
 	for _, v := range childPermitList {
-		permitLeft.Permit = v
-
-		childPermit[v.UppermitId] = append(childPermit[v.UppermitId], permitLeft)
+		childPermit[v.UppermitId] = append(childPermit[v.UppermitId], *(this.orgAdminPermit(v)))
 	}
 
 	for _, v := range permitList {
@@ -118,7 +122,7 @@ func (this *Permit) GetLeftPermit(leftTopId string) *[](map[string]interface{}) 
 		everyData := make(map[string]interface{})
 		everyData["Permit"] = v
 		everyData["Active"] = false //默认设置不为选中的状态
-		everyData["ChildList"] = make([]PermitLeft, 0)
+		everyData["ChildList"] = make([]PermitAdmin, 0)
 
 		//判断内容是否存在，相当于PHP中的isset函数
 		if _, ok := childPermit[v.Id]; ok {
@@ -130,4 +134,13 @@ func (this *Permit) GetLeftPermit(leftTopId string) *[](map[string]interface{}) 
 	log.Println(result)
 	log.Println("--------result Over----------")
 	return &result
+}
+
+func (this *Permit) orgAdminPermit(v Permit) *PermitAdmin {
+
+	//TODO 其他参数,此处组织页面权限展现参数
+	params := make(map[string]string)
+	domain := "default" //default默认为当前域名,此处为域名的MAP映射
+	permitLeft := PermitAdmin{v, params, domain}
+	return &permitLeft
 }
