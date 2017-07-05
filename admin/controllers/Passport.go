@@ -38,8 +38,12 @@ func (this *Passport) IframeLogin() {
 		this.DisplayIframe("请输入正确的账号和密码！")
 		return
 	}
-	this.SetSession("uid", umain.User_id)
+
+	this.SetSession("Uid", umain.User_id)
+	this.SetSession("Username", umain.Username)
+	this.SetSession("Avater", "/assets/img/user.jpg")
 	this.Data["LocationHref"] = "/"
+
 	this.DisplayIframe("")
 	//	this.Redirect("/", 302)
 	//渲染文件

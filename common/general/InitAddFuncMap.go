@@ -16,7 +16,7 @@ func InitAddFuncMap() {
 //创建URL
 func CreateUrl(p ...interface{}) string {
 	length := len(p)
-	var url string
+	url := "/"
 	switch length {
 	case 1:
 		p0, err := convertInterfaceToString(p[0])
@@ -44,18 +44,15 @@ func CreateUrl(p ...interface{}) string {
 		if nil != err {
 			panic(err.Error())
 		}
-		url = domain + url
+		domainStirng := beego.AppConfig.String(beego.BConfig.RunMode + "::" + domain)
+		url = domainStirng + url
 	default:
 		panic("now CreateUrl params length must be 1-4")
 	}
-	log.Println("--------start---------")
-	log.Println(url)
-	log.Println("--------over---------")
-
 	return url
 }
 func getThreeParams(p []interface{}) string {
-	var url string
+	url := "/"
 	p0, err := convertInterfaceToString(p[0])
 	if nil != err {
 		panic(err.Error())

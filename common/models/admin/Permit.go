@@ -141,6 +141,28 @@ func (this *Permit) orgAdminPermit(v Permit) *PermitAdmin {
 	//TODO 其他参数,此处组织页面权限展现参数
 	params := make(map[string]string)
 	domain := "default" //default默认为当前域名,此处为域名的MAP映射
-	permitLeft := PermitAdmin{v, params, domain}
+	m := this.getDefaultModuleControllerAction(v)
+	permitLeft := PermitAdmin{*m, params, domain}
 	return &permitLeft
+}
+
+func (this *Permit) getDefaultModuleControllerAction(v Permit) *Permit {
+
+	//判断是否为header属性
+	if "" == v.Controller && "" == v.Action && "" != v.Module {
+		return this.getModuleDefaultPermit(v)
+	}
+	return &v
+}
+func (this *Permit) getModuleDefaultPermit(permit Permit) *Permit {
+	permit.Controller = "asd"
+	permit.Action = "B"
+	//	log.Println("")
+	//	log.Println("")
+	//	log.Println("-------start--------")
+	//	log.Println(permit)
+	//	log.Println("-------over--------")
+	//	log.Println("")
+	//	log.Println("")
+	return &permit
 }

@@ -13,6 +13,7 @@ import (
 type AdminController struct {
 	PermitService *modelsAdmin.Permit
 	general.BaseController
+	NotNeedLogin bool
 }
 
 //返回当前后台的权限列表
@@ -190,12 +191,34 @@ func (this *AdminController) Prepare() {
 	//引入父类的处理逻辑
 	this.BaseController.Prepare()
 
+	//判断是否登录
+	//如果需要登录等于
+	if this.NotNeedLogin == false && this.IsLogin() == false {
+		gotoUrl := general.CreateUrl("passport", "login", make(map[string]string), "web")
+		this.Redirect(gotoUrl, 301)
+		return
+	}
+
+	//设置登录信息
+	this.Data["Username"] = this.GetSession("UserName")
+	this.Data["Uid"] = this.GetSession("Uid")
+	this.Data["Avater"] = this.GetSession("Avater") //"/assets/img/user.jpg"
+	this.Data["PageTitle"] = " 后台管理中心"
 	//加上权限管理
 	this.InitPermitItem()
 
 	//引入页面内容
 	this.InitPageScript()
 
+}
+
+//判断是否登录
+func (this *AdminController) IsLogin() bool {
+	if "" == this.GetSession("uid") {
+		return true
+	} else {
+		return false
+	}
 }
 
 //设置Layout
