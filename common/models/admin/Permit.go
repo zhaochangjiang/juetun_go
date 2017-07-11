@@ -94,6 +94,13 @@ type PermitAdmin struct {
 	Domain string
 }
 
+//
+func (this *Permit) FetchDefaultPermitByModuleString(moduleString string) {
+	this.Controller = "data"
+	this.Action = "list"
+	this.DomainMap = ""
+}
+
 //获得左边的权限列表
 func (this *Permit) GetLeftPermit(leftTopId string) *[](map[string]interface{}) {
 	result := make([]map[string]interface{}, 0)
