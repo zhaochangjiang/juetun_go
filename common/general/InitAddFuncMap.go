@@ -2,7 +2,7 @@ package general
 
 import (
 	"errors"
-	"log"
+
 	"strings"
 
 	"github.com/astaxie/beego"
@@ -16,7 +16,7 @@ func InitAddFuncMap() {
 //创建URL
 func CreateUrl(p ...interface{}) string {
 	length := len(p)
-	url := "/"
+	var url string
 	switch length {
 	case 1:
 		p0, err := convertInterfaceToString(p[0])
@@ -53,16 +53,13 @@ func CreateUrl(p ...interface{}) string {
 }
 func getThreeParams(p []interface{}) string {
 	url := "/"
-	p0, err := convertInterfaceToString(p[0])
-	if nil != err {
-		panic(err.Error())
+	for i := 0; i < 2; i++ {
+		p0, err := convertInterfaceToString(p[i])
+		if nil != err {
+			panic(err.Error())
+		}
+		url += p0 + "/"
 	}
-	p1, err := convertInterfaceToString(p[1])
-	if nil != err {
-		panic(err.Error())
-	}
-	url += p0 + "/" + p1
-
 	switch p[2].(type) { //多选语句switch
 	case string: //是字符时做的事情
 		url += p[2].(string)
@@ -70,7 +67,7 @@ func getThreeParams(p []interface{}) string {
 		params := make([]string, 0)
 		p2 := p[2].(map[string]string)
 		for k, v := range p2 {
-			params = append(params, k+"="+v)
+			params = append(params, k+"_"+v)
 		}
 		url += strings.Join(params, "&")
 	default:

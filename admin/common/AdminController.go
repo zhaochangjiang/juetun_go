@@ -2,12 +2,10 @@ package common
 
 import (
 	"errors"
-	"log"
-
-	"strings"
-	//	"fmt"
 	"juetun/common/general"
 	modelsAdmin "juetun/common/models/admin"
+	"log"
+	"strings"
 )
 
 type AdminController struct {
@@ -80,14 +78,12 @@ func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []interfa
 		fetchParams["id"] = permitData.UppermitId
 		uponPermitId = *utils.Slice_unshift(uponPermitId, permitData.UppermitId)
 		permitModelList, err1 = permitModel.FetchPermit(fetchParams)
-
-		if len(permitModelList) > 0 {
-			permitData = (permitModelList[0])
-			//往队列的队首添加数据
-			result = *utils.Slice_unshift(result, permitData)
-		} else {
+		if len(permitModelList) <= 0 {
 			break
 		}
+		permitData = (permitModelList[0])
+		//往队列的队首添加数据
+		result = *utils.Slice_unshift(result, permitData)
 
 	}
 	return &result, uponPermitId, err1
@@ -95,8 +91,9 @@ func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []interfa
 
 //获得header默认的Type
 func (this *AdminController) getHeaderDefaultActive(permitUpon []interface{}) (string, string) {
-	headerActive := "dashboard"
 	var activeId string
+	var headerActive = "dashboard"
+
 	length := len(permitUpon)
 	if length > 0 {
 		permit := permitUpon[0].(*modelsAdmin.Permit)
@@ -119,7 +116,6 @@ func (this *AdminController) initAllShowPermit() {
 	//data := this.orgPermit(up onIdList)
 	log.Println(arrayUponId)
 	permit := make(map[string]interface{})
-
 	//Header信息列表
 	permit["Header"] = uponIdList
 	permit["HeaderActive"], leftTopId = this.getHeaderDefaultActive(*permitUpon)
@@ -190,10 +186,17 @@ func (this *AdminController) Prepare() {
 
 	//引入父类的处理逻辑
 	this.BaseController.Prepare()
-
+	if this.NotNeedLogin == true {
+		return
+	}
+	//TODO此为由于SESSION保持有问题的临时解决办法
+	log.Println("AdminController 设置的临时解决登录的方法!")
+	this.SetSession("Uid", "1")
+	this.SetSession("Username", "长江")
+	this.SetSession("Avater", "/assets/img/user.jpg")
 	//判断是否登录
 	//如果需要登录等于
-	if this.NotNeedLogin == false && this.IsLogin() == false {
+	if this.IsLogin() == false {
 		gotoUrl := general.CreateUrl("passport", "login", make(map[string]string), "web")
 		this.Redirect(gotoUrl, 301)
 		return
@@ -204,6 +207,7 @@ func (this *AdminController) Prepare() {
 	this.Data["Uid"] = this.GetSession("Uid")
 	this.Data["Avater"] = this.GetSession("Avater") //"/assets/img/user.jpg"
 	this.Data["PageTitle"] = " 后台管理中心"
+
 	//加上权限管理
 	this.InitPermitItem()
 
@@ -214,11 +218,26 @@ func (this *AdminController) Prepare() {
 
 //判断是否登录
 func (this *AdminController) IsLogin() bool {
-	if "" == this.GetSession("uid") {
-		return true
-	} else {
-		return false
+
+	uid := this.GetSession("Uid")
+
+	switch uid.(type) {
+	case string:
+		if "" == uid.(string) {
+			return false
+		} else {
+			return true
+		}
+	case int:
+		if 0 == uid.(int) {
+			return false
+		} else {
+			return true
+		}
+	default:
+		panic("Uid is not Int or Strig")
 	}
+
 }
 
 //设置Layout

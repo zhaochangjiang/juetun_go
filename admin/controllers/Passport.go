@@ -4,10 +4,18 @@ import (
 	acommon "juetun/admin/common"
 	"juetun/common/general"
 	"juetun/common/models/user"
+	"time"
 )
 
 type Passport struct {
 	acommon.AdminController
+}
+
+//实现本结构体的基本加载，本文件中所有的界面不需要验证登录
+func (this *Passport) Prepare() {
+	//设置本页面不需要登录
+	this.NotNeedLogin = true
+	this.AdminController.Prepare()
 }
 
 //登录页面
@@ -22,6 +30,16 @@ func (this *Passport) Login() {
 func (this *Passport) IframeLogin() {
 	userName := this.GetString("username")
 	pwd := this.GetString("pwd")
+
+	if "" == userName {
+		this.DisplayIframe("请输入账号！")
+		return
+	}
+
+	if "" == pwd {
+		this.DisplayIframe("请输入密码！")
+		return
+	}
 
 	userMain := new(user.Main)
 	umain, message := userMain.FetchUserByUserName(userName)
@@ -42,8 +60,9 @@ func (this *Passport) IframeLogin() {
 	this.SetSession("Uid", umain.User_id)
 	this.SetSession("Username", umain.Username)
 	this.SetSession("Avater", "/assets/img/user.jpg")
+	//延迟500毫秒
+	time.Sleep(time.Microsecond * 500)
 	this.Data["LocationHref"] = "/"
-
 	this.DisplayIframe("")
 	//	this.Redirect("/", 302)
 	//渲染文件

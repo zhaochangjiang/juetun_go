@@ -42,7 +42,9 @@ func (this *Permit) FetchPermitListByUponId(uponid []interface{}) (*[]PermitAdmi
 
 	result := make([]PermitAdmin, 0)
 	for _, v := range permitList {
-		result = append(result, *this.orgAdminPermit(v))
+		params := make(map[string]string)
+		params["module"] = v.Module
+		result = append(result, *this.orgAdminPermit(v, params))
 	}
 	return &result, num, err
 }
@@ -116,7 +118,8 @@ func (this *Permit) GetLeftPermit(leftTopId string) *[](map[string]interface{}) 
 
 	childPermit := make(map[string][]PermitAdmin)
 	for _, v := range childPermitList {
-		childPermit[v.UppermitId] = append(childPermit[v.UppermitId], *(this.orgAdminPermit(v)))
+		params := make(map[string]string)
+		childPermit[v.UppermitId] = append(childPermit[v.UppermitId], *(this.orgAdminPermit(v, params)))
 	}
 
 	for _, v := range permitList {
@@ -136,10 +139,7 @@ func (this *Permit) GetLeftPermit(leftTopId string) *[](map[string]interface{}) 
 	return &result
 }
 
-func (this *Permit) orgAdminPermit(v Permit) *PermitAdmin {
-
-	//TODO 其他参数,此处组织页面权限展现参数
-	params := make(map[string]string)
+func (this *Permit) orgAdminPermit(v Permit, params map[string]string) *PermitAdmin {
 	domain := "default" //default默认为当前域名,此处为域名的MAP映射
 	m := this.getDefaultModuleControllerAction(v)
 	permitLeft := PermitAdmin{*m, params, domain}
@@ -155,14 +155,9 @@ func (this *Permit) getDefaultModuleControllerAction(v Permit) *Permit {
 	return &v
 }
 func (this *Permit) getModuleDefaultPermit(permit Permit) *Permit {
-	permit.Controller = "asd"
-	permit.Action = "B"
-	//	log.Println("")
-	//	log.Println("")
-	//	log.Println("-------start--------")
-	//	log.Println(permit)
-	//	log.Println("-------over--------")
-	//	log.Println("")
-	//	log.Println("")
+
+	//默认访问地址
+	permit.Controller = "main"
+	permit.Action = "goto"
 	return &permit
 }
