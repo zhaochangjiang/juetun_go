@@ -8,9 +8,23 @@ import (
 
 	"log"
 )
-
+//实现本结构体的基本加载，本文件中所有的界面不需要验证登录
+func (this *Passport) Prepare() {
+	_,a:=this.GetControllerAndAction()
+	utils:=new(general.Utils)
+	
+	//设置不需要登录的Action
+	var notNeedLogin=[...]interface{"Goto"}
+	if(utils.InArrayOrSlice(a,notNeedLogin)){
+		//设置本页面不需要登录
+	   this.NotNeedLogin = true
+	}
+	
+	this.AdminController.Prepare()
+}
 type MainController struct {
 	acommon.AdminController
+	log.Println("MainController.go")
 }
 
 /**
