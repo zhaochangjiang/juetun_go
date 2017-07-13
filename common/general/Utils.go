@@ -21,15 +21,14 @@ type UtilsInterface interface {
 type Utils struct {
 }
 
-func (this *Utils) InArrayOrSlice(p, arr []interface{}) {
-	for _,v:=range arr
-	{
-		if(v==p){
+func (this *Utils) InArrayOrSlice(p interface{}, arr []interface{}) bool {
+	for _, v := range arr {
+		if v == p {
 			return true
 		}
 	}
 	return false
-	
+
 }
 func (this *Utils) ConvertInterfaceToString(p interface{}) (string, error) {
 	var c string

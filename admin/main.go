@@ -9,7 +9,6 @@ import (
 )
 
 func main() {
-
 	beego.Info("the server is starting...")
 
 	//引入静态文件路径

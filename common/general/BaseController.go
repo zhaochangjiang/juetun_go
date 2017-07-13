@@ -1,9 +1,9 @@
 package general
 
 import (
-	"strconv"
+	modelsUser "juetun/common/models/user"
+
 	"strings"
-	"time"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
@@ -47,6 +47,30 @@ func (this *BaseController) DisplayIframe(message string) {
 	this.TplName = "iframe.html"
 }
 
+func (this *BaseController) UserDataDefault(userMain *modelsUser.Main) *modelsUser.Main {
+
+	//设置默认头像
+	if "" == userMain.Avater {
+		//判断性别
+		if userMain.Gender == "female" {
+			userMain.Avater = "/assets/img/avatar3.png"
+		} else {
+			userMain.Avater = "/assets/img/avatar5.png"
+		}
+	} else {
+		userMain.Avater = this.GetAvaterByPictureId(userMain.Avater)
+	}
+	return userMain
+}
+
+/**
+* 获得用户头像
+ */
+func (this *BaseController) GetAvaterByPictureId(pictureId string) string {
+
+	return "/assets/img/avatar3.png"
+}
+
 // Prepare implemented Prepare method for baseRouter.
 func (this *BaseController) Prepare() {
 
@@ -54,14 +78,11 @@ func (this *BaseController) Prepare() {
 	// Setting properties.
 	//	this.Data["AppVer"] = AppVer
 	//	this.Data["IsPro"] = IsPro
-	this.Data["PageStartTime"] = time.Now()
-	this.Data["PageTitle"] = ""
-	this.Data["PageKeyword"] = ""
-	this.Data["PageDescription"] = ""
-	this.Data["PageAuthor"] = ""
-	this.Data["SiteName"] = beego.AppConfig.String("sitename")
-	y := time.Now().Year()
-	this.Data["Copyright"] = "Copyright " + strconv.Itoa(y-1) + "-" + strconv.Itoa(y) + " " + beego.AppConfig.String("appname") + " Corporation. All Rights Reserved."
+	//	this.Data["PageStartTime"] = time.Now()
+	//	this.Data["PageTitle"] = ""
+	//	this.Data["PageKeyword"] = ""
+	//	this.Data["PageDescription"] = ""
+	//	this.Data["PageAuthor"] = ""
 
 	// Redirect to make URL clean.
 	if this.setLangVer() {

@@ -60,6 +60,8 @@ func (this *Passport) IframeLogin() {
 	this.SetSession("Uid", umain.User_id)
 	this.SetSession("Username", umain.Username)
 	this.SetSession("Avater", "/assets/img/user.jpg")
+	this.SetSession("Gender", umain.Gender)
+
 	//延迟500毫秒
 	time.Sleep(time.Microsecond * 500)
 	this.Data["LocationHref"] = "/"

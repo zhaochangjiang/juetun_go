@@ -4,8 +4,14 @@ import (
 	"errors"
 	"juetun/common/general"
 	modelsAdmin "juetun/common/models/admin"
+	modelsUser "juetun/common/models/user"
+
+	"github.com/astaxie/beego"
+
 	"log"
+	"strconv"
 	"strings"
+	"time"
 )
 
 type AdminController struct {
@@ -24,10 +30,11 @@ func (this *AdminController) InitPermitItem() {
 	//如果不是超级管理员
 	if !this.authSuperAdmin() {
 		//获得当前不是超级管理员的权限列表。
-		this.Data["Permit"] = this.getListNotSuperAdmin()
+		this.getListNotSuperAdmin()
 	}
 
 }
+
 func (this *AdminController) DefaultControllerAndAction() (string, string) {
 	return "MainController", "GET"
 }
@@ -137,6 +144,15 @@ func (this *AdminController) orgPermit(uponIdList *[]modelsAdmin.Permit) *map[st
 //获得普通账号具备的账号展示权限
 func (this *AdminController) getListNotSuperAdmin() []interface{} {
 	item := make([]interface{}, 0)
+	var getGoupList = make([]modelsAdmin.Groupuser, 0)
+	var groupPermitList = make([]modelsAdmin.GroupPermit, 0)
+
+	groupuser := new(modelsAdmin.Groupuser)
+	groupPermit := new(modelsAdmin.GroupPermit)
+
+	uid := this.getSession("Uid")
+	getGoupList := groupuser.GetGoupList(uid)
+	groupPermit.GetGroupPermitList(getGoupList)
 	return item
 }
 
@@ -186,28 +202,45 @@ func (this *AdminController) Prepare() {
 
 	//引入父类的处理逻辑
 	this.BaseController.Prepare()
-	if this.NotNeedLogin == true {
-		return
-	}
+
 	//TODO此为由于SESSION保持有问题的临时解决办法
 	log.Println("AdminController 设置的临时解决登录的方法!")
 	this.SetSession("Uid", "1")
 	this.SetSession("Username", "长江")
-	this.SetSession("Avater", "/assets/img/user.jpg")
+
+	this.SetSession("Avater", "/assets/img/avatar5.jpg")
+
 	//判断是否登录
 	//如果需要登录等于
-	if this.IsLogin() == false {
+	if this.NotNeedLogin == false && this.IsLogin() == false {
 		gotoUrl := general.CreateUrl("passport", "login", make(map[string]string), "web")
 		this.Redirect(gotoUrl, 301)
 		return
 	}
-
+	this.Data["SiteName"] = beego.AppConfig.String("sitename")
+	y := time.Now().Year()
+	this.Data["Copyright"] = "Copyright " + strconv.Itoa(y-1) + "-" + strconv.Itoa(y) + " " + beego.AppConfig.String("appname") + " Corporation. All Rights Reserved."
 	//设置登录信息
 	this.Data["Username"] = this.GetSession("UserName")
 	this.Data["Uid"] = this.GetSession("Uid")
-	this.Data["Avater"] = this.GetSession("Avater") //"/assets/img/user.jpg"
+
+	main := new(modelsUser.Main)
+	if nil != this.GetSession("Avater") {
+		main.Avater = this.GetSession("Avater").(string)
+	}
+
+	if nil != this.GetSession("Gender") {
+		main.Gender = this.GetSession("Gender").(string)
+	}
+
+	//处理用户默认信息，比如头像
+	this.UserDataDefault(main)
+
+	this.Data["Avater"] = main.Avater
 	this.Data["PageTitle"] = " 后台管理中心"
 
+	time := time.Now()
+	this.Data["NowHourAndMinute"] = strconv.Itoa(time.Hour()) + ":" + strconv.Itoa(time.Minute())
 	//加上权限管理
 	this.InitPermitItem()
 

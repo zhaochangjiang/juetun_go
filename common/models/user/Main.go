@@ -11,7 +11,7 @@ type Main struct {
 	Email             string  //邮箱
 	Mobile            string  //手机号
 	Password          string  //密码
-	Avater            int     //头像ID
+	Avater            string  //头像ID
 	Gender            string  //性别默认 male
 	Step              int     //会员等级
 	Score             int     //积分

@@ -49,3 +49,13 @@ func (this *GroupPermit) DeleteByPermitIds(permitIds []string) (bool, error) {
 
 	return true, err
 }
+func (this *GroupPermit) GetGroupPermitList(permitIds []string) (bool, error) {
+
+	//删除表头信息
+	_, err := this.getQuerySeter().Filter("group_id__in", permitIds).Delete()
+	if nil != err {
+		return false, err
+	}
+
+	return true, err
+}

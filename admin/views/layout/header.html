@@ -222,12 +222,12 @@
                             <img src="{{.Avater}}" class="img-circle" alt="User Image"/>
                             <p>
 					{{.UserName}}
-                                 <small><?php echo date('H:i'); ?></small>
+                                 <small>{{.NowHourAndMinute}}</small>
                             </p>
                         </li>
                         <li class="user-body">
                             <div class="col-xs-12 text-center">
-                                <a href="<?php echo $this->createUrl(); ?>" target="_blank">首页</a>
+                                <a href="/" target="_blank">首页</a>
                             </div>
                         </li>
                         <li class="user-footer">
