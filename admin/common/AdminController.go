@@ -25,14 +25,13 @@ func (this *AdminController) InitPermitItem() {
 
 	//初始化权限操作Service
 	this.PermitService = new(modelsAdmin.Permit)
-	this.initAllShowPermit()
-
+	var permitId map[string]string
 	//如果不是超级管理员
 	if !this.authSuperAdmin() {
 		//获得当前不是超级管理员的权限列表。
-		this.getListNotSuperAdmin()
+		permitId = this.getListNotSuperAdmin()
 	}
-
+	this.initAllShowPermit(&permitId)
 }
 
 func (this *AdminController) DefaultControllerAndAction() (string, string) {
@@ -111,7 +110,7 @@ func (this *AdminController) getHeaderDefaultActive(permitUpon []interface{}) (s
 }
 
 //获得超级管理员具备的页面展示权限
-func (this *AdminController) initAllShowPermit() {
+func (this *AdminController) initAllShowPermit(pids *map[string]string) {
 	var leftTopId string
 
 	// 获得当前页面的所有上级权限
@@ -142,23 +141,53 @@ func (this *AdminController) orgPermit(uponIdList *[]modelsAdmin.Permit) *map[st
 }
 
 //获得普通账号具备的账号展示权限
-func (this *AdminController) getListNotSuperAdmin() []interface{} {
-	item := make([]interface{}, 0)
-	var getGoupList = make([]modelsAdmin.Groupuser, 0)
-	var groupPermitList = make([]modelsAdmin.GroupPermit, 0)
+func (this *AdminController) getListNotSuperAdmin() map[string]string {
+	var uid string
+
+	//用户组权限ID列表
+	var groupPermitList *[]modelsAdmin.GroupPermit
 
 	groupuser := new(modelsAdmin.Groupuser)
 	groupPermit := new(modelsAdmin.GroupPermit)
+	if nil != this.GetSession("Uid") {
+		uid = this.GetSession("Uid").(string)
+	}
 
-	uid := this.getSession("Uid")
-	getGoupList := groupuser.GetGoupList(uid)
-	groupPermit.GetGroupPermitList(getGoupList)
-	return item
+	//获得当前用户的用户组列表
+	getGoupList, err := groupuser.GetGoupList(uid)
+	if nil != err {
+		panic(err)
+	}
+
+	groupIds := make([]string, 0)
+	for _, v := range *getGoupList {
+		groupIds = append(groupIds, v.GroupId)
+	}
+
+	//根据当前用户的用户组获得用户的权限
+	groupPermitList, err = groupPermit.GetGroupPermitList(groupIds)
+
+	if nil != err {
+		panic(err)
+	}
+
+	//权限ID号数组用键值对存储，便于后边判断
+	permitId := make(map[string]string, 0)
+	for _, v := range *groupPermitList {
+		permitId[v.PermitId] = v.PermitId
+	}
+
+	return permitId
 }
 
 //判断是否为超级管理员
 func (this *AdminController) authSuperAdmin() bool {
-	return true
+
+	var authSuperAdmin = false
+	if nil != this.GetSession("SuperAdmin") {
+		return this.GetSession("SuperAdmin").(bool)
+	}
+	return authSuperAdmin
 }
 
 func (this *AdminController) InitPageScript() {

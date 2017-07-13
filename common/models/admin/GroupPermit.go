@@ -1,6 +1,8 @@
 package admin
 
 import (
+	"strings"
+
 	"github.com/astaxie/beego/orm"
 )
 
@@ -49,13 +51,31 @@ func (this *GroupPermit) DeleteByPermitIds(permitIds []string) (bool, error) {
 
 	return true, err
 }
-func (this *GroupPermit) GetGroupPermitList(permitIds []string) (bool, error) {
 
-	//删除表头信息
-	_, err := this.getQuerySeter().Filter("group_id__in", permitIds).Delete()
-	if nil != err {
-		return false, err
+/**
+*
+ */
+func (this *GroupPermit) GetGroupPermitList(groupIds []string) (*[]GroupPermit, error) {
+
+	var groupPermitList []GroupPermit
+	if len(groupIds) == 0 {
+		return &groupPermitList, nil
 	}
 
-	return true, err
+	permit := new(Permit)
+	// 构建查询对象
+	nowTableName := this.TableName()
+	leftTableName := permit.TableName()
+
+	qb, _ := orm.NewQueryBuilder("mysql")
+
+	sql := qb.From(nowTableName).
+		LeftJoin(leftTableName).On(nowTableName + ".permit_id=" + leftTableName + ".id").
+		Where(nowTableName + ".group_id in (?)").String()
+	//	OrderBy("name").Desc().
+	//	Limit(10).Offset(0)
+	// 执行 SQL 语句
+	_, err := this.getOrm().Raw(sql, strings.Join(groupIds, ",")).QueryRows(&groupPermitList)
+
+	return &groupPermitList, err
 }

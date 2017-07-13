@@ -22,20 +22,20 @@ func (this *Groupuser) getOrm() orm.Ormer {
 	o.Using("db_admin") // 默认使用 default，你可以指定为其他数据库
 	return o
 }
-func (this *Permit) getQuerySeter() orm.QuerySeter {
+func (this *Groupuser) getQuerySeter() orm.QuerySeter {
 	return this.getOrm().QueryTable(this)
 }
 
 /**
 *根据用户ID 获得用户的权限组列表
  */
-func (this *Groupuser) GetGoupList(uid string) *[]Groupuser {
+func (this *Groupuser) GetGoupList(uid string) (*[]Groupuser, error) {
 
 	var groupuser []Groupuser
 	var querySeter orm.QuerySeter
 
 	//查询上级权限为leftTopId的权限列表
 	querySeter = this.getQuerySeter().Filter("admin_userid__exact", uid).OrderBy("obyid")
-	querySeter.All(&groupuser)
-	return groupuser
+	_, err := querySeter.All(&groupuser)
+	return &groupuser, err
 }
