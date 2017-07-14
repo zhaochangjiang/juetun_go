@@ -23,17 +23,25 @@ type AdminController struct {
 //返回当前后台的权限列表
 func (this *AdminController) InitPermitItem() {
 
-	//初始化权限操作Service
-	this.PermitService = new(modelsAdmin.Permit)
-	var permitId map[string]string
+	//	//初始化权限操作Service
+	//this.PermitService = new(modelsAdmin.Permit)
+
+	var isSuperAdmin = true
+
 	//如果不是超级管理员
 	if !this.authSuperAdmin() {
-		//获得当前不是超级管理员的权限列表。
-		permitId = this.getListNotSuperAdmin()
+		isSuperAdmin = false
+		//this.getListNotSuperAdmin()
+		this.initAllShowNotSuperAdminPermit()
+
+	} else {
+		this.initAllShowSuperAdminPermit()
 	}
-	this.initAllShowPermit(&permitId)
+	//初始化是否为超级管理员的配置
+	this.Data["isSuperAdmin"] = isSuperAdmin
 }
 
+//默认访问的页面
 func (this *AdminController) DefaultControllerAndAction() (string, string) {
 	return "MainController", "GET"
 }
@@ -110,25 +118,30 @@ func (this *AdminController) getHeaderDefaultActive(permitUpon []interface{}) (s
 }
 
 //获得超级管理员具备的页面展示权限
-func (this *AdminController) initAllShowPermit(pids *map[string]string) {
+/**
+*@param isSuperAdmin 是否为超级管理员
+*
+ */
+func (this *AdminController) initAllShowSuperAdminPermit() {
 	var leftTopId string
+	var permit map[string]interface{}
 
 	// 获得当前页面的所有上级权限
-	permitUpon, arrayUponId, _ := this.getNowAndAllUponPermit()
+	permitUpon, activeUponId, _ := this.getNowAndAllUponPermit()
 
-	upid := make([]interface{}, 0)
-	upid = append(upid, 0)
-	uponIdList, _, _ := this.PermitService.FetchPermitListByUponId(upid)
-	//data := this.orgPermit(up onIdList)
-	log.Println(arrayUponId)
-	permit := make(map[string]interface{})
+	//获得页面头部的信息
+	headerPermitList, _, _ := this.PermitService.FetchPermitListByUponId([]interface{}{0})
+
+	//如果是超级管理员，那么权限对于此账号无效
+
 	//Header信息列表
-	permit["Header"] = uponIdList
+	permit["Header"] = headerPermitList
 	permit["HeaderActive"], leftTopId = this.getHeaderDefaultActive(*permitUpon)
 
 	//左侧边栏权限列表
 	permit["Left"] = this.PermitService.GetLeftPermit(leftTopId)
 	this.Data["Permit"] = permit
+	log.Println(activeUponId)
 }
 
 func (this *AdminController) orgPermit(uponIdList *[]modelsAdmin.Permit) *map[string][]modelsAdmin.Permit {
@@ -139,45 +152,58 @@ func (this *AdminController) orgPermit(uponIdList *[]modelsAdmin.Permit) *map[st
 	}
 	return &result
 }
-
-//获得普通账号具备的账号展示权限
-func (this *AdminController) getListNotSuperAdmin() map[string]string {
-	var uid string
-
-	//用户组权限ID列表
-	var groupPermitList *[]modelsAdmin.GroupPermit
-
-	groupuser := new(modelsAdmin.Groupuser)
-	groupPermit := new(modelsAdmin.GroupPermit)
-	if nil != this.GetSession("Uid") {
-		uid = this.GetSession("Uid").(string)
+func (this *AdminController) getNowUserGroupId() []string {
+	var groupIds []string
+	var uid = this.GetSession("Uid")
+	if nil == uid {
+		return groupIds
 	}
 
+	groupuser := new(modelsAdmin.Groupuser)
+
 	//获得当前用户的用户组列表
-	getGoupList, err := groupuser.GetGoupList(uid)
+	getGoupList, err := groupuser.GetGoupList(uid.(string))
 	if nil != err {
 		panic(err)
 	}
 
-	groupIds := make([]string, 0)
 	for _, v := range *getGoupList {
 		groupIds = append(groupIds, v.GroupId)
 	}
+	return groupIds
+}
 
+//处理当前非超级管理员的权限
+func (this *AdminController) initAllShowNotSuperAdminPermit() {
+	//用户组权限ID列表
+	var groupPermit modelsAdmin.GroupPermit
+	var permit map[string]interface{}
+	var leftTopId string
+
+	//获得当前用户的用户组ID列表
+	groupIds := this.getNowUserGroupId()
+
+	//如果用户组不存在，则不用继续操作了
+	if len(groupIds) == 0 {
+		return
+	}
 	//根据当前用户的用户组获得用户的权限
-	groupPermitList, err = groupPermit.GetGroupPermitList(groupIds)
+	headerPermitList, err := groupPermit.GetGroupPermitList(groupIds, []string{""})
 
 	if nil != err {
 		panic(err)
 	}
 
-	//权限ID号数组用键值对存储，便于后边判断
-	permitId := make(map[string]string, 0)
-	for _, v := range *groupPermitList {
-		permitId[v.PermitId] = v.PermitId
-	}
+	// 获得当前页面的所有上级权限
+	permitUpon, activeUponId, _ := this.getNowAndAllUponPermit()
 
-	return permitId
+	//Header信息列表
+	permit["Header"] = headerPermitList
+	permit["HeaderActive"], leftTopId = this.getHeaderDefaultActive(*permitUpon)
+
+	//左侧边栏权限列表
+	permit["Left"] = this.PermitService.GetLeftPermitByGroupId(leftTopId, groupIds)
+	this.Data["Permit"] = permit
 }
 
 //判断是否为超级管理员

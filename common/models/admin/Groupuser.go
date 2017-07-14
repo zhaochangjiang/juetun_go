@@ -35,7 +35,7 @@ func (this *Groupuser) GetGoupList(uid string) (*[]Groupuser, error) {
 	var querySeter orm.QuerySeter
 
 	//查询上级权限为leftTopId的权限列表
-	querySeter = this.getQuerySeter().Filter("admin_userid__exact", uid).OrderBy("obyid")
+	querySeter = this.getQuerySeter().Filter("admin_userid__exact", uid)
 	_, err := querySeter.All(&groupuser)
 	return &groupuser, err
 }

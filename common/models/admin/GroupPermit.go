@@ -55,27 +55,31 @@ func (this *GroupPermit) DeleteByPermitIds(permitIds []string) (bool, error) {
 /**
 *
  */
-func (this *GroupPermit) GetGroupPermitList(groupIds []string) (*[]GroupPermit, error) {
+func (this *GroupPermit) GetGroupPermitList(groupIds []string, uppermit_id []string) (*[]GroupPermit, error) {
 
+	var permit Permit
 	var groupPermitList []GroupPermit
-	if len(groupIds) == 0 {
-		return &groupPermitList, nil
-	}
-
-	permit := new(Permit)
+	var where string
+	var sliceParams []string
 	// 构建查询对象
 	nowTableName := this.TableName()
 	leftTableName := permit.TableName()
+	if len(groupIds) == 0 {
+		return &groupPermitList, nil
+	} else {
+		where += nowTableName + ".group_id in (?)"
+		sliceParams = append(sliceParams, strings.Join(groupIds, ","))
+	}
+	if len(uppermit_id) > 0 {
+		where += " AND" + leftTableName + ".uppermit_id in (?)"
+		sliceParams = append(sliceParams, strings.Join(uppermit_id, ","))
+	}
 
 	qb, _ := orm.NewQueryBuilder("mysql")
 
 	sql := qb.From(nowTableName).
-		LeftJoin(leftTableName).On(nowTableName + ".permit_id=" + leftTableName + ".id").
-		Where(nowTableName + ".group_id in (?)").String()
-	//	OrderBy("name").Desc().
-	//	Limit(10).Offset(0)
-	// 执行 SQL 语句
-	_, err := this.getOrm().Raw(sql, strings.Join(groupIds, ",")).QueryRows(&groupPermitList)
+		LeftJoin(leftTableName).On(nowTableName + ".permit_id=" + leftTableName + ".id").Where(where).OrderBy(leftTableName + "obyid").Asc().String()
+	_, err := this.getOrm().Raw(sql, sliceParams).QueryRows(&groupPermitList)
 
 	return &groupPermitList, err
 }

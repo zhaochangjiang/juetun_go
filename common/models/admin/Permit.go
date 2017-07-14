@@ -146,6 +146,58 @@ func (this *Permit) GetLeftPermit(leftTopId string) *[](map[string]interface{}) 
 	return &result
 }
 
+//获得左边的权限列表
+func (this *Permit) GetLeftPermitByGroupId(leftTopId string, groupIds []string) *[](map[string]interface{}) {
+	var permit Permit
+	var groupPermitList []GroupPermit
+	var where string
+	var sliceParams []string
+	// 构建查询对象
+	nowTableName := this.TableName()
+	leftTableName := permit.TableName()
+
+	result := make([]map[string]interface{}, 0)
+	if leftTopId == "" {
+		return &result
+	}
+
+	var permitList []Permit
+	var querySeter orm.QuerySeter
+	var childPermitList []Permit
+
+	//查询上级权限为leftTopId的权限列表
+	querySeter = this.getQuerySeter().Filter("uppermit_id__exact", leftTopId).OrderBy("obyid")
+	querySeter.All(&permitList)
+
+	leftPermitIdList := make([]string, 0)
+	for _, v := range permitList {
+		leftPermitIdList = append(leftPermitIdList, v.Id)
+	}
+
+	this.getQuerySeter().Filter("uppermit_id__in", leftPermitIdList).OrderBy("obyid").All(&childPermitList)
+
+	childPermit := make(map[string][]PermitAdmin)
+	for _, v := range childPermitList {
+		params := make(map[string]string)
+		childPermit[v.UppermitId] = append(childPermit[v.UppermitId], *(this.orgAdminPermit(v, params)))
+	}
+
+	for _, v := range permitList {
+
+		everyData := make(map[string]interface{})
+		everyData["Permit"] = v
+		everyData["Active"] = false //默认设置不为选中的状态
+		everyData["ChildList"] = make([]PermitAdmin, 0)
+
+		//判断内容是否存在，相当于PHP中的isset函数
+		if _, ok := childPermit[v.Id]; ok {
+			everyData["ChildList"] = childPermit[v.Id]
+		}
+		result = append(result, everyData)
+	}
+
+	return &result
+}
 func (this *Permit) orgAdminPermit(v Permit, params map[string]string) *PermitAdmin {
 	domain := "default" //default默认为当前域名,此处为域名的MAP映射
 	m := this.getDefaultModuleControllerAction(v)
