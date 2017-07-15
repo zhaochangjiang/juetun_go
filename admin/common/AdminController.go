@@ -4,7 +4,6 @@ import (
 	"errors"
 	"juetun/common/general"
 	modelsAdmin "juetun/common/models/admin"
-	modelsUser "juetun/common/models/user"
 
 	"github.com/astaxie/beego"
 
@@ -203,6 +202,7 @@ func (this *AdminController) initAllShowNotSuperAdminPermit() {
 
 	//左侧边栏权限列表
 	permit["Left"] = this.PermitService.GetLeftPermitByGroupId(leftTopId, groupIds)
+	log.Println(activeUponId)
 	this.Data["Permit"] = permit
 }
 
@@ -262,7 +262,6 @@ func (this *AdminController) Prepare() {
 	log.Println("AdminController 设置的临时解决登录的方法!")
 	this.SetSession("Uid", "1")
 	this.SetSession("Username", "长江")
-
 	this.SetSession("Avater", "/assets/img/avatar5.jpg")
 
 	//判断是否登录
@@ -279,18 +278,8 @@ func (this *AdminController) Prepare() {
 	this.Data["Username"] = this.GetSession("UserName")
 	this.Data["Uid"] = this.GetSession("Uid")
 
-	main := new(modelsUser.Main)
-	if nil != this.GetSession("Avater") {
-		main.Avater = this.GetSession("Avater").(string)
-	}
-
-	if nil != this.GetSession("Gender") {
-		main.Gender = this.GetSession("Gender").(string)
-	}
-
 	//处理用户默认信息，比如头像
-	this.UserDataDefault(main)
-
+	main := this.UserDataDefault()
 	this.Data["Avater"] = main.Avater
 	this.Data["PageTitle"] = " 后台管理中心"
 

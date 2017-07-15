@@ -1,6 +1,8 @@
 package admin
 
 import (
+	"strings"
+
 	"github.com/astaxie/beego/orm"
 )
 
@@ -148,41 +150,25 @@ func (this *Permit) GetLeftPermit(leftTopId string) *[](map[string]interface{}) 
 
 //获得左边的权限列表
 func (this *Permit) GetLeftPermitByGroupId(leftTopId string, groupIds []string) *[](map[string]interface{}) {
-	var permit Permit
-	var groupPermitList []GroupPermit
-	var where string
-	var sliceParams []string
-	// 构建查询对象
-	nowTableName := this.TableName()
-	leftTableName := permit.TableName()
 
-	result := make([]map[string]interface{}, 0)
+	var result [](map[string]interface{})
+	var leftPermitIdList []string
+	var childPermit map[string][]PermitAdmin
+
 	if leftTopId == "" {
 		return &result
 	}
-
-	var permitList []Permit
-	var querySeter orm.QuerySeter
-	var childPermitList []Permit
-
-	//查询上级权限为leftTopId的权限列表
-	querySeter = this.getQuerySeter().Filter("uppermit_id__exact", leftTopId).OrderBy("obyid")
-	querySeter.All(&permitList)
-
-	leftPermitIdList := make([]string, 0)
-	for _, v := range permitList {
+	permitList := this.FetchPermitByGroupIdAndUppermit(groupIds, []string{leftTopId})
+	for _, v := range *permitList {
 		leftPermitIdList = append(leftPermitIdList, v.Id)
 	}
 
-	this.getQuerySeter().Filter("uppermit_id__in", leftPermitIdList).OrderBy("obyid").All(&childPermitList)
-
-	childPermit := make(map[string][]PermitAdmin)
-	for _, v := range childPermitList {
+	childPermitList := this.FetchPermitByGroupIdAndUppermit(groupIds, leftPermitIdList)
+	for _, v := range *childPermitList {
 		params := make(map[string]string)
 		childPermit[v.UppermitId] = append(childPermit[v.UppermitId], *(this.orgAdminPermit(v, params)))
 	}
-
-	for _, v := range permitList {
+	for _, v := range *permitList {
 
 		everyData := make(map[string]interface{})
 		everyData["Permit"] = v
@@ -195,8 +181,34 @@ func (this *Permit) GetLeftPermitByGroupId(leftTopId string, groupIds []string) 
 		}
 		result = append(result, everyData)
 	}
-
 	return &result
+}
+func (this *Permit) FetchPermitByGroupIdAndUppermit(groupIds []string, uppermitIds []string) *[]Permit {
+
+	var sliceParams []string
+	var where string
+	var nowTableName string
+	var leftTableName string
+	var permitList []Permit
+	var groupPermit GroupPermit
+	// 构建查询对象
+	nowTableName = this.TableName()
+	leftTableName = groupPermit.TableName()
+
+	//查询上级权限为leftTopId的权限列表
+	where += nowTableName + ".group_id in (?)"
+	where += nowTableName + ".uppermit_id in (?)"
+	sliceParams = append(sliceParams, strings.Join(groupIds, ","))
+	sliceParams = append(sliceParams, strings.Join(uppermitIds, ","))
+
+	qb, _ := orm.NewQueryBuilder("mysql")
+	sql := qb.From(nowTableName).
+		LeftJoin(leftTableName).On(leftTableName + ".permit_id=" + nowTableName + ".id").Where(where).OrderBy(nowTableName + "obyid").Asc().String()
+	_, err := this.getOrm().Raw(sql, sliceParams).QueryRows(&permitList)
+	if nil != err {
+		panic(err)
+	}
+	return &permitList
 }
 func (this *Permit) orgAdminPermit(v Permit, params map[string]string) *PermitAdmin {
 	domain := "default" //default默认为当前域名,此处为域名的MAP映射

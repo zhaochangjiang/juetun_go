@@ -47,8 +47,16 @@ func (this *BaseController) DisplayIframe(message string) {
 	this.TplName = "iframe.html"
 }
 
-func (this *BaseController) UserDataDefault(userMain *modelsUser.Main) *modelsUser.Main {
+func (this *BaseController) UserDataDefault() *modelsUser.Main {
 
+	userMain := new(modelsUser.Main)
+	if nil != this.GetSession("Avater") {
+		userMain.Avater = this.GetSession("Avater").(string)
+	}
+
+	if nil != this.GetSession("Gender") {
+		userMain.Gender = this.GetSession("Gender").(string)
+	}
 	//设置默认头像
 	if "" == userMain.Avater {
 		//判断性别
