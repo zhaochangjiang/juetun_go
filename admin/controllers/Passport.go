@@ -3,7 +3,10 @@ package controllers
 import (
 	acommon "juetun/admin/common"
 	"juetun/common/general"
+	modelAdmin "juetun/common/models/admin"
 	"juetun/common/models/user"
+	"log"
+
 	"time"
 )
 
@@ -30,24 +33,20 @@ func (this *Passport) Login() {
 func (this *Passport) IframeLogin() {
 	userName := this.GetString("username")
 	pwd := this.GetString("pwd")
-
-	if "" == userName {
-		this.DisplayIframe("请输入账号！")
+	if !this.validateIframeLogin() {
 		return
 	}
-
-	if "" == pwd {
-		this.DisplayIframe("请输入密码！")
-		return
-	}
-
 	userMain := new(user.Main)
-	umain, message := userMain.FetchUserByUserName(userName)
+	umain, err := userMain.FetchUserByUserName(userName)
 
-	if "" != message {
-		this.DisplayIframe(message)
+	if nil != err {
+
+		panic(err)
+		//	this.DisplayIframe("213123123")
 		return
 	}
+	adminUser := new(modelAdmin.User)
+	admin_user, _ := adminUser.FetchUserById(userMain.User_id)
 	encyption := new(general.PasswordEncyption)
 	encyptionString := encyption.Sha1(pwd)
 	// 判断密码是否正确
@@ -61,7 +60,10 @@ func (this *Passport) IframeLogin() {
 	this.SetSession("Username", umain.Username)
 	this.SetSession("Avater", "/assets/img/user.jpg")
 	this.SetSession("Gender", umain.Gender)
-
+	this.SetSession("SuperAdmin", admin_user.SuperAdmin)
+	log.Println("-----------------start----------------------------")
+	log.Printf("adsfasdfasdf")
+	log.Println("-----------------over----------------------------")
 	//延迟500毫秒
 	time.Sleep(time.Microsecond * 500)
 	this.Data["LocationHref"] = "/"
@@ -69,6 +71,19 @@ func (this *Passport) IframeLogin() {
 	//	this.Redirect("/", 302)
 	//渲染文件
 	//this.DisplayIframe("密码正确")
+}
+func (this *Passport) validateIframeLogin() bool {
+	var pass = true
+	if "" == userName {
+		this.DisplayIframe("请输入账号！")
+		return false
+	}
+
+	if "" == pwd {
+		this.DisplayIframe("请输入密码！")
+		return false
+	}
+	return pass
 }
 
 //忘记密码

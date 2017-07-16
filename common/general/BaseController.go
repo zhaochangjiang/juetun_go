@@ -50,12 +50,22 @@ func (this *BaseController) DisplayIframe(message string) {
 func (this *BaseController) UserDataDefault() *modelsUser.Main {
 
 	userMain := new(modelsUser.Main)
-	if nil != this.GetSession("Avater") {
-		userMain.Avater = this.GetSession("Avater").(string)
-	}
+	avater := this.GetSession("Avater")
+	gender := this.GetSession("Gender")
+	user_id := this.GetSession("User_id")
+	username := this.GetSession("Username")
 
-	if nil != this.GetSession("Gender") {
-		userMain.Gender = this.GetSession("Gender").(string)
+	if nil != avater {
+		userMain.Avater = avater.(string)
+	}
+	if nil != gender {
+		userMain.Gender = gender.(string)
+	}
+	if nil != user_id {
+		userMain.User_id = user_id.(string)
+	}
+	if nil != username {
+		userMain.Username = username.(string)
 	}
 	//设置默认头像
 	if "" == userMain.Avater {
@@ -68,6 +78,9 @@ func (this *BaseController) UserDataDefault() *modelsUser.Main {
 	} else {
 		userMain.Avater = this.GetAvaterByPictureId(userMain.Avater)
 	}
+	this.Data["Username"] = userMain.Username
+	this.Data["Avater"] = userMain.Avater
+	this.Data["Uid"] = userMain.User_id
 	return userMain
 }
 

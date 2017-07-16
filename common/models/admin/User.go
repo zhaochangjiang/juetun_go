@@ -8,7 +8,7 @@ type User struct {
 	Uid        string `orm:"column(uid);pk;"`
 	Name       string `orm:varchar(30)`
 	SuperAdmin string `orm:"column(super_admin)"`
-	Isdel      string `orm:"column(id_del)"`
+	Isdel      string `orm:"column(isdel)"`
 }
 
 func (u *User) TableName() string {
@@ -22,4 +22,12 @@ func (this *User) getOrm() orm.Ormer {
 	// 默认使用 default，你可以指定为其他数据库
 	o.Using("db_admin")
 	return o
+}
+func (this *User) getQuerySeter() orm.QuerySeter {
+	return this.getOrm().QueryTable(this)
+}
+
+func (this *User) FetchUserById(userid string) (*User, error) {
+	err := this.getQuerySeter().Filter("uid", userid).One(this)
+	return this, err
 }

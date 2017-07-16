@@ -33,15 +33,9 @@ func (this *Main) getOrm() orm.Ormer {
 /**
 * 根据用户名获得用户信息
  */
-func (this *Main) FetchUserByUserName(userName string) (Main, string) {
+func (this *Main) FetchUserByUserName(userName string) (Main, error) {
 	var umain Main
-	var message string
 	o := this.getOrm()
 	err := o.QueryTable(this).Filter("username", userName).Filter("flag_del", "no").One(&umain)
-	if err == orm.ErrMultiRows {
-		// 多条的时候报错
-		message = "data exception,please cotact the administrator!"
-		return umain, message
-	}
-	return umain, message
+	return umain, err
 }

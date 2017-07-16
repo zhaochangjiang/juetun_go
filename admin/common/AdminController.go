@@ -211,7 +211,12 @@ func (this *AdminController) authSuperAdmin() bool {
 
 	var authSuperAdmin = false
 	if nil != this.GetSession("SuperAdmin") {
-		return this.GetSession("SuperAdmin").(bool)
+		switch this.GetSession("SuperAdmin").(string) {
+		case "yes":
+			authSuperAdmin = true
+		default:
+			authSuperAdmin = false
+		}
 	}
 	return authSuperAdmin
 }
@@ -259,10 +264,10 @@ func (this *AdminController) Prepare() {
 	this.BaseController.Prepare()
 
 	//TODO此为由于SESSION保持有问题的临时解决办法
-	log.Println("AdminController 设置的临时解决登录的方法!")
-	this.SetSession("Uid", "1")
-	this.SetSession("Username", "长江")
-	this.SetSession("Avater", "/assets/img/avatar5.jpg")
+	//	log.Println("AdminController 设置的临时解决登录的方法!")
+	//	this.SetSession("Uid", "1")
+	//	this.SetSession("Username", "长江")
+	//	this.SetSession("Avater", "/assets/img/avatar5.jpg")
 
 	//判断是否登录
 	//如果需要登录等于
@@ -272,18 +277,16 @@ func (this *AdminController) Prepare() {
 		return
 	}
 	this.Data["SiteName"] = beego.AppConfig.String("sitename")
-	y := time.Now().Year()
+	time := time.Now()
+	y := time.Year()
 	this.Data["Copyright"] = "Copyright " + strconv.Itoa(y-1) + "-" + strconv.Itoa(y) + " " + beego.AppConfig.String("appname") + " Corporation. All Rights Reserved."
-	//设置登录信息
-	this.Data["Username"] = this.GetSession("UserName")
-	this.Data["Uid"] = this.GetSession("Uid")
 
 	//处理用户默认信息，比如头像
-	main := this.UserDataDefault()
-	this.Data["Avater"] = main.Avater
-	this.Data["PageTitle"] = " 后台管理中心"
+	this.UserDataDefault()
 
-	time := time.Now()
+	this.Data["PageTitle"] = " 后台管理中心"
+	//设置登录信息
+
 	this.Data["NowHourAndMinute"] = strconv.Itoa(time.Hour()) + ":" + strconv.Itoa(time.Minute())
 	//加上权限管理
 	this.InitPermitItem()
@@ -295,8 +298,10 @@ func (this *AdminController) Prepare() {
 
 //判断是否登录
 func (this *AdminController) IsLogin() bool {
-
 	uid := this.GetSession("Uid")
+	if nil == uid {
+		return false
+	}
 
 	switch uid.(type) {
 	case string:
