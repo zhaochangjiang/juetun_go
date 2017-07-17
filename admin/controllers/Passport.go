@@ -5,8 +5,6 @@ import (
 	"juetun/common/general"
 	modelAdmin "juetun/common/models/admin"
 	"juetun/common/models/user"
-	"log"
-
 	"time"
 )
 
@@ -31,39 +29,38 @@ func (this *Passport) Login() {
 
 //登录提交
 func (this *Passport) IframeLogin() {
-	userName := this.GetString("username")
-	pwd := this.GetString("pwd")
-	if !this.validateIframeLogin() {
+	params, validateAuth := this.validateIframeLogin()
+	if !validateAuth {
 		return
 	}
-	userMain := new(user.Main)
-	umain, err := userMain.FetchUserByUserName(userName)
 
-	if nil != err {
-
-		panic(err)
-		//	this.DisplayIframe("213123123")
-		return
+	modelUserMain := new(user.Main)
+	var userMain user.Main
+	if _, ok := (*params)["userName"]; ok {
+		var err error
+		userMain, err = modelUserMain.FetchUserByUserName((*params)["userName"])
+		if nil != err {
+			this.DisplayIframe(err.Error())
+			return
+		}
 	}
 	adminUser := new(modelAdmin.User)
 	admin_user, _ := adminUser.FetchUserById(userMain.User_id)
 	encyption := new(general.PasswordEncyption)
-	encyptionString := encyption.Sha1(pwd)
+	encyptionString := encyption.Sha1((*params)["pwd"])
 	// 判断密码是否正确
-	if umain.Password != encyptionString {
+	if userMain.Password != encyptionString {
 		// 多条的时候报错
 		this.DisplayIframe("请输入正确的账号和密码！")
 		return
 	}
 
-	this.SetSession("Uid", umain.User_id)
-	this.SetSession("Username", umain.Username)
+	this.SetSession("Uid", userMain.User_id)
+	this.SetSession("Username", userMain.Username)
 	this.SetSession("Avater", "/assets/img/user.jpg")
-	this.SetSession("Gender", umain.Gender)
+	this.SetSession("Gender", userMain.Gender)
 	this.SetSession("SuperAdmin", admin_user.SuperAdmin)
-	log.Println("-----------------start----------------------------")
-	log.Printf("adsfasdfasdf")
-	log.Println("-----------------over----------------------------")
+
 	//延迟500毫秒
 	time.Sleep(time.Microsecond * 500)
 	this.Data["LocationHref"] = "/"
@@ -72,18 +69,22 @@ func (this *Passport) IframeLogin() {
 	//渲染文件
 	//this.DisplayIframe("密码正确")
 }
-func (this *Passport) validateIframeLogin() bool {
+func (this *Passport) validateIframeLogin() (*map[string]string, bool) {
+	params := make(map[string]string, 0)
+	params["userName"] = this.GetString("username")
+	params["pwd"] = this.GetString("pwd")
+
 	var pass = true
-	if "" == userName {
+	if "" == params["userName"] {
 		this.DisplayIframe("请输入账号！")
-		return false
+		return &params, false
 	}
 
-	if "" == pwd {
+	if "" == params["pwd"] {
 		this.DisplayIframe("请输入密码！")
-		return false
+		return &params, false
 	}
-	return pass
+	return &params, pass
 }
 
 //忘记密码

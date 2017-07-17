@@ -29,6 +29,7 @@ func (this *AdminController) InitPermitItem() {
 
 	//如果不是超级管理员
 	if !this.authSuperAdmin() {
+
 		isSuperAdmin = false
 		//this.getListNotSuperAdmin()
 		this.initAllShowNotSuperAdminPermit()
@@ -176,9 +177,8 @@ func (this *AdminController) getNowUserGroupId() []string {
 func (this *AdminController) initAllShowNotSuperAdminPermit() {
 	//用户组权限ID列表
 	var groupPermit modelsAdmin.GroupPermit
-	var permit map[string]interface{}
-	var leftTopId string
-
+	permit := make(map[string]interface{})
+	//var headerPermitList *[]modelsAdmin.GroupPermit
 	//获得当前用户的用户组ID列表
 	groupIds := this.getNowUserGroupId()
 
@@ -186,20 +186,22 @@ func (this *AdminController) initAllShowNotSuperAdminPermit() {
 	if len(groupIds) == 0 {
 		return
 	}
-	//根据当前用户的用户组获得用户的权限
-	headerPermitList, err := groupPermit.GetGroupPermitList(groupIds, []string{""})
+	//根据当前用户的用户组获得用户的权限//Header信息列表
+	headerPermit, _ := groupPermit.GetGroupPermitList(groupIds, []string{""})
+	log.Println("--------------------------start------------------------")
+	log.Println(headerPermit)
+	log.Println("---------------------------over-----------------------")
 
-	if nil != err {
-		panic(err)
-	}
+	permit["Header"] = headerPermit
 
 	// 获得当前页面的所有上级权限
 	permitUpon, activeUponId, _ := this.getNowAndAllUponPermit()
 
-	//Header信息列表
-	permit["Header"] = headerPermitList
-	permit["HeaderActive"], leftTopId = this.getHeaderDefaultActive(*permitUpon)
+	headerActive, leftTopId := this.getHeaderDefaultActive(*permitUpon)
 
+	if "" != headerActive {
+		permit["HeaderActive"] = headerActive
+	}
 	//左侧边栏权限列表
 	permit["Left"] = this.PermitService.GetLeftPermitByGroupId(leftTopId, groupIds)
 	log.Println(activeUponId)
@@ -268,14 +270,17 @@ func (this *AdminController) Prepare() {
 	//	this.SetSession("Uid", "1")
 	//	this.SetSession("Username", "长江")
 	//	this.SetSession("Avater", "/assets/img/avatar5.jpg")
-
+	if true == this.NotNeedLogin {
+		return
+	}
 	//判断是否登录
 	//如果需要登录等于
-	if this.NotNeedLogin == false && this.IsLogin() == false {
+	if this.IsLogin() == false {
 		gotoUrl := general.CreateUrl("passport", "login", make(map[string]string), "web")
 		this.Redirect(gotoUrl, 301)
 		return
 	}
+
 	this.Data["SiteName"] = beego.AppConfig.String("sitename")
 	time := time.Now()
 	y := time.Year()

@@ -6,17 +6,20 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
+var dbPrefix = "admin_"
+
 type GroupPermit struct {
 	Id       string `orm:"column(id);pk" json:"id"`
 	PermitId string `orm:"column(permit_id)"`
 	GroupId  string `orm:"column(group_id)"`
 }
 
-func (u *GroupPermit) TableName() string {
+func (this *GroupPermit) TableName() string {
 	return "grouppermit"
 }
+
 func init() {
-	orm.RegisterModelWithPrefix("admin_", new(GroupPermit))
+	orm.RegisterModelWithPrefix(dbPrefix, new(GroupPermit))
 }
 func (this *GroupPermit) getQuerySeter() orm.QuerySeter {
 	return this.getOrm().QueryTable(this)
@@ -62,24 +65,27 @@ func (this *GroupPermit) GetGroupPermitList(groupIds []string, uppermit_id []str
 	var where string
 	var sliceParams []string
 	// 构建查询对象
-	nowTableName := this.TableName()
-	leftTableName := permit.TableName()
+
+	nowTableName := dbPrefix + this.TableName()
+	leftTableName := dbPrefix + permit.TableName()
 	if len(groupIds) == 0 {
 		return &groupPermitList, nil
 	} else {
 		where += nowTableName + ".group_id in (?)"
-		sliceParams = append(sliceParams, strings.Join(groupIds, ","))
+		sliceParams = append(sliceParams, "\""+strings.Join(groupIds, "\",\"")+"\"")
 	}
 	if len(uppermit_id) > 0 {
-		where += " AND" + leftTableName + ".uppermit_id in (?)"
-		sliceParams = append(sliceParams, strings.Join(uppermit_id, ","))
+		where += " AND " + leftTableName + ".uppermit_id in (?)"
+		sliceParams = append(sliceParams, "\""+strings.Join(uppermit_id, "\",\"")+"\"")
 	}
 
 	qb, _ := orm.NewQueryBuilder("mysql")
 
-	sql := qb.From(nowTableName).
-		LeftJoin(leftTableName).On(nowTableName + ".permit_id=" + leftTableName + ".id").Where(where).OrderBy(leftTableName + "obyid").Asc().String()
+	sql := qb.Select("*").From(nowTableName).
+		LeftJoin(leftTableName).On(nowTableName + ".permit_id=" + leftTableName + ".id").Where(where).OrderBy(leftTableName + ".obyid").Asc().String()
 	_, err := this.getOrm().Raw(sql, sliceParams).QueryRows(&groupPermitList)
-
+	if nil != err {
+		panic(err)
+	}
 	return &groupPermitList, err
 }
