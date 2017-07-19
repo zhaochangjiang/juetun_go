@@ -36,16 +36,19 @@ func (this *Passport) IframeLogin() {
 
 	modelUserMain := new(user.Main)
 	var userMain user.Main
-	if _, ok := (*params)["userName"]; ok {
-		var err error
-		userMain, err = modelUserMain.FetchUserByUserName((*params)["userName"])
-		if nil != err {
-			this.DisplayIframe(err.Error())
-			return
-		}
+	var err error
+	userMain, err = modelUserMain.FetchUserByUserName((*params)["userName"])
+	if nil != err {
+		this.DisplayIframe(err.Error())
+		return
 	}
+
 	adminUser := new(modelAdmin.User)
-	admin_user, _ := adminUser.FetchUserById(userMain.User_id)
+	admin_user, err1 := adminUser.FetchUserById(userMain.User_id)
+	if nil != err1 {
+		this.DisplayIframe(err1.Error())
+		return
+	}
 	encyption := new(general.PasswordEncyption)
 	encyptionString := encyption.Sha1((*params)["pwd"])
 	// 判断密码是否正确
@@ -62,9 +65,10 @@ func (this *Passport) IframeLogin() {
 	this.SetSession("SuperAdmin", admin_user.SuperAdmin)
 
 	//延迟500毫秒
-	time.Sleep(time.Microsecond * 500)
+	time.Sleep(time.Microsecond * 3000)
 	this.Data["LocationHref"] = "/"
 	this.DisplayIframe("")
+
 	//	this.Redirect("/", 302)
 	//渲染文件
 	//this.DisplayIframe("密码正确")

@@ -58,34 +58,38 @@ func (this *GroupPermit) DeleteByPermitIds(permitIds []string) (bool, error) {
 /**
 *
  */
-func (this *GroupPermit) GetGroupPermitList(groupIds []string, uppermit_id []string) (*[]GroupPermit, error) {
+func (this *GroupPermit) GetGroupPermitList(groupIds []string, uppermit_id []string) (*[]PermitAdmin, error) {
 
 	var permit Permit
-	var groupPermitList []GroupPermit
+	var permitList []PermitAdmin
 	var where string
 	var sliceParams []string
-	// 构建查询对象
-
-	nowTableName := dbPrefix + this.TableName()
-	leftTableName := dbPrefix + permit.TableName()
-	if len(groupIds) == 0 {
-		return &groupPermitList, nil
-	} else {
-		where += nowTableName + ".group_id in (?)"
-		sliceParams = append(sliceParams, "\""+strings.Join(groupIds, "\",\"")+"\"")
-	}
-	if len(uppermit_id) > 0 {
-		where += " AND " + leftTableName + ".uppermit_id in (?)"
-		sliceParams = append(sliceParams, "\""+strings.Join(uppermit_id, "\",\"")+"\"")
-	}
 
 	qb, _ := orm.NewQueryBuilder("mysql")
+	// 构建查询对象
+	nowTableName := dbPrefix + this.TableName()
+	leftTableName := dbPrefix + permit.TableName()
 
-	sql := qb.Select("*").From(nowTableName).
-		LeftJoin(leftTableName).On(nowTableName + ".permit_id=" + leftTableName + ".id").Where(where).OrderBy(leftTableName + ".obyid").Asc().String()
-	_, err := this.getOrm().Raw(sql, sliceParams).QueryRows(&groupPermitList)
+	if len(groupIds) == 0 {
+		return &permitList, nil
+	} else {
+		where += nowTableName + ".group_id in (\"" + strings.Join(groupIds, "\",\"") + "\")"
+	}
+	if len(uppermit_id) > 0 {
+		where += " AND " + leftTableName + ".uppermit_id in (\"" + strings.Join(uppermit_id, "\",\"") + "\")"
+	}
+
+	sql := qb.Select(leftTableName + ".*").From(nowTableName).LeftJoin(leftTableName).On(nowTableName + ".permit_id=" + leftTableName + ".id").Where(where).OrderBy(leftTableName + ".obyid").Asc().String()
+
+	_, err := this.getOrm().Raw(sql, sliceParams).QueryRows(&permitList)
 	if nil != err {
 		panic(err)
 	}
-	return &groupPermitList, err
+	result := make([]PermitAdmin, 0)
+	for _, v := range permitList {
+		params := make(map[string]string)
+		params["module"] = v.Module
+		result = append(result, *permit.OrgAdminPermit(v, params))
+	}
+	return &result, err
 }

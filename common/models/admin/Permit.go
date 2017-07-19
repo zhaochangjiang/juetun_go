@@ -46,13 +46,13 @@ func (this *Permit) FetchPermitListByUponId(uponid []interface{}) (*[]PermitAdmi
 	for _, v := range permitList {
 		params := make(map[string]string)
 		params["module"] = v.Module
-		result = append(result, *this.orgAdminPermit(v, params))
+		result = append(result, *this.OrgAdminPermit(v, params))
 	}
 	return &result, num, err
 }
 
 //查询单个权限
-func (this *Permit) FetchPermit(argument map[string]interface{}) ([]*Permit, error) {
+func (this *Permit) FetchPermit(argument map[string]string) ([]*Permit, error) {
 
 	var permitList []*Permit
 	querySeter := this.getQuerySeter()
@@ -113,9 +113,9 @@ func (this *Permit) GetLeftPermit(leftTopId string) *[](map[string]interface{}) 
 	var permitList []Permit
 	var querySeter orm.QuerySeter
 	var childPermitList []Permit
-
+	querySeter = this.getQuerySeter()
 	//查询上级权限为leftTopId的权限列表
-	querySeter = this.getQuerySeter().Filter("uppermit_id__exact", leftTopId).OrderBy("obyid")
+	querySeter = querySeter.Filter("uppermit_id__exact", leftTopId).OrderBy("obyid")
 	querySeter.All(&permitList)
 
 	leftPermitIdList := make([]string, 0)
@@ -123,7 +123,7 @@ func (this *Permit) GetLeftPermit(leftTopId string) *[](map[string]interface{}) 
 		leftPermitIdList = append(leftPermitIdList, v.Id)
 	}
 
-	this.getQuerySeter().Filter("uppermit_id__in", leftPermitIdList).OrderBy("obyid").All(&childPermitList)
+	querySeter.Filter("uppermit_id__in", leftPermitIdList).OrderBy("obyid").All(&childPermitList)
 
 	childPermit := make(map[string][]PermitAdmin)
 	for _, v := range childPermitList {
@@ -210,7 +210,12 @@ func (this *Permit) FetchPermitByGroupIdAndUppermit(groupIds []string, uppermitI
 	}
 	return &permitList
 }
-func (this *Permit) orgAdminPermit(v Permit, params map[string]string) *PermitAdmin {
+
+/**
+* @author karl.zhao<zhaocj2009@hotmail.com>
+*
+ */
+func (this *Permit) OrgAdminPermit(v Permit, params map[string]string) *PermitAdmin {
 	domain := "default" //default默认为当前域名,此处为域名的MAP映射
 	m := this.getDefaultModuleControllerAction(v)
 	permitLeft := PermitAdmin{*m, params, domain}

@@ -43,24 +43,29 @@ func (this *AdminController) InitPermitItem() {
 
 //默认访问的页面
 func (this *AdminController) DefaultControllerAndAction() (string, string) {
-	return "MainController", "GET"
+	return "main", "get"
 }
 
 //获得当前的权限
 func (this *AdminController) getNowPermitData() (*modelsAdmin.Permit, error) {
 	permitModel := new(modelsAdmin.Permit)
-
-	fetchParams := make(map[string]interface{})
+	utils := new(general.Utils)
+	fetchParams := make(map[string]string)
 	fetchParams["Controller"], fetchParams["Action"] = this.GetControllerAndAction()
 
-	fetchParams["Controller"] = strings.ToLower(strings.TrimRight(fetchParams["Controller"].(string), "Controller"))
-	fetchParams["Action"] = strings.ToLower(fetchParams["Action"].(string))
+	fetchParams["Controller"] = strings.ToLower(utils.Substr(fetchParams["Controller"], 0, strings.Index(fetchParams["Controller"], "Controller")))
 
+	fetchParams["Action"] = strings.ToLower(fetchParams["Action"])
+
+	//获得默认的访问连接路由
 	defaultController, actionString := this.DefaultControllerAndAction()
+
+	//如果
 	if defaultController == fetchParams["Controller"] && actionString == fetchParams["Action"] {
 		return permitModel, errors.New("")
 	}
 	var permitModelList []*modelsAdmin.Permit
+
 	permitModelList, err := this.PermitService.FetchPermit(fetchParams)
 	if len(permitModelList) > 0 {
 		permitModel = permitModelList[0]
@@ -88,7 +93,7 @@ func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []interfa
 		if "" == permitData.UppermitId || i > 5 {
 			break
 		}
-		fetchParams := make(map[string]interface{})
+		fetchParams := make(map[string]string)
 		fetchParams["id"] = permitData.UppermitId
 		uponPermitId = *utils.Slice_unshift(uponPermitId, permitData.UppermitId)
 		permitModelList, err1 = permitModel.FetchPermit(fetchParams)
@@ -187,10 +192,7 @@ func (this *AdminController) initAllShowNotSuperAdminPermit() {
 		return
 	}
 	//根据当前用户的用户组获得用户的权限//Header信息列表
-	headerPermit, _ := groupPermit.GetGroupPermitList(groupIds, []string{""})
-	log.Println("--------------------------start------------------------")
-	log.Println(headerPermit)
-	log.Println("---------------------------over-----------------------")
+	headerPermit, _ := groupPermit.GetGroupPermitList(groupIds, []string{"0", ""})
 
 	permit["Header"] = headerPermit
 

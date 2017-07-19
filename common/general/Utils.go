@@ -30,6 +30,39 @@ func (this *Utils) InArrayOrSlice(p interface{}, arr []interface{}) bool {
 	return false
 
 }
+
+/**
+* 字符串截取函数
+*
+ */
+func (this *Utils) Substr(str string, start, length int) string {
+	rs := []rune(str)
+	rl := len(rs)
+	end := 0
+	//如果开始为负数，则从字符串尾部开始算
+	if start < 0 {
+		start = rl - 1 + start
+	}
+	end = start + length
+
+	if start > end {
+		start, end = end, start
+	}
+
+	if start < 0 {
+		start = 0
+	}
+	if start > rl {
+		start = rl
+	}
+	if end < 0 {
+		end = 0
+	}
+	if end > rl {
+		end = rl
+	}
+	return string(rs[start:end])
+}
 func (this *Utils) ConvertInterfaceToString(p interface{}) (string, error) {
 	var c string
 	var e error

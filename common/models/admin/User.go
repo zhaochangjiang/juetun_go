@@ -1,6 +1,8 @@
 package admin
 
 import (
+	"errors"
+
 	"github.com/astaxie/beego/orm"
 )
 
@@ -28,6 +30,9 @@ func (this *User) getQuerySeter() orm.QuerySeter {
 }
 
 func (this *User) FetchUserById(userid string) (*User, error) {
+	if "" == userid {
+		return this, errors.New("userid is null")
+	}
 	err := this.getQuerySeter().Filter("uid", userid).One(this)
 	return this, err
 }
