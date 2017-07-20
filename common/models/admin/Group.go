@@ -5,6 +5,7 @@ import (
 )
 
 type Group struct {
+	CommonModel
 	Id         string `orm:"column(id);pk" json:"id"`
 	Name       string `orm:"column(name)"`
 	SuperAdmin string `orm:varchar(30);orm:"column(super_admin)"`
@@ -15,7 +16,8 @@ func (u *Group) TableName() string {
 	return "group"
 }
 func init() {
-	orm.RegisterModelWithPrefix("admin_", new(Group))
+	group := new(Group)
+	orm.RegisterModelWithPrefix(group.GetTablePrefix(), group)
 }
 func (this *Group) getOrm() orm.Ormer {
 	o := orm.NewOrm()

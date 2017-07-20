@@ -6,6 +6,7 @@ import (
 
 //表头信息存储表
 type TableSetting struct {
+	CommonModel
 	Id string `orm:"column(id);varchar(32);pk" json:"id"`
 
 	//字段名称
@@ -26,7 +27,8 @@ type TableSetting struct {
 }
 
 func init() {
-	orm.RegisterModelWithPrefix("admin_", new(TableSetting))
+	tableSetting := new(TableSetting)
+	orm.RegisterModelWithPrefix(tableSetting.GetTablePrefix(), tableSetting)
 }
 func (u *TableSetting) TableName() string {
 	return "table_setting"

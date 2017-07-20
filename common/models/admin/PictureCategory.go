@@ -5,6 +5,7 @@ import (
 )
 
 type PictureCategory struct {
+	CommonModel
 	PictureCategoryId   string `orm:"column(picture_category_id);pk" json:"picture_category_id"`
 	PictureCategoryname string `orm:"column(picture_categoryname)"`
 	PictureCategorykey  string `orm:"column(picture_category_key)"`
@@ -12,7 +13,8 @@ type PictureCategory struct {
 }
 
 func init() {
-	orm.RegisterModelWithPrefix("admin_", new(PictureCategory))
+	pictureCate := new(PictureCategory)
+	orm.RegisterModelWithPrefix(pictureCate.GetTablePrefix(), pictureCate)
 }
 func (this *PictureCategory) TableName() string {
 	return "picture_category"

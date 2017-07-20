@@ -6,9 +6,8 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-var dbPrefix = "admin_"
-
 type GroupPermit struct {
+	CommonModel
 	Id       string `orm:"column(id);pk" json:"id"`
 	PermitId string `orm:"column(permit_id)"`
 	GroupId  string `orm:"column(group_id)"`
@@ -19,7 +18,8 @@ func (this *GroupPermit) TableName() string {
 }
 
 func init() {
-	orm.RegisterModelWithPrefix(dbPrefix, new(GroupPermit))
+	model := new(GroupPermit)
+	orm.RegisterModelWithPrefix(model.GetTablePrefix(), model)
 }
 func (this *GroupPermit) getQuerySeter() orm.QuerySeter {
 	return this.getOrm().QueryTable(this)
@@ -61,17 +61,19 @@ func (this *GroupPermit) DeleteByPermitIds(permitIds []string) (bool, error) {
 func (this *GroupPermit) GetGroupPermitList(groupIds []string, uppermit_id []string) (*[]PermitAdmin, error) {
 
 	var permit Permit
-	var permitList []PermitAdmin
+	var permitList []Permit
 	var where string
 	var sliceParams []string
-
+	result := make([]PermitAdmin, 0)
 	qb, _ := orm.NewQueryBuilder("mysql")
+
+	tablePrefix := this.GetTablePrefix()
 	// 构建查询对象
-	nowTableName := dbPrefix + this.TableName()
-	leftTableName := dbPrefix + permit.TableName()
+	nowTableName := tablePrefix + this.TableName()
+	leftTableName := tablePrefix + permit.TableName()
 
 	if len(groupIds) == 0 {
-		return &permitList, nil
+		return &result, nil
 	} else {
 		where += nowTableName + ".group_id in (\"" + strings.Join(groupIds, "\",\"") + "\")"
 	}
@@ -85,7 +87,7 @@ func (this *GroupPermit) GetGroupPermitList(groupIds []string, uppermit_id []str
 	if nil != err {
 		panic(err)
 	}
-	result := make([]PermitAdmin, 0)
+
 	for _, v := range permitList {
 		params := make(map[string]string)
 		params["module"] = v.Module

@@ -4,13 +4,15 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-type Groupuser struct {
-	AdminUserid string `orm:"column(admin_userid);pk" json:"admin_userid"`
-	GroupId     string `orm:"column(group_id)"`
+func init() {
+	groupUser := new(Groupuser)
+	orm.RegisterModelWithPrefix(groupUser.GetTablePrefix(), groupUser)
 }
 
-func init() {
-	orm.RegisterModelWithPrefix("admin_", new(Groupuser))
+type Groupuser struct {
+	CommonModel
+	AdminUserid string `orm:"column(admin_userid);pk" json:"admin_userid"`
+	GroupId     string `orm:"column(group_id)"`
 }
 
 func (u *Groupuser) TableName() string {

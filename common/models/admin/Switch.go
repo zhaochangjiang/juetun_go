@@ -5,6 +5,7 @@ import (
 )
 
 type Switch struct {
+	CommonModel
 	Id             string `orm:"column(id);varchar(32);pk" json:"id"`
 	Name           string `orm:"varchar(20)";orm:"column(name)"`
 	Status         string `orm:"column(status)"`
@@ -14,7 +15,8 @@ type Switch struct {
 }
 
 func init() {
-	orm.RegisterModelWithPrefix("admin_", new(Switch))
+	switchModel := new(Switch)
+	orm.RegisterModelWithPrefix(switchModel.GetTablePrefix(), switchModel)
 }
 func (u *Switch) TableName() string {
 	return "switch"

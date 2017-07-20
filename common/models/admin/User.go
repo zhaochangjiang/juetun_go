@@ -7,6 +7,7 @@ import (
 )
 
 type User struct {
+	CommonModel
 	Uid        string `orm:"column(uid);pk;"`
 	Name       string `orm:varchar(30)`
 	SuperAdmin string `orm:"column(super_admin)"`
@@ -17,7 +18,8 @@ func (u *User) TableName() string {
 	return "user"
 }
 func init() {
-	orm.RegisterModelWithPrefix("admin_", new(User))
+	user := new(User)
+	orm.RegisterModelWithPrefix(user.GetTablePrefix(), user)
 }
 func (this *User) getOrm() orm.Ormer {
 	o := orm.NewOrm()

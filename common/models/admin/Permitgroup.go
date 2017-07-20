@@ -5,13 +5,15 @@ import (
 )
 
 type Permitgroup struct {
+	CommonModel
 	Id       string `orm:"column(id);pk" json:"id"`
 	PermitId string `orm:"column(permit_id);`
 	GroupId  string `orm:"column(group_id);`
 }
 
 func init() {
-	orm.RegisterModelWithPrefix("admin_", new(Permitgroup))
+	permitgroup := new(Permitgroup)
+	orm.RegisterModelWithPrefix(permitgroup.GetTablePrefix(), permitgroup)
 }
 func (u *Permitgroup) TableName() string {
 	return "permitgroup"

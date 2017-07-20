@@ -5,6 +5,7 @@ import (
 )
 
 type Serverlist struct {
+	CommonModel
 	Id          string `orm:"column(id);pk" json:"id"`
 	IpAddr      string `orm:varchar(30);orm:"column(ip_addr);`
 	MachineRoom string `orm:varchar(30);orm:"column(machine_room);`
@@ -12,7 +13,8 @@ type Serverlist struct {
 }
 
 func init() {
-	orm.RegisterModelWithPrefix("admin_", new(Serverlist))
+	serverlist := new(Serverlist)
+	orm.RegisterModelWithPrefix(serverlist.GetTablePrefix(), serverlist)
 }
 func (u *Serverlist) TableName() string {
 	return "serverlist"

@@ -7,6 +7,7 @@ import (
 )
 
 type Permit struct {
+	CommonModel
 	Id         string `orm:"column(id);pk" json:"id"`
 	Name       string `orm:varchar(50);orm:"column(name)"`
 	Module     string `orm:varchar(30);orm:"column(module)"`
@@ -19,7 +20,8 @@ type Permit struct {
 }
 
 func init() {
-	orm.RegisterModelWithPrefix("admin_", new(Permit))
+	permit := new(Permit)
+	orm.RegisterModelWithPrefix(permit.GetTablePrefix(), permit)
 }
 func (this *Permit) TableName() string {
 	return "permit"
@@ -128,7 +130,7 @@ func (this *Permit) GetLeftPermit(leftTopId string) *[](map[string]interface{}) 
 	childPermit := make(map[string][]PermitAdmin)
 	for _, v := range childPermitList {
 		params := make(map[string]string)
-		childPermit[v.UppermitId] = append(childPermit[v.UppermitId], *(this.orgAdminPermit(v, params)))
+		childPermit[v.UppermitId] = append(childPermit[v.UppermitId], *(this.OrgAdminPermit(v, params)))
 	}
 
 	for _, v := range permitList {
@@ -148,7 +150,12 @@ func (this *Permit) GetLeftPermit(leftTopId string) *[](map[string]interface{}) 
 	return &result
 }
 
-//获得左边的权限列表
+/**
+* 获得左边的权限列表
+* @author karl.zhao<zhaocj2009@hotmail.com>
+* @date 2017/07/20
+ */
+
 func (this *Permit) GetLeftPermitByGroupId(leftTopId string, groupIds []string) *[](map[string]interface{}) {
 
 	var result [](map[string]interface{})
@@ -166,7 +173,7 @@ func (this *Permit) GetLeftPermitByGroupId(leftTopId string, groupIds []string) 
 	childPermitList := this.FetchPermitByGroupIdAndUppermit(groupIds, leftPermitIdList)
 	for _, v := range *childPermitList {
 		params := make(map[string]string)
-		childPermit[v.UppermitId] = append(childPermit[v.UppermitId], *(this.orgAdminPermit(v, params)))
+		childPermit[v.UppermitId] = append(childPermit[v.UppermitId], *(this.OrgAdminPermit(v, params)))
 	}
 	for _, v := range *permitList {
 
@@ -183,6 +190,11 @@ func (this *Permit) GetLeftPermitByGroupId(leftTopId string, groupIds []string) 
 	}
 	return &result
 }
+
+/**
+* @author karl.zhao<zhaocj2009@hotmail.com>
+* @date 2017/07/20
+ */
 func (this *Permit) FetchPermitByGroupIdAndUppermit(groupIds []string, uppermitIds []string) *[]Permit {
 
 	var sliceParams []string
@@ -191,18 +203,19 @@ func (this *Permit) FetchPermitByGroupIdAndUppermit(groupIds []string, uppermitI
 	var leftTableName string
 	var permitList []Permit
 	var groupPermit GroupPermit
+	commonModel := new(CommonModel)
+	//获得表前缀
+	tablePrefix := commonModel.GetTablePrefix()
+
 	// 构建查询对象
-	nowTableName = this.TableName()
-	leftTableName = groupPermit.TableName()
+	nowTableName = tablePrefix + this.TableName()
+	leftTableName = tablePrefix + groupPermit.TableName()
 
 	//查询上级权限为leftTopId的权限列表
-	where += nowTableName + ".group_id in (?)"
-	where += nowTableName + ".uppermit_id in (?)"
-	sliceParams = append(sliceParams, strings.Join(groupIds, ","))
-	sliceParams = append(sliceParams, strings.Join(uppermitIds, ","))
-
+	where += nowTableName + ".group_id in (\"" + strings.Join(groupIds, "\",\"") + "\")"
+	where += nowTableName + ".uppermit_id in (" + strings.Join(uppermitIds, "\",\"") + ")"
 	qb, _ := orm.NewQueryBuilder("mysql")
-	sql := qb.From(nowTableName).
+	sql := qb.Select(nowTableName + ".*").From(nowTableName).
 		LeftJoin(leftTableName).On(leftTableName + ".permit_id=" + nowTableName + ".id").Where(where).OrderBy(nowTableName + "obyid").Asc().String()
 	_, err := this.getOrm().Raw(sql, sliceParams).QueryRows(&permitList)
 	if nil != err {
@@ -213,7 +226,7 @@ func (this *Permit) FetchPermitByGroupIdAndUppermit(groupIds []string, uppermitI
 
 /**
 * @author karl.zhao<zhaocj2009@hotmail.com>
-*
+* @date 2017/07/20
  */
 func (this *Permit) OrgAdminPermit(v Permit, params map[string]string) *PermitAdmin {
 	domain := "default" //default默认为当前域名,此处为域名的MAP映射
@@ -222,6 +235,10 @@ func (this *Permit) OrgAdminPermit(v Permit, params map[string]string) *PermitAd
 	return &permitLeft
 }
 
+/**
+* @author karl.zhao<zhaocj2009@hotmail.com>
+* @date 2017/07/20
+ */
 func (this *Permit) getDefaultModuleControllerAction(v Permit) *Permit {
 
 	//判断是否为header属性
@@ -230,6 +247,11 @@ func (this *Permit) getDefaultModuleControllerAction(v Permit) *Permit {
 	}
 	return &v
 }
+
+/**
+* @author karl.zhao<zhaocj2009@hotmail.com>
+* @date 2017/07/20
+ */
 func (this *Permit) getModuleDefaultPermit(permit Permit) *Permit {
 
 	//默认访问地址
