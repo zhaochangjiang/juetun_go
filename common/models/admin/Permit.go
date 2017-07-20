@@ -203,6 +203,11 @@ func (this *Permit) FetchPermitByGroupIdAndUppermit(groupIds []string, uppermitI
 	var leftTableName string
 	var permitList []Permit
 	var groupPermit GroupPermit
+
+	if len(groupIds) == 0 || len(uppermitIds) == 0 {
+		return &permitList
+	}
+
 	commonModel := new(CommonModel)
 	//获得表前缀
 	tablePrefix := commonModel.GetTablePrefix()
@@ -212,11 +217,12 @@ func (this *Permit) FetchPermitByGroupIdAndUppermit(groupIds []string, uppermitI
 	leftTableName = tablePrefix + groupPermit.TableName()
 
 	//查询上级权限为leftTopId的权限列表
-	where += nowTableName + ".group_id in (\"" + strings.Join(groupIds, "\",\"") + "\")"
-	where += nowTableName + ".uppermit_id in (" + strings.Join(uppermitIds, "\",\"") + ")"
+	where += leftTableName + ".group_id in (\"" + strings.Join(groupIds, "\",\"") + "\")"
+	where += " AND " + nowTableName + ".uppermit_id in (" + strings.Join(uppermitIds, "\",\"") + ")"
+
 	qb, _ := orm.NewQueryBuilder("mysql")
 	sql := qb.Select(nowTableName + ".*").From(nowTableName).
-		LeftJoin(leftTableName).On(leftTableName + ".permit_id=" + nowTableName + ".id").Where(where).OrderBy(nowTableName + "obyid").Asc().String()
+		LeftJoin(leftTableName).On(leftTableName + ".permit_id=" + nowTableName + ".id").Where(where).OrderBy(nowTableName + ".obyid").Asc().String()
 	_, err := this.getOrm().Raw(sql, sliceParams).QueryRows(&permitList)
 	if nil != err {
 		panic(err)

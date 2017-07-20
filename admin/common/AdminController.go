@@ -108,6 +108,41 @@ func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []interfa
 	return &result, uponPermitId, err1
 }
 
+//获得当前地址对应的数据库存储的权限及所有上级权限
+func (this *AdminController) getNowNotSuperAdminAndAllUponPermit(groupIds *[]string) (*[]interface{}, []interface{}, error) {
+
+	permitModel := new(modelsAdmin.Permit)
+	log.Println(*groupIds)
+	result := make([]interface{}, 0)
+	utils := new(general.Utils)
+	uponPermitId := make([]interface{}, 0)
+	permitData, _ := this.getNowPermitData()
+
+	//默认的上级机构必须查询
+	uponPermitId = *utils.Slice_unshift(uponPermitId, 0)
+	var err1 error
+	var permitModelList []*modelsAdmin.Permit
+	i := 0
+	for {
+		i++
+		if "" == permitData.UppermitId || i > 5 {
+			break
+		}
+		fetchParams := make(map[string]string)
+		fetchParams["id"] = permitData.UppermitId
+		uponPermitId = *utils.Slice_unshift(uponPermitId, permitData.UppermitId)
+		permitModelList, err1 = permitModel.FetchPermit(fetchParams)
+		if len(permitModelList) <= 0 {
+			break
+		}
+		permitData = (permitModelList[0])
+		//往队列的队首添加数据
+		result = *utils.Slice_unshift(result, permitData)
+
+	}
+	return &result, uponPermitId, err1
+}
+
 //获得header默认的Type
 func (this *AdminController) getHeaderDefaultActive(permitUpon []interface{}) (string, string) {
 	var activeId string
@@ -115,7 +150,7 @@ func (this *AdminController) getHeaderDefaultActive(permitUpon []interface{}) (s
 
 	length := len(permitUpon)
 	if length > 0 {
-		permit := permitUpon[0].(*modelsAdmin.Permit)
+		permit := permitUpon[0].(*modelsAdmin.PermitAdmin)
 		headerActive = permit.Module
 		activeId = permit.Id
 	}
@@ -146,6 +181,7 @@ func (this *AdminController) initAllShowSuperAdminPermit() {
 	//左侧边栏权限列表
 	permit["Left"] = this.PermitService.GetLeftPermit(leftTopId)
 	this.Data["Permit"] = permit
+
 	log.Println(activeUponId)
 }
 
@@ -193,21 +229,33 @@ func (this *AdminController) initAllShowNotSuperAdminPermit() {
 	}
 	//根据当前用户的用户组获得用户的权限//Header信息列表
 	headerPermit, _ := groupPermit.GetGroupPermitList(groupIds, []string{"0", ""})
-
+	log.Println("")
+	log.Println("")
+	log.Println(headerPermit)
+	log.Println("")
+	log.Println("")
 	permit["Header"] = headerPermit
 
 	// 获得当前页面的所有上级权限
-	permitUpon, activeUponId, _ := this.getNowAndAllUponPermit()
+	permitUpon, activeUponId, _ := this.getNowNotSuperAdminAndAllUponPermit(&groupIds)
 
-	headerActive, leftTopId := this.getHeaderDefaultActive(*permitUpon)
+	permitArray := make([]interface{}, 0)
+	for _, v := range *headerPermit {
+		permitArray = append(permitArray, &v)
+	}
+
+	headerActive, leftTopId := this.getHeaderDefaultActive(permitArray)
 
 	if "" != headerActive {
 		permit["HeaderActive"] = headerActive
 	}
 	//左侧边栏权限列表
 	permit["Left"] = this.PermitService.GetLeftPermitByGroupId(leftTopId, groupIds)
-	log.Println(activeUponId)
+
 	this.Data["Permit"] = permit
+
+	log.Println(activeUponId)
+	log.Println(permitUpon)
 }
 
 //判断是否为超级管理员
