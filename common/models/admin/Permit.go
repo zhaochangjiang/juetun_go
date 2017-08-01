@@ -98,14 +98,23 @@ type PermitAdmin struct {
 	Domain string
 }
 
-//
+/**
+* @author karl.zhao<zhaocj2009@126.com>
+* @Date 2017/08/01
+*
+ */
 func (this *Permit) FetchDefaultPermitByModuleString(moduleString string) {
 	this.Controller = "data"
 	this.Action = "list"
 	this.DomainMap = ""
 }
 
-//获得左边的权限列表
+/**
+* 获得左边的权限列表
+* @author karl.zhao<zhaocj2009@126.com>
+* @Date 2017/08/01
+*
+ */
 func (this *Permit) GetLeftPermit(leftTopId string) *[](map[string]interface{}) {
 	result := make([]map[string]interface{}, 0)
 	if leftTopId == "" {
@@ -169,7 +178,6 @@ func (this *Permit) GetLeftPermitByGroupId(leftTopId string, groupIds []string) 
 	for _, v := range *permitList {
 		leftPermitIdList = append(leftPermitIdList, v.Id)
 	}
-
 	childPermitList := this.FetchPermitByGroupIdAndUppermit(groupIds, leftPermitIdList)
 	for _, v := range *childPermitList {
 		params := make(map[string]string)
@@ -178,7 +186,8 @@ func (this *Permit) GetLeftPermitByGroupId(leftTopId string, groupIds []string) 
 	for _, v := range *permitList {
 
 		everyData := make(map[string]interface{})
-		everyData["Permit"] = v
+		params := make(map[string]string)
+		everyData["Permit"] = this.OrgAdminPermit(v, params)
 		everyData["Active"] = false //默认设置不为选中的状态
 		everyData["ChildList"] = make([]PermitAdmin, 0)
 
@@ -218,7 +227,7 @@ func (this *Permit) FetchPermitByGroupIdAndUppermit(groupIds []string, uppermitI
 
 	//查询上级权限为leftTopId的权限列表
 	where += leftTableName + ".group_id in (\"" + strings.Join(groupIds, "\",\"") + "\")"
-	where += " AND " + nowTableName + ".uppermit_id in (" + strings.Join(uppermitIds, "\",\"") + ")"
+	where += " AND " + nowTableName + ".uppermit_id in (\"" + strings.Join(uppermitIds, "\",\"") + "\")"
 
 	qb, _ := orm.NewQueryBuilder("mysql")
 	sql := qb.Select(nowTableName + ".*").From(nowTableName).

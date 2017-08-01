@@ -4,49 +4,53 @@ import (
 	"errors"
 	"juetun/common/general"
 	modelsAdmin "juetun/common/models/admin"
-
-	"github.com/astaxie/beego"
-
 	"log"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/astaxie/beego"
 )
 
 type AdminController struct {
 	PermitService *modelsAdmin.Permit
 	general.BaseController
-	NotNeedLogin bool
+	NotNeedLogin bool //是否需要登录
+	isSuperAdmin bool //是否为超级管理员
 }
 
-//返回当前后台的权限列表
+/**
+* 返回当前后台的权限列表
+* @author karl.zhao<zhaocj2009@126.com>
+* @Date 2017/08/01
+*
+ */
 func (this *AdminController) InitPermitItem() {
-
-	//	//初始化权限操作Service
-	//this.PermitService = new(modelsAdmin.Permit)
-
-	var isSuperAdmin = true
-
 	//如果不是超级管理员
 	if !this.authSuperAdmin() {
-
-		isSuperAdmin = false
-		//this.getListNotSuperAdmin()
 		this.initAllShowNotSuperAdminPermit()
-
 	} else {
 		this.initAllShowSuperAdminPermit()
 	}
-	//初始化是否为超级管理员的配置
-	this.Data["isSuperAdmin"] = isSuperAdmin
+
 }
 
-//默认访问的页面
+/**
+* 默认访问的页面
+* @author karl.zhao<zhaocj2009@126.com>
+* @Date 2017/08/01
+*
+ */
 func (this *AdminController) DefaultControllerAndAction() (string, string) {
 	return "main", "get"
 }
 
-//获得当前的权限
+/**
+* 获得当前的权限
+* @author karl.zhao<zhaocj2009@126.com>
+* @Date 2017/08/01
+*
+ */
 func (this *AdminController) getNowPermitData() (*modelsAdmin.Permit, error) {
 	permitModel := new(modelsAdmin.Permit)
 	utils := new(general.Utils)
@@ -73,7 +77,12 @@ func (this *AdminController) getNowPermitData() (*modelsAdmin.Permit, error) {
 	return permitModel, err
 }
 
-//获得当前地址对应的数据库存储的权限及所有上级权限
+/**
+* 获得当前地址对应的数据库存储的权限及所有上级权限
+* @author karl.zhao<zhaocj2009@126.com>
+* @Date 2017/08/01
+*
+ */
 func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []interface{}, error) {
 
 	permitModel := new(modelsAdmin.Permit)
@@ -108,7 +117,12 @@ func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []interfa
 	return &result, uponPermitId, err1
 }
 
-//获得当前地址对应的数据库存储的权限及所有上级权限
+/**
+* 获得当前地址对应的数据库存储的权限及所有上级权限
+* @author karl.zhao<zhaocj2009@126.com>
+* @Date 2017/08/01
+*
+ */
 func (this *AdminController) getNowNotSuperAdminAndAllUponPermit(groupIds *[]string) (*[]interface{}, []interface{}, error) {
 
 	permitModel := new(modelsAdmin.Permit)
@@ -143,7 +157,12 @@ func (this *AdminController) getNowNotSuperAdminAndAllUponPermit(groupIds *[]str
 	return &result, uponPermitId, err1
 }
 
-//获得header默认的Type
+/**
+* 获得header默认的Type
+* @author karl.zhao<zhaocj2009@126.com>
+* @Date 2017/08/01
+*
+ */
 func (this *AdminController) getHeaderDefaultActive(permitUpon []interface{}) (string, string) {
 	var activeId string
 	var headerActive = "dashboard"
@@ -157,21 +176,22 @@ func (this *AdminController) getHeaderDefaultActive(permitUpon []interface{}) (s
 	return headerActive, activeId
 }
 
-//获得超级管理员具备的页面展示权限
 /**
-*@param isSuperAdmin 是否为超级管理员
+*获得超级管理员具备的页面展示权限
+* @author karl.zhao<zhaocj2009@126.com>
+* @Date 2017/08/01
+* @param isSuperAdmin 是否为超级管理员
 *
  */
 func (this *AdminController) initAllShowSuperAdminPermit() {
 	var leftTopId string
-	var permit map[string]interface{}
-
+	permit := make(map[string]interface{})
 	// 获得当前页面的所有上级权限
 	permitUpon, activeUponId, _ := this.getNowAndAllUponPermit()
 
 	//获得页面头部的信息
 	headerPermitList, _, _ := this.PermitService.FetchPermitListByUponId([]interface{}{0})
-
+	//Header信息列表
 	//如果是超级管理员，那么权限对于此账号无效
 
 	//Header信息列表
@@ -185,6 +205,11 @@ func (this *AdminController) initAllShowSuperAdminPermit() {
 	log.Println(activeUponId)
 }
 
+/**
+* @author karl.zhao<zhaocj2009@126.com>
+* @Date 2017/08/01
+*
+ */
 func (this *AdminController) orgPermit(uponIdList *[]modelsAdmin.Permit) *map[string][]modelsAdmin.Permit {
 	var result = make(map[string][]modelsAdmin.Permit)
 
@@ -193,6 +218,13 @@ func (this *AdminController) orgPermit(uponIdList *[]modelsAdmin.Permit) *map[st
 	}
 	return &result
 }
+
+/**
+*获得当前用户的用户组
+* @author karl.zhao<zhaocj2009@126.com>
+* @Date 2017/08/01
+*
+ */
 func (this *AdminController) getNowUserGroupId() []string {
 	var groupIds []string
 	var uid = this.GetSession("Uid")
@@ -214,7 +246,12 @@ func (this *AdminController) getNowUserGroupId() []string {
 	return groupIds
 }
 
-//处理当前非超级管理员的权限
+/**
+*处理当前非超级管理员的权限
+* @author karl.zhao<zhaocj2009@126.com>
+* @Date 2017/08/01
+*
+ */
 func (this *AdminController) initAllShowNotSuperAdminPermit() {
 	//用户组权限ID列表
 	var groupPermit modelsAdmin.GroupPermit
@@ -229,11 +266,6 @@ func (this *AdminController) initAllShowNotSuperAdminPermit() {
 	}
 	//根据当前用户的用户组获得用户的权限//Header信息列表
 	headerPermit, _ := groupPermit.GetGroupPermitList(groupIds, []string{"0", ""})
-	log.Println("")
-	log.Println("")
-	log.Println(headerPermit)
-	log.Println("")
-	log.Println("")
 	permit["Header"] = headerPermit
 
 	// 获得当前页面的所有上级权限
@@ -251,28 +283,17 @@ func (this *AdminController) initAllShowNotSuperAdminPermit() {
 	}
 	//左侧边栏权限列表
 	permit["Left"] = this.PermitService.GetLeftPermitByGroupId(leftTopId, groupIds)
-
 	this.Data["Permit"] = permit
-
 	log.Println(activeUponId)
 	log.Println(permitUpon)
 }
 
-//判断是否为超级管理员
-func (this *AdminController) authSuperAdmin() bool {
-
-	var authSuperAdmin = false
-	if nil != this.GetSession("SuperAdmin") {
-		switch this.GetSession("SuperAdmin").(string) {
-		case "yes":
-			authSuperAdmin = true
-		default:
-			authSuperAdmin = false
-		}
-	}
-	return authSuperAdmin
-}
-
+/**
+* 头部页面的CSS JS文件引入
+* @author karl.zhao<zhaocj2009@126.com>
+* @Date 2017/08/01
+*
+ */
 func (this *AdminController) InitPageScript() {
 
 	this.Data["PageVersion"] = "1.0"
@@ -310,6 +331,13 @@ func (this *AdminController) InitPageScript() {
 		"AdminLTE/app.js",
 		"AdminLTE/dashboard.js"}
 }
+
+/**
+* 上下文调用方法，用作引入初始化用
+* @author karl.zhao<zhaocj2009@126.com>
+* @Date 2017/08/01
+*
+ */
 func (this *AdminController) Prepare() {
 
 	//引入父类的处理逻辑
@@ -351,7 +379,33 @@ func (this *AdminController) Prepare() {
 
 }
 
-//判断是否登录
+/**
+* 判断是否为超级管理员
+* @author karl.zhao<zhaocj2009@126.com>
+* @Date 2017/08/01
+*
+ */
+func (this *AdminController) authSuperAdmin() bool {
+	this.isSuperAdmin = false
+	if nil != this.GetSession("SuperAdmin") {
+		switch this.GetSession("SuperAdmin").(string) {
+		case "yes":
+			this.isSuperAdmin = true
+		default:
+			this.isSuperAdmin = false
+		}
+	}
+	//初始化是否为超级管理员的配置
+	this.Data["isSuperAdmin"] = this.isSuperAdmin
+	return this.isSuperAdmin
+}
+
+/**
+* 判断是否登录
+* @author karl.zhao<zhaocj2009@126.com>
+* @Date 2017/08/01
+*
+ */
 func (this *AdminController) IsLogin() bool {
 	uid := this.GetSession("Uid")
 	if nil == uid {
@@ -377,7 +431,12 @@ func (this *AdminController) IsLogin() bool {
 
 }
 
-//设置Layout
+/**
+* 设置用于页面排版Layout
+* @author karl.zhao<zhaocj2009@126.com>
+* @Date 2017/08/01
+*
+ */
 func (this *AdminController) LoadCommon(tplName string) {
 
 	this.Layout = "layout/main.html"
