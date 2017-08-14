@@ -27,7 +27,12 @@ func (this *Passport) Login() {
 	this.TplName = "passport/login.html"
 }
 
-//登录提交
+/**
+* @author karl.zhao <zhaocj2009@hotmail.com>
+* @date 2017/08/14
+* 登录提交
+*
+ */
 func (this *Passport) IframeLogin() {
 	params, validateAuth := this.validateIframeLogin()
 	if !validateAuth {
@@ -73,6 +78,13 @@ func (this *Passport) IframeLogin() {
 	//渲染文件
 	//this.DisplayIframe("密码正确")
 }
+
+/**
+* @author karl.zhao <zhaocj2009@hotmail.com>
+* @date 2017/08/14
+* 检验登录提交的参数
+*
+ */
 func (this *Passport) validateIframeLogin() (*map[string]string, bool) {
 	params := make(map[string]string, 0)
 	params["userName"] = this.GetString("username")
@@ -91,26 +103,46 @@ func (this *Passport) validateIframeLogin() (*map[string]string, bool) {
 	return &params, pass
 }
 
-//忘记密码
+/**
+* @author karl.zhao <zhaocj2009@hotmail.com>
+* @date 2017/08/14
+* 忘记密码
+*
+ */
 func (this *Passport) Forget() {
 
 	this.Layout = "layout/passport.html"
 	this.TplName = "passport/forget.html"
 }
 
-//验证码请求
+/**
+* @author karl.zhao <zhaocj2009@hotmail.com>
+* @date 2017/08/14
+* 验证码请求
+*
+ */
 func (this *Passport) Authcode() {
 	authcode := new(general.AuthCode)
 	authcode.GetImage(&this.BaseController.Controller)
 }
 
-//注册
+/**
+* @author karl.zhao <zhaocj2009@hotmail.com>
+* @date 2017/08/14
+* 注册
+*
+ */
 func (this *Passport) Register() {
 	this.Layout = "layout/passport.html"
 	this.TplName = "passport/register.html"
 }
 
-//注册数据处理
+/**
+* @author karl.zhao <zhaocj2009@hotmail.com>
+* @date 2017/08/14
+* 注册数据处理
+*
+ */
 func (this *Passport) IframeRegister() {
 	authcode := new(general.AuthCode)
 	validate := authcode.Validate(&this.BaseController.Controller)

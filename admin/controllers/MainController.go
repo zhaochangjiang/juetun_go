@@ -4,6 +4,7 @@ import (
 	acommon "juetun/admin/common"
 	"juetun/common/general"
 	modelsAdmin "juetun/common/models/admin"
+	"juetun/common/utils"
 	"strings"
 
 	"log"
@@ -13,11 +14,15 @@ type MainController struct {
 	acommon.AdminController
 }
 
-//实现本结构体的基本加载，本文件中所有的界面不需要验证登录
+/**
+* @author karl.zhao <zhaocj2009@hotmail.com>
+* @date 2017/08/14
+* 实现本结构体的基本加载，本文件中所有的界面不需要验证登录
+*
+ */
 func (this *MainController) Prepare() {
 
 	_, a := this.GetControllerAndAction()
-	utils := new(general.Utils)
 
 	//设置不需要登录的Action
 	var notNeedLogin = []interface{}{"Goto"}
@@ -30,6 +35,8 @@ func (this *MainController) Prepare() {
 }
 
 /**
+* @author karl.zhao <zhaocj2009@hotmail.com>
+* @date 2017/08/14
 * 301跳转页面
  */
 func (this *MainController) Goto() {
@@ -53,6 +60,12 @@ func (this *MainController) Goto() {
 	this.Redirect("地址不正确!", 404)
 
 }
+
+/**
+* @author karl.zhao <zhaocj2009@hotmail.com>
+* @date 2017/08/14
+* 首页访问默认页面
+ */
 func (this *MainController) Get() {
 	this.LoadCommon("default/index.html")
 }

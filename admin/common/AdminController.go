@@ -4,6 +4,7 @@ import (
 	"errors"
 	"juetun/common/general"
 	modelsAdmin "juetun/common/models/admin"
+	"juetun/common/utils"
 	"log"
 	"strconv"
 	"strings"
@@ -53,7 +54,6 @@ func (this *AdminController) DefaultControllerAndAction() (string, string) {
  */
 func (this *AdminController) getNowPermitData() (*modelsAdmin.Permit, error) {
 	permitModel := new(modelsAdmin.Permit)
-	utils := new(general.Utils)
 	fetchParams := make(map[string]string)
 	fetchParams["Controller"], fetchParams["Action"] = this.GetControllerAndAction()
 
@@ -88,7 +88,7 @@ func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []interfa
 	permitModel := new(modelsAdmin.Permit)
 
 	result := make([]interface{}, 0)
-	utils := new(general.Utils)
+
 	uponPermitId := make([]interface{}, 0)
 	permitData, _ := this.getNowPermitData()
 
@@ -128,7 +128,7 @@ func (this *AdminController) getNowNotSuperAdminAndAllUponPermit(groupIds *[]str
 	permitModel := new(modelsAdmin.Permit)
 	log.Println(*groupIds)
 	result := make([]interface{}, 0)
-	utils := new(general.Utils)
+
 	uponPermitId := make([]interface{}, 0)
 	permitData, _ := this.getNowPermitData()
 
