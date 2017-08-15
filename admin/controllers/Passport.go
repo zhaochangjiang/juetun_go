@@ -21,7 +21,9 @@ func (this *Passport) Prepare() {
 
 //登录页面
 func (this *Passport) Login() {
-
+	if this.IsLogin() {
+		this.Redirect("/", 301)
+	}
 	//渲染文件
 	this.Layout = "layout/passport.html"
 	this.TplName = "passport/login.html"
@@ -63,6 +65,7 @@ func (this *Passport) IframeLogin() {
 		return
 	}
 
+	//将系统常驻信息保存到Session中
 	this.SetSession("Uid", userMain.User_id)
 	this.SetSession("Username", userMain.Username)
 	this.SetSession("Avater", "/assets/img/user.jpg")

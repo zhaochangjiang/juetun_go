@@ -56,7 +56,12 @@ func (this *GroupPermit) DeleteByPermitIds(permitIds []string) (bool, error) {
 }
 
 /**
-*
+* 根据用户组ID获得用户的权限列表
+* @author karl.zhao<zhaocj2009@hotmail.com>
+* @date 2017/08/14
+* @param  groupIds 						[]string
+* @param   uppermit_id 					[]string
+* @return  *[]PermitAdmin, error
  */
 func (this *GroupPermit) GetGroupPermitList(groupIds []string, uppermit_id []string) (*[]PermitAdmin, error) {
 
@@ -67,8 +72,8 @@ func (this *GroupPermit) GetGroupPermitList(groupIds []string, uppermit_id []str
 	result := make([]PermitAdmin, 0)
 	qb, _ := orm.NewQueryBuilder("mysql")
 
-	tablePrefix := this.GetTablePrefix()
 	// 构建查询对象
+	tablePrefix := this.GetTablePrefix()
 	nowTableName := tablePrefix + this.TableName()
 	leftTableName := tablePrefix + permit.TableName()
 

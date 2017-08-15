@@ -27,10 +27,15 @@ type AdminController struct {
 *
  */
 func (this *AdminController) InitPermitItem() {
-	//如果不是超级管理员
+
 	if !this.authSuperAdmin() {
+
+		//如果不是超级管理员
 		this.initAllShowNotSuperAdminPermit()
+
 	} else {
+
+		//如果是超级管理员
 		this.initAllShowSuperAdminPermit()
 	}
 
@@ -247,15 +252,17 @@ func (this *AdminController) getNowUserGroupId() []string {
 }
 
 /**
-*处理当前非超级管理员的权限
+* 处理当前非超级管理员的权限
 * @author karl.zhao<zhaocj2009@126.com>
 * @Date 2017/08/01
 *
  */
 func (this *AdminController) initAllShowNotSuperAdminPermit() {
+
 	//用户组权限ID列表
 	var groupPermit modelsAdmin.GroupPermit
 	permit := make(map[string]interface{})
+
 	//var headerPermitList *[]modelsAdmin.GroupPermit
 	//获得当前用户的用户组ID列表
 	groupIds := this.getNowUserGroupId()
@@ -264,7 +271,9 @@ func (this *AdminController) initAllShowNotSuperAdminPermit() {
 	if len(groupIds) == 0 {
 		return
 	}
-	//根据当前用户的用户组获得用户的权限//Header信息列表
+
+	//根据当前用户的用户组获得用户的权限
+	//Header信息列表
 	headerPermit, _ := groupPermit.GetGroupPermitList(groupIds, []string{"0", ""})
 	permit["Header"] = headerPermit
 
@@ -281,6 +290,7 @@ func (this *AdminController) initAllShowNotSuperAdminPermit() {
 	if "" != headerActive {
 		permit["HeaderActive"] = headerActive
 	}
+
 	//左侧边栏权限列表
 	permit["Left"] = this.PermitService.GetLeftPermitByGroupId(leftTopId, groupIds)
 	this.Data["Permit"] = permit
@@ -408,6 +418,10 @@ func (this *AdminController) authSuperAdmin() bool {
  */
 func (this *AdminController) IsLogin() bool {
 	uid := this.GetSession("Uid")
+	log.Println("---------------IsLogin---------------------")
+	log.Println(uid)
+	log.Println("---------------IsLogin O---------------------")
+
 	if nil == uid {
 		return false
 	}
