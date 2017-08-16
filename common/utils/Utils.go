@@ -11,6 +11,7 @@ import (
 	"net"
 	"os"
 	"os/exec"
+	"reflect"
 	"strings"
 )
 
@@ -22,6 +23,7 @@ import (
 *
  */
 func Struct2Map(obj interface{}) map[string]interface{} {
+
 	t := reflect.TypeOf(obj)
 	v := reflect.ValueOf(obj)
 
@@ -144,8 +146,22 @@ func getMacAddress() *[]string {
 }
 
 //切片的头追加数据
-func Slice_unshift(oSlice []interface{}, content interface{}) *[]interface{} {
+func SliceUnshift(oSlice []interface{}, content interface{}) *[]interface{} {
 	slice := []interface{}{content}
+	slice = append(slice, oSlice...)
+	return &slice
+}
+
+//切片的头追加数据
+func SliceUnshiftString(oSlice []string, content string) *[]string {
+	slice := []string{content}
+	slice = append(slice, oSlice...)
+	return &slice
+}
+
+//切片的头追加数据
+func SliceUnshiftInt(oSlice []int, content int) *[]int {
+	slice := []int{content}
 	slice = append(slice, oSlice...)
 	return &slice
 }

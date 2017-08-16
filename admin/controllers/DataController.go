@@ -8,6 +8,12 @@ type DataController struct {
 	acommon.AdminController
 }
 
+/**
+* 基础数据管理
+* @author karl.zhao<zhaocj2009@hotmail.com>
+* @date 2017/08/16
+* @return void
+ */
 func (this *DataController) List() {
 	//	this.Data["UserId"] = this.GetSession("uid")
 	//	this.Data["PageTitle"] = " 后台管理中心"

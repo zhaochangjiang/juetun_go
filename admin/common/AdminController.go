@@ -5,7 +5,6 @@ import (
 	"juetun/common/general"
 	modelsAdmin "juetun/common/models/admin"
 	"juetun/common/utils"
-	"log"
 	"strconv"
 	"strings"
 	"time"
@@ -71,11 +70,12 @@ func (this *AdminController) getNowPermitData() (*modelsAdmin.Permit, error) {
 
 	//如果
 	if defaultController == fetchParams["Controller"] && actionString == fetchParams["Action"] {
-		return permitModel, errors.New("")
+		return permitModel, errors.New("the controller and action is equal default!")
 	}
 	var permitModelList []*modelsAdmin.Permit
 
 	permitModelList, err := this.PermitService.FetchPermit(fetchParams)
+
 	if len(permitModelList) > 0 {
 		permitModel = permitModelList[0]
 	}
@@ -86,37 +86,47 @@ func (this *AdminController) getNowPermitData() (*modelsAdmin.Permit, error) {
 * 获得当前地址对应的数据库存储的权限及所有上级权限
 * @author karl.zhao<zhaocj2009@126.com>
 * @Date 2017/08/01
-*
+* @return *[]interface{}, []interface{}, error
  */
-func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []interface{}, error) {
+func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []string, error) {
 
 	permitModel := new(modelsAdmin.Permit)
 
 	result := make([]interface{}, 0)
 
-	uponPermitId := make([]interface{}, 0)
+	uponPermitId := make([]string, 0)
 	permitData, _ := this.getNowPermitData()
 
 	//默认的上级机构必须查询
-	uponPermitId = *utils.Slice_unshift(uponPermitId, 0)
+	uponPermitId = *utils.SliceUnshiftString(uponPermitId, "")
+
 	var err1 error
 	var permitModelList []*modelsAdmin.Permit
 	i := 0
 	for {
+
 		i++
-		if "" == permitData.UppermitId || i > 5 {
+
+		//判断如果循环超过5次还没中断，则强制中断，防止程序异常
+		if "" == permitData.UppermitId || "0" == permitData.UppermitId || i > 5 {
 			break
 		}
+
+		uponPermitId = *utils.SliceUnshiftString(uponPermitId, permitData.UppermitId)
+
 		fetchParams := make(map[string]string)
 		fetchParams["id"] = permitData.UppermitId
-		uponPermitId = *utils.Slice_unshift(uponPermitId, permitData.UppermitId)
 		permitModelList, err1 = permitModel.FetchPermit(fetchParams)
+
+		//如果没有查询到数据，那么跳出循环
 		if len(permitModelList) <= 0 {
 			break
 		}
+
 		permitData = (permitModelList[0])
+
 		//往队列的队首添加数据
-		result = *utils.Slice_unshift(result, permitData)
+		result = *utils.SliceUnshift(result, permitData)
 
 	}
 	return &result, uponPermitId, err1
@@ -128,19 +138,19 @@ func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []interfa
 * @Date 2017/08/01
 *
  */
-func (this *AdminController) getNowNotSuperAdminAndAllUponPermit(groupIds *[]string) (*[]interface{}, []interface{}, error) {
+func (this *AdminController) getNowNotSuperAdminAndAllUponPermit(groupIds *[]string) (*[]interface{}, []string, error) {
 
 	permitModel := new(modelsAdmin.Permit)
-	log.Println(*groupIds)
 	result := make([]interface{}, 0)
 
-	uponPermitId := make([]interface{}, 0)
+	uponPermitId := make([]string, 0)
 	permitData, _ := this.getNowPermitData()
 
 	//默认的上级机构必须查询
-	uponPermitId = *utils.Slice_unshift(uponPermitId, 0)
+	uponPermitId = *utils.SliceUnshiftString(uponPermitId, "")
 	var err1 error
 	var permitModelList []*modelsAdmin.Permit
+
 	i := 0
 	for {
 		i++
@@ -149,14 +159,15 @@ func (this *AdminController) getNowNotSuperAdminAndAllUponPermit(groupIds *[]str
 		}
 		fetchParams := make(map[string]string)
 		fetchParams["id"] = permitData.UppermitId
-		uponPermitId = *utils.Slice_unshift(uponPermitId, permitData.UppermitId)
+		uponPermitId = *utils.SliceUnshiftString(uponPermitId, permitData.UppermitId)
+
 		permitModelList, err1 = permitModel.FetchPermit(fetchParams)
 		if len(permitModelList) <= 0 {
 			break
 		}
 		permitData = (permitModelList[0])
 		//往队列的队首添加数据
-		result = *utils.Slice_unshift(result, permitData)
+		result = *utils.SliceUnshift(result, permitData)
 
 	}
 	return &result, uponPermitId, err1
@@ -203,11 +214,19 @@ func (this *AdminController) initAllShowSuperAdminPermit() {
 	permit["Header"] = headerPermitList
 	permit["HeaderActive"], leftTopId = this.getHeaderDefaultActive(*permitUpon)
 
+	leftPermit := this.PermitService.GetLeftPermit(leftTopId)
+
+	//设置左侧权限active
+	var err2 error
+	leftPermit, err2 = this.setLeftActive(leftPermit, activeUponId)
+	if nil != err2 {
+		panic(err2)
+	}
+
 	//左侧边栏权限列表
-	permit["Left"] = this.PermitService.GetLeftPermit(leftTopId)
+	permit["Left"] = leftPermit
 	this.Data["Permit"] = permit
 
-	log.Println(activeUponId)
 }
 
 /**
@@ -277,9 +296,7 @@ func (this *AdminController) initAllShowNotSuperAdminPermit() {
 	headerPermit, _ := groupPermit.GetGroupPermitList(groupIds, []string{"0", ""})
 	permit["Header"] = headerPermit
 
-	// 获得当前页面的所有上级权限
-	permitUpon, activeUponId, _ := this.getNowNotSuperAdminAndAllUponPermit(&groupIds)
-
+	//处理当前头部选中的选项
 	permitArray := make([]interface{}, 0)
 	for _, v := range *headerPermit {
 		permitArray = append(permitArray, &v)
@@ -291,11 +308,70 @@ func (this *AdminController) initAllShowNotSuperAdminPermit() {
 		permit["HeaderActive"] = headerActive
 	}
 
+	// 获得当前页面的所有上级权限
+	_, activeUponId, _ := this.getNowNotSuperAdminAndAllUponPermit(&groupIds)
+
 	//左侧边栏权限列表
-	permit["Left"] = this.PermitService.GetLeftPermitByGroupId(leftTopId, groupIds)
+	leftPermit := this.PermitService.GetLeftPermitByGroupId(leftTopId, groupIds)
+	var err2 error
+	leftPermit, err2 = this.setLeftActive(leftPermit, activeUponId)
+	if nil != err2 {
+		panic(err2)
+	}
+	permit["Left"] = leftPermit
 	this.Data["Permit"] = permit
-	log.Println(activeUponId)
-	log.Println(permitUpon)
+
+	//log.Println(activeUponId)
+	//log.Println(permitUpon)
+}
+
+/**
+* 组织左侧权限的高亮显示设置
+* @author karl.zhao<zhaocj2009@126.com>
+* @Date 2017/08/16
+* @return *[](map[string]interface{}), error
+ */
+func (this *AdminController) setLeftActive(leftPermit *[](map[string]interface{}), activeUponId []string) (*[](map[string]interface{}), error) {
+	var res = make([](map[string]interface{}), 0)
+	var errR error
+
+	if len(activeUponId) < 2 {
+		return leftPermit, nil
+	}
+
+	//去掉第一，第二条数据为空字符串
+	activeUponId = activeUponId[2:]
+
+	//如果没有数据，说明没有标明选中项
+	if len(activeUponId) < 1 {
+		return leftPermit, nil
+	}
+
+	for _, v := range *leftPermit {
+
+		//将数据转换为Permit格式
+		p := v["Permit"].(*modelsAdmin.PermitAdmin)
+
+		upid := activeUponId[0]
+		this.Debug(p)
+		this.Debug(upid)
+		//如果ID相等
+		if p.Id == upid {
+			v["Active"] = true
+			childList := v["ChildList"].(*[](map[string]interface{}))
+			//如果有子选项
+			if len(*childList) > 0 {
+
+				//此处为一个递归处理
+				v["ChildList"], errR = this.setLeftActive(childList, activeUponId[1:])
+				if nil != errR {
+					panic(errR)
+				}
+			}
+		}
+		res = append(res, v)
+	}
+	return &res, nil
 }
 
 /**
@@ -352,12 +428,6 @@ func (this *AdminController) Prepare() {
 
 	//引入父类的处理逻辑
 	this.BaseController.Prepare()
-
-	//TODO此为由于SESSION保持有问题的临时解决办法
-	//	log.Println("AdminController 设置的临时解决登录的方法!")
-	//	this.SetSession("Uid", "1")
-	//	this.SetSession("Username", "长江")
-	//	this.SetSession("Avater", "/assets/img/avatar5.jpg")
 	if true == this.NotNeedLogin {
 		return
 	}
@@ -418,10 +488,6 @@ func (this *AdminController) authSuperAdmin() bool {
  */
 func (this *AdminController) IsLogin() bool {
 	uid := this.GetSession("Uid")
-	log.Println("---------------IsLogin---------------------")
-	log.Println(uid)
-	log.Println("---------------IsLogin O---------------------")
-
 	if nil == uid {
 		return false
 	}

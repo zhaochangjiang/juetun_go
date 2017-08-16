@@ -3,6 +3,7 @@ package general
 import (
 	modelsUser "juetun/common/models/user"
 
+	"log"
 	"strings"
 
 	"github.com/astaxie/beego"
@@ -26,6 +27,16 @@ type BaseController struct {
 	beego.Controller
 	i18n.Locale
 	Database orm.Ormer //数据库操作对象
+}
+
+func (this *BaseController) Debug(data interface{}) {
+	log.Println("")
+	log.Println("")
+	log.Println("--------------------Debug----------------------")
+	log.Println(data)
+	log.Println("------------------- Debug-----------------------")
+	log.Println("")
+	log.Println("")
 }
 
 //公共的

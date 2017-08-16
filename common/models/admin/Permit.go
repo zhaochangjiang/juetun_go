@@ -169,7 +169,7 @@ func (this *Permit) GetLeftPermitByGroupId(leftTopId string, groupIds []string) 
 
 	var result [](map[string]interface{})
 	var leftPermitIdList []string
-	var childPermit map[string][]PermitAdmin
+	var childPermit = make(map[string][]PermitAdmin)
 
 	if leftTopId == "" {
 		return &result
@@ -181,7 +181,8 @@ func (this *Permit) GetLeftPermitByGroupId(leftTopId string, groupIds []string) 
 	childPermitList := this.FetchPermitByGroupIdAndUppermit(groupIds, leftPermitIdList)
 	for _, v := range *childPermitList {
 		params := make(map[string]string)
-		childPermit[v.UppermitId] = append(childPermit[v.UppermitId], *(this.OrgAdminPermit(v, params)))
+		tmp := this.OrgAdminPermit(v, params)
+		childPermit[v.UppermitId] = append(childPermit[v.UppermitId], *tmp)
 	}
 	for _, v := range *permitList {
 

@@ -22,18 +22,37 @@ func (this *ErrorController) Prepare() {
 
 	this.AdminController.Prepare()
 }
+
+/**
+* 404界面
+* @author karl.zhao<zhaocj2009@hotmail.com>
+* @date 2017/08/16
+*
+ */
 func (this *ErrorController) Error404() {
-	this.Data["content"] = "page not found"
+	this.Data["Content"] = "page not found"
 	this.LoadCommon("error/404.html")
 	//this.TplName = "404.tpl"
 }
 
+/**
+* 501界面
+* @author karl.zhao<zhaocj2009@hotmail.com>
+* @date 2017/08/16
+*
+ */
 func (this *ErrorController) Error501() {
-	this.Data["content"] = "server error"
+	this.Data["Content"] = "server error"
 	this.LoadCommon("error/501.html")
 }
 
+/**
+* 数据库异常提醒
+* @author karl.zhao<zhaocj2009@hotmail.com>
+* @date 2017/08/16
+*
+ */
 func (this *ErrorController) ErrorDb() {
-	this.Data["content"] = "database is now down"
+	this.Data["Content"] = "database is now down"
 	this.LoadCommon("error/db.html")
 }
