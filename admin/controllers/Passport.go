@@ -15,7 +15,7 @@ type Passport struct {
 //实现本结构体的基本加载，本文件中所有的界面不需要验证登录
 func (this *Passport) Prepare() {
 	//设置本页面不需要登录
-	this.NotNeedLogin = true
+	this.ConContext.NotNeedLogin = true
 	this.AdminController.Prepare()
 }
 

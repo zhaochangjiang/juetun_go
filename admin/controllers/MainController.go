@@ -28,7 +28,7 @@ func (this *MainController) Prepare() {
 	var notNeedLogin = []interface{}{"Goto"}
 	if utils.InArrayOrSlice(a, notNeedLogin) {
 		//设置本页面不需要登录
-		this.NotNeedLogin = true
+		this.ConContext.NotNeedLogin = true
 	}
 
 	this.AdminController.Prepare()

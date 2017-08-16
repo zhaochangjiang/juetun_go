@@ -244,6 +244,47 @@ func (this *Permit) FetchPermitByGroupIdAndUppermit(groupIds []string, uppermitI
 * @author karl.zhao<zhaocj2009@hotmail.com>
 * @date 2017/07/20
  */
+func (this *Permit) FetchPermitByGroupId(groupIds []string, condition map[string]string) (*[]Permit, error) {
+
+	var sliceParams []string
+	var where string
+	var nowTableName string
+	var leftTableName string
+	var permitList []Permit
+	var groupPermit GroupPermit
+
+	if len(groupIds) == 0 {
+		return &permitList, nil
+	}
+
+	commonModel := new(CommonModel)
+	//获得表前缀
+	tablePrefix := commonModel.GetTablePrefix()
+
+	// 构建查询对象
+	nowTableName = tablePrefix + this.TableName()
+	leftTableName = tablePrefix + groupPermit.TableName()
+
+	//查询上级权限为leftTopId的权限列表
+	where += leftTableName + ".group_id in (\"" + strings.Join(groupIds, "\",\"") + "\")"
+	for k, v := range condition {
+		where += " AND " + nowTableName + "." + k + " = \"" + v + "\""
+	}
+
+	qb, _ := orm.NewQueryBuilder("mysql")
+	sql := qb.Select(nowTableName + ".*").From(nowTableName).
+		LeftJoin(leftTableName).On(leftTableName + ".permit_id=" + nowTableName + ".id").Where(where).OrderBy(nowTableName + ".obyid").Asc().String()
+	_, err := this.getOrm().Raw(sql, sliceParams).QueryRows(&permitList)
+	if nil != err {
+		panic(err)
+	}
+	return &permitList, nil
+}
+
+/**
+* @author karl.zhao<zhaocj2009@hotmail.com>
+* @date 2017/07/20
+ */
 func (this *Permit) OrgAdminPermit(v Permit, params map[string]string) *PermitAdmin {
 	domain := "default" //default默认为当前域名,此处为域名的MAP映射
 	m := this.getDefaultModuleControllerAction(v)

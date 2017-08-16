@@ -12,11 +12,16 @@ import (
 	"github.com/astaxie/beego"
 )
 
+type ControllerContext struct {
+	GroupIds     []string //当前用户所属用户组
+	NotNeedLogin bool     //是否需要登录
+	IsSuperAdmin bool     //是否为超级管理员
+}
 type AdminController struct {
 	PermitService *modelsAdmin.Permit
 	general.BaseController
-	NotNeedLogin bool //是否需要登录
-	isSuperAdmin bool //是否为超级管理员
+
+	ConContext ControllerContext //本次请求上下文存储的数据
 }
 
 /**
@@ -28,6 +33,9 @@ type AdminController struct {
 func (this *AdminController) InitPermitItem() {
 
 	if !this.authSuperAdmin() {
+
+		//获得当前用户的用户组ID列表
+		this.ConContext.GroupIds = this.getNowUserGroupId()
 
 		//如果不是超级管理员
 		this.initAllShowNotSuperAdminPermit()
@@ -57,24 +65,39 @@ func (this *AdminController) DefaultControllerAndAction() (string, string) {
 *
  */
 func (this *AdminController) getNowPermitData() (*modelsAdmin.Permit, error) {
+	var err error
+	var permitModelList = make([]*modelsAdmin.Permit, 0)
+
 	permitModel := new(modelsAdmin.Permit)
-	fetchParams := make(map[string]string)
-	fetchParams["Controller"], fetchParams["Action"] = this.GetControllerAndAction()
-
-	fetchParams["Controller"] = strings.ToLower(utils.Substr(fetchParams["Controller"], 0, strings.Index(fetchParams["Controller"], "Controller")))
-
-	fetchParams["Action"] = strings.ToLower(fetchParams["Action"])
+	//var permitModelList []*modelsAdmin.Permit
 
 	//获得默认的访问连接路由
 	defaultController, actionString := this.DefaultControllerAndAction()
+
+	fetchParams := make(map[string]string)
+	fetchParams["Controller"], fetchParams["Action"] = this.GetControllerAndAction()
+	fetchParams["Controller"] = strings.ToLower(utils.Substr(fetchParams["Controller"], 0, strings.Index(fetchParams["Controller"], "Controller")))
+	fetchParams["Action"] = strings.ToLower(fetchParams["Action"])
 
 	//如果
 	if defaultController == fetchParams["Controller"] && actionString == fetchParams["Action"] {
 		return permitModel, errors.New("the controller and action is equal default!")
 	}
-	var permitModelList []*modelsAdmin.Permit
 
-	permitModelList, err := this.PermitService.FetchPermit(fetchParams)
+	//如果是超级管理员
+	if this.ConContext.IsSuperAdmin {
+		permitModelList, err = this.PermitService.FetchPermit(fetchParams)
+	} else {
+		//如果不是超级管理员
+		var pList *[]modelsAdmin.Permit
+		pList, err = this.PermitService.FetchPermitByGroupId(this.ConContext.GroupIds, fetchParams)
+		if 0 == len(*pList) {
+			return nil, nil
+		}
+		for _, v := range *pList {
+			permitModelList = append(permitModelList, &v)
+		}
+	}
 
 	if len(permitModelList) > 0 {
 		permitModel = permitModelList[0]
@@ -140,15 +163,20 @@ func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []string,
  */
 func (this *AdminController) getNowNotSuperAdminAndAllUponPermit(groupIds *[]string) (*[]interface{}, []string, error) {
 
+	var err1 error
+
 	permitModel := new(modelsAdmin.Permit)
 	result := make([]interface{}, 0)
 
 	uponPermitId := make([]string, 0)
-	permitData, _ := this.getNowPermitData()
 
+	permitData, _ := this.getNowPermitData()
+	if nil == permitData {
+		return nil, nil, err1
+	}
 	//默认的上级机构必须查询
 	uponPermitId = *utils.SliceUnshiftString(uponPermitId, "")
-	var err1 error
+
 	var permitModelList []*modelsAdmin.Permit
 
 	i := 0
@@ -283,17 +311,23 @@ func (this *AdminController) initAllShowNotSuperAdminPermit() {
 	permit := make(map[string]interface{})
 
 	//var headerPermitList *[]modelsAdmin.GroupPermit
-	//获得当前用户的用户组ID列表
-	groupIds := this.getNowUserGroupId()
 
 	//如果用户组不存在，则不用继续操作了
-	if len(groupIds) == 0 {
+	if len(this.ConContext.GroupIds) == 0 {
 		return
 	}
 
+	// 获得当前页面的所有上级权限
+	_, activeUponId, _ := this.getNowNotSuperAdminAndAllUponPermit(&this.ConContext.GroupIds)
+
+	//如果没有查询到当前信息
+	if nil == activeUponId {
+		this.Data["Permit"] = permit
+		return
+	}
 	//根据当前用户的用户组获得用户的权限
 	//Header信息列表
-	headerPermit, _ := groupPermit.GetGroupPermitList(groupIds, []string{"0", ""})
+	headerPermit, _ := groupPermit.GetGroupPermitList(this.ConContext.GroupIds, []string{"0", ""})
 	permit["Header"] = headerPermit
 
 	//处理当前头部选中的选项
@@ -308,11 +342,8 @@ func (this *AdminController) initAllShowNotSuperAdminPermit() {
 		permit["HeaderActive"] = headerActive
 	}
 
-	// 获得当前页面的所有上级权限
-	_, activeUponId, _ := this.getNowNotSuperAdminAndAllUponPermit(&groupIds)
-
 	//左侧边栏权限列表
-	leftPermit := this.PermitService.GetLeftPermitByGroupId(leftTopId, groupIds)
+	leftPermit := this.PermitService.GetLeftPermitByGroupId(leftTopId, this.ConContext.GroupIds)
 	var err2 error
 	leftPermit, err2 = this.setLeftActive(leftPermit, activeUponId)
 	if nil != err2 {
@@ -428,7 +459,7 @@ func (this *AdminController) Prepare() {
 
 	//引入父类的处理逻辑
 	this.BaseController.Prepare()
-	if true == this.NotNeedLogin {
+	if true == this.ConContext.NotNeedLogin {
 		return
 	}
 	//判断是否登录
@@ -466,18 +497,18 @@ func (this *AdminController) Prepare() {
 *
  */
 func (this *AdminController) authSuperAdmin() bool {
-	this.isSuperAdmin = false
+	this.ConContext.IsSuperAdmin = false
 	if nil != this.GetSession("SuperAdmin") {
 		switch this.GetSession("SuperAdmin").(string) {
 		case "yes":
-			this.isSuperAdmin = true
+			this.ConContext.IsSuperAdmin = true
 		default:
-			this.isSuperAdmin = false
+			this.ConContext.IsSuperAdmin = false
 		}
 	}
 	//初始化是否为超级管理员的配置
-	this.Data["isSuperAdmin"] = this.isSuperAdmin
-	return this.isSuperAdmin
+	this.Data["isSuperAdmin"] = this.ConContext.IsSuperAdmin
+	return this.ConContext.IsSuperAdmin
 }
 
 /**
