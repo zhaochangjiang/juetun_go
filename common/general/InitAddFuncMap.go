@@ -34,9 +34,11 @@ func CreateUrl(p ...interface{}) string {
 		if nil != err {
 			panic(err.Error())
 		}
+
 		url += p0 + "/" + p1
 		break
 	case 3:
+
 		url += getThreeParams(p)
 	case 4:
 		url += getThreeParams(p)
@@ -45,7 +47,11 @@ func CreateUrl(p ...interface{}) string {
 			panic(err.Error())
 		}
 		domainStirng := beego.AppConfig.String(beego.BConfig.RunMode + "::" + domain)
-		url = domainStirng + url
+		if url != "///" {
+			url = domainStirng + url
+		} else {
+			url = "javascript:void(0);"
+		}
 	default:
 		panic("now CreateUrl params length must be 1-4")
 	}

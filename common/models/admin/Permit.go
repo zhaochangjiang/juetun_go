@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"juetun/common/general"
 	"strings"
 
 	"github.com/astaxie/beego/orm"
@@ -94,8 +95,9 @@ type PermitLeft struct {
 //后台结构体
 type PermitAdmin struct {
 	Permit
-	Params map[string]string
-	Domain string
+	Params    map[string]string
+	Domain    string
+	UrlString string
 }
 
 /**
@@ -139,6 +141,7 @@ func (this *Permit) GetLeftPermit(leftTopId string) *[](map[string]interface{}) 
 	childPermit := make(map[string][]PermitAdmin)
 	for _, v := range childPermitList {
 		params := make(map[string]string)
+
 		childPermit[v.UppermitId] = append(childPermit[v.UppermitId], *(this.OrgAdminPermit(v, params)))
 	}
 
@@ -288,7 +291,8 @@ func (this *Permit) FetchPermitByGroupId(groupIds []string, condition map[string
 func (this *Permit) OrgAdminPermit(v Permit, params map[string]string) *PermitAdmin {
 	domain := "default" //default默认为当前域名,此处为域名的MAP映射
 	m := this.getDefaultModuleControllerAction(v)
-	permitLeft := PermitAdmin{*m, params, domain}
+	urlString := general.CreateUrl(v.Controller, v.Action, params, v.DomainMap)
+	permitLeft := PermitAdmin{*m, params, domain, urlString}
 	return &permitLeft
 }
 
