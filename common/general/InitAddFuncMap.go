@@ -2,6 +2,7 @@ package general
 
 import (
 	"errors"
+	"html/template"
 
 	"strings"
 
@@ -11,6 +12,18 @@ import (
 //添加模板函数
 func InitAddFuncMap() {
 	beego.AddFuncMap("createurl", CreateUrl)
+	beego.AddFuncMap("unescaped", Unescaped)
+}
+
+/**
+*
+* 转换HTML代码
+* @author karl.zhao<zhaocj2009@hotmail.com>
+* @date 2017/08/22
+* @return interface{}
+ */
+func Unescaped(x string) interface{} {
+	return template.HTML(x)
 }
 
 //创建URL

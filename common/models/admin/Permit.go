@@ -289,9 +289,16 @@ func (this *Permit) FetchPermitByGroupId(groupIds []string, condition map[string
 * @date 2017/07/20
  */
 func (this *Permit) OrgAdminPermit(v Permit, params map[string]string) *PermitAdmin {
+
 	domain := "default" //default默认为当前域名,此处为域名的MAP映射
+
 	m := this.getDefaultModuleControllerAction(v)
+
+	//获得链接字符串
 	urlString := general.CreateUrl(v.Controller, v.Action, params, v.DomainMap)
+	if urlString == "" {
+		urlString = "javascript:void(0);"
+	}
 	permitLeft := PermitAdmin{*m, params, domain, urlString}
 	return &permitLeft
 }

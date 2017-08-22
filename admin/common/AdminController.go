@@ -384,8 +384,8 @@ func (this *AdminController) setLeftActive(leftPermit *[](map[string]interface{}
 		p := v["Permit"].(*modelsAdmin.PermitAdmin)
 
 		upid := activeUponId[0]
-		this.Debug(p)
-		this.Debug(upid)
+		//		this.Debug(p)
+		//		this.Debug(upid)
 		//如果ID相等
 		if p.Id == upid {
 			v["Active"] = true
