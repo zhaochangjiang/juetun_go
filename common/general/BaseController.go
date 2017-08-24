@@ -39,6 +39,30 @@ func (this *BaseController) Debug(data interface{}) {
 	log.Println("")
 }
 
+/**
+* 获得域名MAP key列表
+* @author karl.zhao<zhaocj2009@126.com>
+* @date 2017/08/24
+ */
+func (this *BaseController) GetDomainMapKey() *[]string {
+	domainMapArray := beego.AppConfig.Strings("domainmap")
+	return &domainMapArray
+}
+
+/**
+* 获得域名MAP对应的域名地址
+* @author karl.zhao<zhaocj2009@126.com>
+* @date 2017/08/24
+ */
+func (this *BaseController) GetDomainMapList() *map[string]string {
+	domainMapArray := this.GetDomainMapKey()
+	var returnContent = make(map[string]string)
+	for _, dataName := range *domainMapArray {
+		returnContent[dataName] = beego.AppConfig.String(beego.BConfig.RunMode + "::domain_" + dataName)
+	}
+	return &returnContent
+}
+
 //公共的
 //func (this *BaseController) Common() {
 //	w := this.Ctx.ResponseWriter

@@ -296,9 +296,7 @@ func (this *Permit) OrgAdminPermit(v Permit, params map[string]string) *PermitAd
 
 	//获得链接字符串
 	urlString := general.CreateUrl(v.Controller, v.Action, params, v.DomainMap)
-	if urlString == "" {
-		urlString = "javascript:void(0);"
-	}
+
 	permitLeft := PermitAdmin{*m, params, domain, urlString}
 	return &permitLeft
 }

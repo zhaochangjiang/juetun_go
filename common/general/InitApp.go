@@ -18,7 +18,6 @@ func init() {
 	logs.Async(1e3) //异步输出允许设置缓冲 chan 的大小
 	//初始化语言包
 	InitLanguage()
-
 	//初始化数据库
 	InitDatabase()
 

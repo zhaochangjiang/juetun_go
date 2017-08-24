@@ -34,21 +34,31 @@
 			<li class="treeview">
 			{{end}}
                     <a href="javascript:void(0);">
-                        <i class="fa {{$nowPermit.Csscode}}"></i>
+                        <i class="fa {{if eq $nowPermit.Csscode ""}}fa-laptop{{else}}{{$nowPermit.Csscode}}{{end}}"></i>
                         <span>{{$nowPermit.Name}}</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
 					{{range $key, $elem := $childPermitList}}
-					 <li><a href="{{$elem.UrlString | html}}" style="margin-left: 10px;"><i class="fa fa-angle-double-right"></i> {{.Name}}|{{$elem.UrlString}}|</a></li>
+					 <li>
+						{{if eq $elem.UrlString ""}}
+						 	<a href="javascript:void(0);" style="margin-left: 10px;"> 
+						{{else}}
+						 	<a href="{{$elem.UrlString | html}}" style="margin-left: 10px;">
+						{{end}}
+					<i class="fa fa-angle-double-right"></i> {{.Name}}</a></li>
 					{{end}}  
                     </ul>
                 </li>
 			{{else}}
 			  {{if $active}} <li class="active"> {{else}}  <li>{{end}}
-                    <a href="{{$nowPermit.UrlString | html}}">
-                        <i class="fa fa-envelope"></i> <span>{{$nowPermit.Name}}</span>
-                        <small class="badge pull-right bg-yellow">12</small>
+						{{if eq $nowPermit.UrlString ""}}
+						 	<a href="javascript:void(0);"> 
+						{{else}}
+						 	<a href="{{$nowPermit.UrlString | html}}">
+						{{end}}
+                        <i class="{{if eq $nowPermit.Csscode ""}}fa-laptop{{else}}{{$nowPermit.Csscode}}{{end}}"></i> <span>{{$nowPermit.Name}}</span>
+                        <!--<small class="badge pull-right bg-yellow">12</small>-->
                     </a>
                 </li>
 			{{end}}

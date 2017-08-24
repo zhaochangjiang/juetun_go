@@ -36,7 +36,7 @@ func CreateUrl(p ...interface{}) string {
 		if nil == err {
 			panic(err.Error())
 		}
-		url += p0
+		url += p0 + "?t=1"
 		break
 	case 2:
 		p0, err := convertInterfaceToString(p[0])
@@ -48,28 +48,32 @@ func CreateUrl(p ...interface{}) string {
 			panic(err.Error())
 		}
 
-		url += p0 + "/" + p1
+		url += p0 + "/" + p1 + "?t=2"
 		break
 	case 3:
-
-		url += getThreeParams(p)
+		url += getThreeParams(p) + "?t=3"
 	case 4:
 		url += getThreeParams(p)
 		domain, err := convertInterfaceToString(p[3])
 		if nil != err {
 			panic(err.Error())
 		}
-		domainStirng := beego.AppConfig.String(beego.BConfig.RunMode + "::" + domain)
+		domainStirng := beego.AppConfig.String(beego.BConfig.RunMode + "::domain_" + domain)
 		if url != "///" {
 			url = domainStirng + url
 		} else {
-			url = "javascript:void(0);"
+			url = ""
 		}
 	default:
 		panic("now CreateUrl params length must be 1-4")
 	}
 	return url
 }
+
+/**
+* @author karl.zhao<zhaocj2009@hotmail.com>
+* @date 2017/08/22
+ */
 func getThreeParams(p []interface{}) string {
 	url := "/"
 	for i := 0; i < 2; i++ {
@@ -94,6 +98,11 @@ func getThreeParams(p []interface{}) string {
 	}
 	return url
 }
+
+/**
+* @author karl.zhao<zhaocj2009@hotmail.com>
+* @date 2017/08/22
+ */
 func convertInterfaceToString(p interface{}) (string, error) {
 	var c string
 	var e error
