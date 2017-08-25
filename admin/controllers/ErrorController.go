@@ -18,8 +18,8 @@ func (this *ErrorController) Prepare() {
 	//	if(utils.InArrayOrSlice(a,notNeedLogin)){
 	//设置本页面不需要登录
 	this.ConContext.NotNeedLogin = true
-	//}
 
+	this.Data["Breadcrumbs"] = ""
 	this.AdminController.Prepare()
 }
 

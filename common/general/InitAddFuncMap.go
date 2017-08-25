@@ -36,7 +36,7 @@ func CreateUrl(p ...interface{}) string {
 		if nil == err {
 			panic(err.Error())
 		}
-		url += p0 + "?t=1"
+		url += p0
 		break
 	case 2:
 		p0, err := convertInterfaceToString(p[0])
@@ -48,10 +48,10 @@ func CreateUrl(p ...interface{}) string {
 			panic(err.Error())
 		}
 
-		url += p0 + "/" + p1 + "?t=2"
+		url += p0 + "/" + p1
 		break
 	case 3:
-		url += getThreeParams(p) + "?t=3"
+		url += getThreeParams(p)
 	case 4:
 		url += getThreeParams(p)
 		domain, err := convertInterfaceToString(p[3])

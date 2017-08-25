@@ -119,7 +119,9 @@ func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []string,
 
 	uponPermitId := make([]string, 0)
 	permitData, _ := this.getNowPermitData()
-
+	if nil == permitData {
+		return nil, nil, err1
+	}
 	//默认的上级机构必须查询
 	uponPermitId = *utils.SliceUnshiftString(uponPermitId, "")
 
@@ -233,6 +235,11 @@ func (this *AdminController) initAllShowSuperAdminPermit() {
 	// 获得当前页面的所有上级权限
 	permitUpon, activeUponId, _ := this.getNowAndAllUponPermit()
 
+	//如果当前权限没查到,则直接跳转404
+	if permitUpon == nil {
+		this.Abort("404")
+		return
+	}
 	//获得页面头部的信息
 	headerPermitList, _, _ := this.PermitService.FetchPermitListByUponId([]interface{}{0})
 	//Header信息列表
@@ -318,8 +325,14 @@ func (this *AdminController) initAllShowNotSuperAdminPermit() {
 	}
 
 	// 获得当前页面的所有上级权限
-	_, activeUponId, _ := this.getNowNotSuperAdminAndAllUponPermit(&this.ConContext.GroupIds)
+	res, activeUponId, _ := this.getNowNotSuperAdminAndAllUponPermit(&this.ConContext.GroupIds)
 
+	//如果没有查询到当前的权限
+	if res == nil {
+		//如果没有查询到信息，则直接跳转到未找到页面
+		this.Abort("404")
+		return
+	}
 	//如果没有查询到当前信息
 	if nil == activeUponId {
 		this.Data["Permit"] = permit
@@ -459,6 +472,20 @@ func (this *AdminController) Prepare() {
 
 	//引入父类的处理逻辑
 	this.BaseController.Prepare()
+
+	this.Data["SiteName"] = beego.AppConfig.String("sitename")
+	time := time.Now()
+	y := time.Year()
+	this.Data["Copyright"] = "Copyright " + strconv.Itoa(y-1) + "-" + strconv.Itoa(y) + " " + beego.AppConfig.String("appname") + " Corporation. All Rights Reserved."
+
+	this.Data["PageTitle"] = " 后台管理中心"
+	//设置登录信息
+
+	this.Data["NowHourAndMinute"] = strconv.Itoa(time.Hour()) + ":" + strconv.Itoa(time.Minute())
+
+	//引入页面内容
+	this.InitPageScript()
+
 	if true == this.ConContext.NotNeedLogin {
 		return
 	}
@@ -469,24 +496,10 @@ func (this *AdminController) Prepare() {
 		this.Redirect(gotoUrl, 301)
 		return
 	}
-
-	this.Data["SiteName"] = beego.AppConfig.String("sitename")
-	time := time.Now()
-	y := time.Year()
-	this.Data["Copyright"] = "Copyright " + strconv.Itoa(y-1) + "-" + strconv.Itoa(y) + " " + beego.AppConfig.String("appname") + " Corporation. All Rights Reserved."
-
 	//处理用户默认信息，比如头像
 	this.UserDataDefault()
-
-	this.Data["PageTitle"] = " 后台管理中心"
-	//设置登录信息
-
-	this.Data["NowHourAndMinute"] = strconv.Itoa(time.Hour()) + ":" + strconv.Itoa(time.Minute())
 	//加上权限管理
 	this.InitPermitItem()
-
-	//引入页面内容
-	this.InitPageScript()
 
 }
 
