@@ -112,20 +112,18 @@ func (this *AdminController) getNowPermitData() (*modelsAdmin.Permit, error) {
 * @return *[]interface{}, []interface{}, error
  */
 func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []string, error) {
+	var err1 error
+	result := make([]interface{}, 0)
+	uponPermitId := make([]string, 0)
 
 	permitModel := new(modelsAdmin.Permit)
-
-	result := make([]interface{}, 0)
-
-	uponPermitId := make([]string, 0)
 	permitData, _ := this.getNowPermitData()
 	if nil == permitData {
-		return nil, nil, err1
+		return nil, nil, nil
 	}
 	//默认的上级机构必须查询
 	uponPermitId = *utils.SliceUnshiftString(uponPermitId, "")
 
-	var err1 error
 	var permitModelList []*modelsAdmin.Permit
 	i := 0
 	for {
@@ -473,7 +471,7 @@ func (this *AdminController) Prepare() {
 	//引入父类的处理逻辑
 	this.BaseController.Prepare()
 
-	this.Data["SiteName"] = beego.AppConfig.String("sitename")
+	this.Data["SiteName"] = beego.AppConfig.String(beego.BConfig.RunMode + "::sitename")
 	time := time.Now()
 	y := time.Year()
 	this.Data["Copyright"] = "Copyright " + strconv.Itoa(y-1) + "-" + strconv.Itoa(y) + " " + beego.AppConfig.String("appname") + " Corporation. All Rights Reserved."
