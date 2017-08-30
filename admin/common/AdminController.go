@@ -251,8 +251,6 @@ func (this *AdminController) initAllShowSuperAdminPermit() {
 
 	leftPermit := this.PermitService.GetLeftPermit(leftTopId)
 
-	this.Debug(leftPermit)
-
 	//设置左侧权限active
 	var err2 error
 	leftPermit, err2 = this.setLeftActive(leftPermit, activeUponId)

@@ -2,7 +2,6 @@ package controllers
 
 import (
 	acommon "juetun/admin/common"
-	"juetun/common/general"
 	modelsAdmin "juetun/common/models/admin"
 	"juetun/common/utils"
 	"strings"
@@ -38,7 +37,9 @@ func (this *MainController) Prepare() {
 * 301跳转页面
  */
 func (this *MainController) Goto() {
+
 	getParams := this.Ctx.Input.Params()
+
 	//如果参数和呼标准,此处判断map类型key是否存在的方式，不适合数组切片的判断
 	if _, ok := getParams["0"]; ok {
 		permit := new(modelsAdmin.PermitAdmin)
@@ -54,6 +55,7 @@ func (this *MainController) Goto() {
 			return
 		}
 	}
+
 	this.Abort("404")
 
 }

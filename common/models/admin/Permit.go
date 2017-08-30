@@ -2,6 +2,7 @@ package admin
 
 import (
 	"juetun/common/general"
+	"log"
 	"strings"
 
 	"github.com/astaxie/beego/orm"
@@ -106,6 +107,7 @@ type PermitAdmin struct {
 *
  */
 func (this *Permit) FetchDefaultPermitByModuleString(moduleString string) {
+
 	this.Controller = "group"
 	this.Action = "list"
 	this.DomainMap = ""
