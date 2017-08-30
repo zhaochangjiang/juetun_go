@@ -20,7 +20,6 @@ type ControllerContext struct {
 type AdminController struct {
 	PermitService *modelsAdmin.Permit
 	general.BaseController
-
 	ConContext ControllerContext //本次请求上下文存储的数据
 }
 
@@ -66,7 +65,7 @@ func (this *AdminController) DefaultControllerAndAction() (string, string) {
  */
 func (this *AdminController) getNowPermitData() (*modelsAdmin.Permit, error) {
 	var err error
-	var permitModelList = make([]*modelsAdmin.Permit, 0)
+	var permitModelList = make([]modelsAdmin.Permit, 0)
 
 	permitModel := new(modelsAdmin.Permit)
 	//var permitModelList []*modelsAdmin.Permit
@@ -86,7 +85,9 @@ func (this *AdminController) getNowPermitData() (*modelsAdmin.Permit, error) {
 
 	//如果是超级管理员
 	if this.ConContext.IsSuperAdmin {
-		permitModelList, err = this.PermitService.FetchPermit(fetchParams)
+		var listTmp *[]modelsAdmin.Permit
+		listTmp, err = this.PermitService.FetchPermit(fetchParams)
+		permitModelList = *listTmp
 	} else {
 		//如果不是超级管理员
 		var pList *[]modelsAdmin.Permit
@@ -95,12 +96,12 @@ func (this *AdminController) getNowPermitData() (*modelsAdmin.Permit, error) {
 			return nil, nil
 		}
 		for _, v := range *pList {
-			permitModelList = append(permitModelList, &v)
+			permitModelList = append(permitModelList, v)
 		}
 	}
 
 	if len(permitModelList) > 0 {
-		permitModel = permitModelList[0]
+		permitModel = &permitModelList[0]
 	}
 	return permitModel, err
 }
@@ -124,7 +125,7 @@ func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []string,
 	//默认的上级机构必须查询
 	uponPermitId = *utils.SliceUnshiftString(uponPermitId, "")
 
-	var permitModelList []*modelsAdmin.Permit
+	var permitModelList *[]modelsAdmin.Permit
 	i := 0
 	for {
 
@@ -134,7 +135,6 @@ func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []string,
 		if "" == permitData.UppermitId || "0" == permitData.UppermitId || i > 5 {
 			break
 		}
-
 		uponPermitId = *utils.SliceUnshiftString(uponPermitId, permitData.UppermitId)
 
 		fetchParams := make(map[string]string)
@@ -142,14 +142,16 @@ func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []string,
 		permitModelList, err1 = permitModel.FetchPermit(fetchParams)
 
 		//如果没有查询到数据，那么跳出循环
-		if len(permitModelList) <= 0 {
+		if len(*permitModelList) <= 0 {
 			break
 		}
+		permitData = &((*permitModelList)[0])
 
-		permitData = (permitModelList[0])
+		params := make(map[string]string)
+		permitDataTmp := permitModel.OrgAdminPermit(*permitData, params)
 
 		//往队列的队首添加数据
-		result = *utils.SliceUnshift(result, permitData)
+		result = *utils.SliceUnshift(result, permitDataTmp)
 
 	}
 	return &result, uponPermitId, err1
@@ -177,7 +179,7 @@ func (this *AdminController) getNowNotSuperAdminAndAllUponPermit(groupIds *[]str
 	//默认的上级机构必须查询
 	uponPermitId = *utils.SliceUnshiftString(uponPermitId, "")
 
-	var permitModelList []*modelsAdmin.Permit
+	var permitModelList *[]modelsAdmin.Permit
 
 	i := 0
 	for {
@@ -190,10 +192,10 @@ func (this *AdminController) getNowNotSuperAdminAndAllUponPermit(groupIds *[]str
 		uponPermitId = *utils.SliceUnshiftString(uponPermitId, permitData.UppermitId)
 
 		permitModelList, err1 = permitModel.FetchPermit(fetchParams)
-		if len(permitModelList) <= 0 {
+		if len(*permitModelList) <= 0 {
 			break
 		}
-		permitData = (permitModelList[0])
+		permitData = &((*permitModelList)[0])
 		//往队列的队首添加数据
 		result = *utils.SliceUnshift(result, permitData)
 
@@ -248,6 +250,8 @@ func (this *AdminController) initAllShowSuperAdminPermit() {
 	permit["HeaderActive"], leftTopId = this.getHeaderDefaultActive(*permitUpon)
 
 	leftPermit := this.PermitService.GetLeftPermit(leftTopId)
+
+	this.Debug(leftPermit)
 
 	//设置左侧权限active
 	var err2 error

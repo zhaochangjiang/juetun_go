@@ -10,7 +10,6 @@ import (
 
 func main() {
 	beego.Info("the server is starting...")
-
 	//引入静态文件路径
 	beego.SetStaticPath("/assets", "static/assets")
 	beego.Run()

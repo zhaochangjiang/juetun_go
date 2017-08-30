@@ -57,15 +57,13 @@
 						{{else}}
 						 	<a href="{{$nowPermit.UrlString | html}}">
 						{{end}}
-                        <i class="{{if eq $nowPermit.Csscode ""}}fa-laptop{{else}}{{$nowPermit.Csscode}}{{end}}"></i> <span>{{$nowPermit.Name}}</span>
+                        <i class="fa {{if eq $nowPermit.Csscode ""}}fa-laptop{{else}}{{$nowPermit.Csscode}}{{end}}"></i> <span>{{$nowPermit.Name}}</span>
                         <!--<small class="badge pull-right bg-yellow">12</small>-->
                     </a>
                 </li>
 			{{end}}
 		{{end}}
             </ul>
-		
-
       <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">

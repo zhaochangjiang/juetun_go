@@ -55,16 +55,16 @@ func (this *Permit) FetchPermitListByUponId(uponid []interface{}) (*[]PermitAdmi
 }
 
 //查询单个权限
-func (this *Permit) FetchPermit(argument map[string]string) ([]*Permit, error) {
+func (this *Permit) FetchPermit(argument map[string]string) (*[]Permit, error) {
 
-	var permitList []*Permit
+	var permitList []Permit
 	querySeter := this.getQuerySeter()
 	for k, v := range argument {
 		querySeter = querySeter.Filter(k, v)
 	}
 	_, err := querySeter.All(&permitList)
 
-	return permitList, err
+	return &permitList, err
 }
 
 //删除权限
@@ -106,7 +106,7 @@ type PermitAdmin struct {
 *
  */
 func (this *Permit) FetchDefaultPermitByModuleString(moduleString string) {
-	this.Controller = "data"
+	this.Controller = "group"
 	this.Action = "list"
 	this.DomainMap = ""
 }
@@ -130,32 +130,37 @@ func (this *Permit) GetLeftPermit(leftTopId string) *[](map[string]interface{}) 
 	//查询上级权限为leftTopId的权限列表
 	querySeter = querySeter.Filter("uppermit_id__exact", leftTopId).OrderBy("obyid")
 	querySeter.All(&permitList)
-
 	leftPermitIdList := make([]string, 0)
+	leftPermitIdList = append(leftPermitIdList, leftTopId)
 	for _, v := range permitList {
 		leftPermitIdList = append(leftPermitIdList, v.Id)
 	}
 
-	querySeter.Filter("uppermit_id__in", leftPermitIdList).OrderBy("obyid").All(&childPermitList)
+	this.getQuerySeter().Filter("uppermit_id__in", leftPermitIdList).OrderBy("obyid").All(&childPermitList)
 
 	childPermit := make(map[string][]PermitAdmin)
 	for _, v := range childPermitList {
 		params := make(map[string]string)
-
 		childPermit[v.UppermitId] = append(childPermit[v.UppermitId], *(this.OrgAdminPermit(v, params)))
 	}
 
 	for _, v := range permitList {
 
 		everyData := make(map[string]interface{})
-		everyData["Permit"] = v
+
+		params := make(map[string]string)
+		vAddress := this.OrgAdminPermit(v, params)
+		everyData["Permit"] = vAddress
+
 		everyData["Active"] = false //默认设置不为选中的状态
 		everyData["ChildList"] = make([]PermitAdmin, 0)
 
 		//判断内容是否存在，相当于PHP中的isset函数
 		if _, ok := childPermit[v.Id]; ok {
 			everyData["ChildList"] = childPermit[v.Id]
+
 		}
+
 		result = append(result, everyData)
 	}
 
