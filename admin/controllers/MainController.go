@@ -53,9 +53,10 @@ func (this *MainController) Goto() {
 			this.Redirect(gotoUrl, 301)
 			return
 		}
+		this.Abort("404")
 	}
-	this.Abort("404")
-
+	this.Data["Message"] = "您没有选择跳转的链接!"
+	this.LoadCommon("error/goto.html")
 }
 
 /**

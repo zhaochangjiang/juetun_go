@@ -25,10 +25,8 @@ type AdminController struct {
 *
  */
 func (this *AdminController) InitPermitItem() {
-	if !this.authSuperAdmin() {
 
-		//获得当前用户的用户组ID列表
-		this.ConContext.GroupIds = this.getNowUserGroupId()
+	if this.ConContext.IsSuperAdmin != true {
 
 		//如果不是超级管理员
 		this.initAllShowNotSuperAdminPermit()
@@ -464,9 +462,6 @@ func (this *AdminController) InitPageScript() {
  */
 func (this *AdminController) Prepare() {
 
-	//引入父类的处理逻辑
-	this.BaseController.Prepare()
-
 	this.Data["SiteName"] = beego.AppConfig.String(beego.BConfig.RunMode + "::sitename")
 	time := time.Now()
 	y := time.Year()
@@ -480,8 +475,16 @@ func (this *AdminController) Prepare() {
 	//引入页面内容
 	this.InitPageScript()
 
+	//初始化当前用户是否为超级管理员
+	if !this.authSuperAdmin() {
+		//获得当前用户的用户组ID列表
+		this.ConContext.GroupIds = this.getNowUserGroupId()
+	}
+
 	if true == this.ConContext.NotNeedLogin {
 
+		//引入父类的处理逻辑
+		this.BaseController.Prepare()
 		return
 	}
 
@@ -492,11 +495,15 @@ func (this *AdminController) Prepare() {
 		this.Redirect(gotoUrl, 301)
 		return
 	}
+
 	//处理用户默认信息，比如头像
 	this.UserDataDefault()
+
 	//加上权限管理
 	this.InitPermitItem()
 
+	//引入父类的处理逻辑
+	this.BaseController.Prepare()
 }
 
 /**

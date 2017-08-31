@@ -11,9 +11,9 @@ func init() {
 	beego.ErrorController(&controllers.ErrorController{})
 	beego.Router("/", &controllers.MainController{})
 
+	beego.AutoRouter(&controllers.MainController{})
 	beego.AutoRouter(&controllers.Passport{})
 	beego.AutoRouter(&controllers.DataController{})
-	beego.AutoRouter(&controllers.MainController{})
 	beego.AutoRouter(&controllers.GroupController{})
 
 }

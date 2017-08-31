@@ -109,6 +109,7 @@ type PermitAdmin struct {
 func (this *Permit) FetchDefaultPermitByModuleString(moduleString string, controllerContext general.ControllerContext) {
 
 	if "" == moduleString {
+		panic("moduleString is null string")
 		return
 	}
 
@@ -318,6 +319,13 @@ func (this *Permit) FetchPermitByGroupIdAndUppermit(groupIds []string, uppermitI
 /**
 * @author karl.zhao<zhaocj2009@hotmail.com>
 * @date 2017/07/20
+* @param condition map[string]interface{}
+* 							PermitTable map[string]interface{}
+*									mod	 string
+*									uppermit_id string
+*									uppermit_ids []string
+*							GrouppermitTable map[string]interface{}
+*									GroupIds []string
  */
 func (this *Permit) FetchPermitByCondition(condition map[string]interface{}) *[]Permit {
 	//   groupIds []string, uppermitIds []string
@@ -341,16 +349,16 @@ func (this *Permit) FetchPermitByCondition(condition map[string]interface{}) *[]
 		tmp := condition["PermitTable"].(map[string]interface{})
 		if _, ok := tmp["mod"]; ok {
 			mod := tmp["mod"].(string)
-			where += " AND " + nowTableName + ".mod=\"" + mod + "\""
+			where += " AND " + nowTableName + ".`mod`=\"" + mod + "\""
 
 		}
 		if _, ok := tmp["uppermit_id"]; ok {
 			uppermitId := tmp["uppermit_id"].(string)
-			where += " AND " + nowTableName + ".uppermit_id =\"" + uppermitId + "\""
+			where += " AND " + nowTableName + ".`uppermit_id` =\"" + uppermitId + "\""
 		}
 		if _, ok := tmp["uppermit_ids"]; ok {
 			uppermitIds := tmp["uppermit_ids"].([]string)
-			where += " AND " + nowTableName + ".uppermit_id in (\"" + strings.Join(uppermitIds, "\",\"") + "\")"
+			where += " AND " + nowTableName + ".`uppermit_id` in (\"" + strings.Join(uppermitIds, "\",\"") + "\")"
 		}
 	}
 	if _, ok := condition["GrouppermitTable"]; ok {
@@ -359,14 +367,14 @@ func (this *Permit) FetchPermitByCondition(condition map[string]interface{}) *[]
 		if _, ok := tmp["GroupIds"]; ok {
 			groupIds := tmp["GroupIds"].([]string)
 			//查询上级权限为leftTopId的权限列表
-			where += " AND " + leftTableName + ".group_id in (\"" + strings.Join(groupIds, "\",\"") + "\")"
+			where += " AND " + leftTableName + ".`group_id` in (\"" + strings.Join(groupIds, "\",\"") + "\")"
 		}
 
 	}
 
 	qb, _ := orm.NewQueryBuilder("mysql")
 	sql := qb.Select(nowTableName + ".*").From(nowTableName).
-		LeftJoin(leftTableName).On(leftTableName + ".permit_id=" + nowTableName + ".id").Where(where).OrderBy(nowTableName + ".obyid").Asc().String()
+		LeftJoin(leftTableName).On(leftTableName + ".`permit_id`=" + nowTableName + ".id").Where(where).OrderBy(nowTableName + ".obyid").Asc().String()
 	_, err := this.getOrm().Raw(sql, sliceParams).QueryRows(&permitList)
 	if nil != err {
 		panic(err)
