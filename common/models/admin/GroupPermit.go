@@ -95,7 +95,7 @@ func (this *GroupPermit) GetGroupPermitList(groupIds []string, uppermit_id []str
 
 	for _, v := range permitList {
 		params := make(map[string]string)
-		params["module"] = v.Module
+		params["mod"] = v.Mod
 		result = append(result, *permit.OrgAdminPermit(v, params))
 	}
 	return &result, err

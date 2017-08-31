@@ -12,15 +12,10 @@ import (
 	"github.com/astaxie/beego"
 )
 
-type ControllerContext struct {
-	GroupIds     []string //当前用户所属用户组
-	NotNeedLogin bool     //是否需要登录
-	IsSuperAdmin bool     //是否为超级管理员
-}
 type AdminController struct {
 	PermitService *modelsAdmin.Permit
 	general.BaseController
-	ConContext ControllerContext //本次请求上下文存储的数据
+	ConContext general.ControllerContext //本次请求上下文存储的数据
 }
 
 /**
@@ -30,7 +25,6 @@ type AdminController struct {
 *
  */
 func (this *AdminController) InitPermitItem() {
-
 	if !this.authSuperAdmin() {
 
 		//获得当前用户的用户组ID列表
@@ -84,7 +78,7 @@ func (this *AdminController) getNowPermitData() (*modelsAdmin.Permit, error) {
 	}
 
 	//如果是超级管理员
-	if this.ConContext.IsSuperAdmin {
+	if this.ConContext.IsSuperAdmin == true {
 		var listTmp *[]modelsAdmin.Permit
 		listTmp, err = this.PermitService.FetchPermit(fetchParams)
 		permitModelList = *listTmp
@@ -216,7 +210,7 @@ func (this *AdminController) getHeaderDefaultActive(permitUpon []interface{}) (s
 	length := len(permitUpon)
 	if length > 0 {
 		permit := permitUpon[0].(*modelsAdmin.PermitAdmin)
-		headerActive = permit.Module
+		headerActive = permit.Mod
 		activeId = permit.Id
 	}
 	return headerActive, activeId
@@ -487,8 +481,10 @@ func (this *AdminController) Prepare() {
 	this.InitPageScript()
 
 	if true == this.ConContext.NotNeedLogin {
+
 		return
 	}
+
 	//判断是否登录
 	//如果需要登录等于
 	if this.IsLogin() == false {

@@ -34,18 +34,18 @@ func CreateUrl(p ...interface{}) string {
 	case 1:
 		p0, err := convertInterfaceToString(p[0])
 		if nil == err {
-			panic(err.Error())
+			panic(err)
 		}
 		url += p0
 		break
 	case 2:
 		p0, err := convertInterfaceToString(p[0])
 		if nil != err {
-			panic(err.Error())
+			panic(err)
 		}
 		p1, err := convertInterfaceToString(p[1])
 		if nil != err {
-			panic(err.Error())
+			panic(err)
 		}
 
 		url += p0 + "/" + p1
@@ -56,7 +56,7 @@ func CreateUrl(p ...interface{}) string {
 		url += getThreeParams(p)
 		domain, err := convertInterfaceToString(p[3])
 		if nil != err {
-			panic(err.Error())
+			panic(err)
 		}
 		domainStirng := beego.AppConfig.String(beego.BConfig.RunMode + "::domain_" + domain)
 		if url != "///" {
