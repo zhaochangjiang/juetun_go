@@ -204,33 +204,8 @@ func (this *Permit) GetLeftPermit(leftTopId string) *[](map[string]interface{}) 
 
 	this.getQuerySeter().Filter("uppermit_id__in", leftPermitIdList).OrderBy("obyid").All(&childPermitList)
 
-	childPermit := make(map[string][]PermitAdmin)
-	for _, v := range childPermitList {
-		params := make(map[string]string)
-		childPermit[v.UppermitId] = append(childPermit[v.UppermitId], *(this.OrgAdminPermit(v, params)))
-	}
+	return this.orgPermitSepData(&permitList, &childPermitList)
 
-	for _, v := range permitList {
-
-		everyData := make(map[string]interface{})
-
-		params := make(map[string]string)
-		vAddress := this.OrgAdminPermit(v, params)
-		everyData["Permit"] = vAddress
-
-		everyData["Active"] = false //默认设置不为选中的状态
-		everyData["ChildList"] = make([]PermitAdmin, 0)
-
-		//判断内容是否存在，相当于PHP中的isset函数
-		if _, ok := childPermit[v.Id]; ok {
-			everyData["ChildList"] = childPermit[v.Id]
-
-		}
-
-		result = append(result, everyData)
-	}
-
-	return &result
 }
 
 /**
@@ -241,9 +216,8 @@ func (this *Permit) GetLeftPermit(leftTopId string) *[](map[string]interface{}) 
 
 func (this *Permit) GetLeftPermitByGroupId(leftTopId string, groupIds []string) *[](map[string]interface{}) {
 
-	var result [](map[string]interface{})
+	var result = make([](map[string]interface{}), 0)
 	var leftPermitIdList []string
-	var childPermit = make(map[string][]PermitAdmin)
 
 	if leftTopId == "" {
 		return &result
@@ -253,11 +227,25 @@ func (this *Permit) GetLeftPermitByGroupId(leftTopId string, groupIds []string) 
 		leftPermitIdList = append(leftPermitIdList, v.Id)
 	}
 	childPermitList := this.FetchPermitByGroupIdAndUppermit(groupIds, leftPermitIdList)
+
+	return this.orgPermitSepData(permitList, childPermitList)
+}
+
+/**
+*
+*
+*
+ */
+func (this *Permit) orgPermitSepData(permitList *[]Permit, childPermitList *[]Permit) *([](map[string]interface{})) {
+	var result = make([](map[string]interface{}), 0)
+	var childPermit = make(map[string][]PermitAdmin)
+
 	for _, v := range *childPermitList {
 		params := make(map[string]string)
 		tmp := this.OrgAdminPermit(v, params)
 		childPermit[v.UppermitId] = append(childPermit[v.UppermitId], *tmp)
 	}
+
 	for _, v := range *permitList {
 
 		everyData := make(map[string]interface{})

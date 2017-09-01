@@ -15,5 +15,6 @@ func init() {
 	beego.AutoRouter(&controllers.Passport{})
 	beego.AutoRouter(&controllers.DataController{})
 	beego.AutoRouter(&controllers.GroupController{})
-
+	beego.AutoRouter(&controllers.UserController{})
+	beego.AutoRouter(&controllers.PermitController{})
 }

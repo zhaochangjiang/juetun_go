@@ -18,6 +18,19 @@ type AdminController struct {
 	ConContext general.ControllerContext //本次请求上下文存储的数据
 }
 
+func (this *AdminController) Edit() {
+	this.LoadCommon("layout/edit.html")
+}
+
+func (this *AdminController) Delete() {
+
+}
+
+func (this *AdminController) List() {
+	this.Debug("AdminController_List")
+	this.LoadCommon("layout/list.html")
+}
+
 /**
 * 返回当前后台的权限列表
 * @author karl.zhao<zhaocj2009@126.com>
@@ -370,13 +383,14 @@ func (this *AdminController) initAllShowNotSuperAdminPermit() {
 func (this *AdminController) setLeftActive(leftPermit *[](map[string]interface{}), activeUponId []string) (*[](map[string]interface{}), error) {
 	var res = make([](map[string]interface{}), 0)
 	var errR error
-
+	//	this.Debug(leftPermit)
+	//	this.Debug(activeUponId)
 	if len(activeUponId) < 2 {
 		return leftPermit, nil
 	}
 
 	//去掉第一，第二条数据为空字符串
-	activeUponId = activeUponId[2:]
+	activeUponId = activeUponId[1:]
 
 	//如果没有数据，说明没有标明选中项
 	if len(activeUponId) < 1 {
@@ -388,18 +402,15 @@ func (this *AdminController) setLeftActive(leftPermit *[](map[string]interface{}
 		//将数据转换为Permit格式
 		p := v["Permit"].(*modelsAdmin.PermitAdmin)
 
-		upid := activeUponId[0]
-		//		this.Debug(p)
-		//		this.Debug(upid)
 		//如果ID相等
-		if p.Id == upid {
+		if p.Id == activeUponId[0] {
 			v["Active"] = true
-			childList := v["ChildList"].(*[](map[string]interface{}))
+			childList := v["ChildList"].([]map[string]interface{})
 			//如果有子选项
-			if len(*childList) > 0 {
+			if len(childList) > 0 {
 
 				//此处为一个递归处理
-				v["ChildList"], errR = this.setLeftActive(childList, activeUponId[1:])
+				v["ChildList"], errR = this.setLeftActive(&childList, activeUponId[1:])
 				if nil != errR {
 					panic(errR)
 				}
@@ -474,6 +485,8 @@ func (this *AdminController) Prepare() {
 
 	//引入页面内容
 	this.InitPageScript()
+	//初始化模板引入
+	this.LayoutSections = make(map[string]string)
 
 	if true == this.ConContext.NotNeedLogin {
 
@@ -574,9 +587,8 @@ func (this *AdminController) LoadCommon(tplName string) {
 	this.Layout = "layout/main.html"
 	this.TplName = tplName
 
-	this.LayoutSections = make(map[string]string)
 	this.LayoutSections["HtmlHead"] = "layout/header.html"
-	this.LayoutSections["SideBar"] = "layout/left.html"
-	this.LayoutSections["ScriptsAfter"] = "layout/scriptsafter.html"
+	this.LayoutSections["HtmlSideBar"] = "layout/left.html"
+	this.LayoutSections["HtmlScriptsAfter"] = "layout/scriptsafter.html"
 
 }
