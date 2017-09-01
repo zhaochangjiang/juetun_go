@@ -3,6 +3,7 @@ package admin
 import (
 	"juetun/common/general"
 	"log"
+
 	"strings"
 
 	"github.com/astaxie/beego/orm"
@@ -126,8 +127,9 @@ func (this *Permit) FetchDefaultPermitByModuleString(moduleString string, contro
 			panic(err)
 		}
 		if len(*permit) != 0 {
-			leftTopId = (*permit)[0].UppermitId
+			leftTopId = (*permit)[0].Id
 		}
+		log.Println(permit)
 		leftPermit = this.GetLeftPermit(leftTopId)
 	} else {
 
@@ -144,16 +146,13 @@ func (this *Permit) FetchDefaultPermitByModuleString(moduleString string, contro
 		permit := this.FetchPermitByCondition(fetchParams)
 
 		if len(*permit) != 0 {
-			leftTopId = (*permit)[0].UppermitId
+			leftTopId = (*permit)[0].Id
 		}
 		leftPermit = this.GetLeftPermitByGroupId(leftTopId, controllerContext.GroupIds)
 	}
-	log.Println("------------------leftPermit-----------------------")
-	log.Println(leftPermit)
-	log.Println("------------------leftPermit-----------------------")
 
 	for _, v := range *leftPermit {
-		p := v["Permit"].(PermitAdmin)
+		p := (v["Permit"]).(*PermitAdmin)
 		if p.Controller != "" && p.Action != "" {
 			this.Controller = p.Controller
 			this.Action = p.Action
@@ -176,7 +175,6 @@ func (this *Permit) FetchDefaultPermitByModuleString(moduleString string, contro
 			break
 		}
 	}
-	panic("adsfasdfasdf")
 
 }
 

@@ -475,12 +475,6 @@ func (this *AdminController) Prepare() {
 	//引入页面内容
 	this.InitPageScript()
 
-	//初始化当前用户是否为超级管理员
-	if !this.authSuperAdmin() {
-		//获得当前用户的用户组ID列表
-		this.ConContext.GroupIds = this.getNowUserGroupId()
-	}
-
 	if true == this.ConContext.NotNeedLogin {
 
 		//引入父类的处理逻辑
@@ -495,15 +489,23 @@ func (this *AdminController) Prepare() {
 		this.Redirect(gotoUrl, 301)
 		return
 	}
+	//初始化当前用户是否为超级管理员
+	if !this.authSuperAdmin() {
+		//获得当前用户的用户组ID列表
+		this.ConContext.GroupIds = this.getNowUserGroupId()
+	}
 
 	//处理用户默认信息，比如头像
 	this.UserDataDefault()
 
-	//加上权限管理
-	this.InitPermitItem()
+	if this.ConContext.NotNeedValidatePermit == false {
+		//加上权限管理
+		this.InitPermitItem()
+	}
 
 	//引入父类的处理逻辑
 	this.BaseController.Prepare()
+	return
 }
 
 /**
@@ -514,6 +516,7 @@ func (this *AdminController) Prepare() {
  */
 func (this *AdminController) authSuperAdmin() bool {
 	this.ConContext.IsSuperAdmin = false
+
 	if nil != this.GetSession("SuperAdmin") {
 		switch this.GetSession("SuperAdmin").(string) {
 		case "yes":
@@ -521,6 +524,8 @@ func (this *AdminController) authSuperAdmin() bool {
 		default:
 			this.ConContext.IsSuperAdmin = false
 		}
+	} else {
+		panic(errors.New("the session message is not having SuperAdmin!"))
 	}
 	//初始化是否为超级管理员的配置
 	this.Data["isSuperAdmin"] = this.ConContext.IsSuperAdmin
