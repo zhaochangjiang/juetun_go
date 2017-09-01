@@ -238,12 +238,16 @@ func (this *Permit) GetLeftPermitByGroupId(leftTopId string, groupIds []string) 
  */
 func (this *Permit) orgPermitSepData(permitList *[]Permit, childPermitList *[]Permit) *([](map[string]interface{})) {
 	var result = make([](map[string]interface{}), 0)
-	var childPermit = make(map[string][]PermitAdmin)
+	var childPermit = make(map[string][]interface{})
 
 	for _, v := range *childPermitList {
 		params := make(map[string]string)
 		tmp := this.OrgAdminPermit(v, params)
-		childPermit[v.UppermitId] = append(childPermit[v.UppermitId], *tmp)
+		obj := make(map[string]interface{})
+		obj["Permit"] = *tmp
+		obj["Active"] = false
+		obj["ChildList"] = make([]interface{}, 0)
+		childPermit[v.UppermitId] = append(childPermit[v.UppermitId], &obj)
 	}
 
 	for _, v := range *permitList {
@@ -252,7 +256,7 @@ func (this *Permit) orgPermitSepData(permitList *[]Permit, childPermitList *[]Pe
 		params := make(map[string]string)
 		everyData["Permit"] = this.OrgAdminPermit(v, params)
 		everyData["Active"] = false //默认设置不为选中的状态
-		everyData["ChildList"] = make([]PermitAdmin, 0)
+		everyData["ChildList"] = make([]interface{}, 0)
 
 		//判断内容是否存在，相当于PHP中的isset函数
 		if _, ok := childPermit[v.Id]; ok {

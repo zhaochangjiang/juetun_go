@@ -405,7 +405,7 @@ func (this *AdminController) setLeftActive(leftPermit *[](map[string]interface{}
 		//如果ID相等
 		if p.Id == activeUponId[0] {
 			v["Active"] = true
-			childList := v["ChildList"].([]map[string]interface{})
+			childList := v["ChildList"].([]interface{})
 			//如果有子选项
 			if len(childList) > 0 {
 
