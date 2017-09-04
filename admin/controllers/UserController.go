@@ -9,6 +9,5 @@ type UserController struct {
 }
 
 func (this *UserController) List() {
-	this.Debug("UserController_List")
 	this.LoadCommon("layout/list.html")
 }

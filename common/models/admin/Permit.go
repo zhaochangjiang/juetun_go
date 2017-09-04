@@ -118,6 +118,8 @@ func (this *Permit) FetchDefaultPermitByModuleString(moduleString string, contro
 
 	var leftTopId string
 
+	var args map[string]interface{}
+	args["SuperAdmin"] = controllerContext.IsSuperAdmin
 	if controllerContext.IsSuperAdmin == true {
 		var fetchParams = make(map[string]string)
 		fetchParams["mod"] = moduleString
@@ -129,10 +131,9 @@ func (this *Permit) FetchDefaultPermitByModuleString(moduleString string, contro
 		if len(*permit) != 0 {
 			leftTopId = (*permit)[0].Id
 		}
-		log.Println(permit)
-		leftPermit = this.GetLeftPermit(leftTopId)
-	} else {
+		args["LeftTopId"] = leftTopId
 
+	} else {
 		var fetchParams = make(map[string]interface{})
 		var permitParams = make(map[string]interface{})
 		permitParams["mod"] = moduleString
@@ -148,8 +149,10 @@ func (this *Permit) FetchDefaultPermitByModuleString(moduleString string, contro
 		if len(*permit) != 0 {
 			leftTopId = (*permit)[0].Id
 		}
-		leftPermit = this.GetLeftPermitByGroupId(leftTopId, controllerContext.GroupIds)
+		args["LeftTopId"] = leftTopId
+		args["GroupIds"] = controllerContext.GroupIds
 	}
+	leftPermit = this.GetLeftPermit(args)
 
 	for _, v := range *leftPermit {
 		p := (v["Permit"]).(*PermitAdmin)
@@ -184,51 +187,57 @@ func (this *Permit) FetchDefaultPermitByModuleString(moduleString string, contro
 * @Date 2017/08/01
 *
  */
-func (this *Permit) GetLeftPermit(leftTopId string) *[](map[string]interface{}) {
+func (this *Permit) GetLeftPermit(args map[string]interface{}) *[](map[string]interface{}) {
 	var permitList, childPermitList []Permit
-	result := make([]map[string]interface{}, 0)
-	if leftTopId == "" {
-		return &result
+	var result = make([]map[string]interface{}, 0)
+
+	var leftTopId string = ""
+	var groupIds []string = make([]string, 0)
+	var superAdmin = false
+	if _, ok := args["LeftTopId"]; ok {
+		leftTopId = args["LeftTopId"].(string)
 	}
 
-	querySeter := this.getQuerySeter()
-
-	//查询上级权限为leftTopId的权限列表
-	querySeter = querySeter.Filter("uppermit_id__exact", leftTopId).OrderBy("obyid")
-	querySeter.All(&permitList)
-	leftPermitIdList := make([]string, 0)
-	leftPermitIdList = append(leftPermitIdList, leftTopId)
-	for _, v := range permitList {
-		leftPermitIdList = append(leftPermitIdList, v.Id)
+	if _, ok := args["SuperAdmin"]; ok {
+		superAdmin = args["SuperAdmin"].(bool)
 	}
-
-	this.getQuerySeter().Filter("uppermit_id__in", leftPermitIdList).OrderBy("obyid").All(&childPermitList)
-
-	return this.orgPermitSepData(&permitList, &childPermitList)
-
-}
-
-/**
-* 获得左边的权限列表
-* @author karl.zhao<zhaocj2009@hotmail.com>
-* @date 2017/07/20
- */
-
-func (this *Permit) GetLeftPermitByGroupId(leftTopId string, groupIds []string) *[](map[string]interface{}) {
-
-	var result = make([](map[string]interface{}), 0)
-	var leftPermitIdList []string
 
 	if leftTopId == "" {
 		return &result
 	}
-	permitList := this.FetchPermitByGroupIdAndUppermit(groupIds, []string{leftTopId})
-	for _, v := range *permitList {
-		leftPermitIdList = append(leftPermitIdList, v.Id)
-	}
-	childPermitList := this.FetchPermitByGroupIdAndUppermit(groupIds, leftPermitIdList)
+	if superAdmin == true {
+		querySeter := this.getQuerySeter()
 
-	return this.orgPermitSepData(permitList, childPermitList)
+		//查询上级权限为leftTopId的权限列表
+		querySeter = querySeter.Filter("uppermit_id__exact", leftTopId).OrderBy("obyid")
+		querySeter.All(&permitList)
+		leftPermitIdList := make([]string, 0)
+		leftPermitIdList = append(leftPermitIdList, leftTopId)
+		for _, v := range permitList {
+			leftPermitIdList = append(leftPermitIdList, v.Id)
+		}
+
+		this.getQuerySeter().Filter("uppermit_id__in", leftPermitIdList).OrderBy("obyid").All(&childPermitList)
+
+	} else {
+		if _, ok := args["GroupIds"]; ok {
+			groupIds = args["GroupIds"].([]string)
+		}
+		var result = make([](map[string]interface{}), 0)
+		var leftPermitIdList []string
+
+		if leftTopId == "" {
+			return &result
+		}
+		permitList := this.FetchPermitByGroupIdAndUppermit(groupIds, []string{leftTopId})
+		for _, v := range *permitList {
+			leftPermitIdList = append(leftPermitIdList, v.Id)
+		}
+		tmp := this.FetchPermitByGroupIdAndUppermit(groupIds, leftPermitIdList)
+		childPermitList = *tmp
+	}
+
+	return this.orgPermitSepData(&childPermitList, leftTopId)
 }
 
 /**
@@ -236,10 +245,8 @@ func (this *Permit) GetLeftPermitByGroupId(leftTopId string, groupIds []string) 
 *
 *
  */
-func (this *Permit) orgPermitSepData(permitList *[]Permit, childPermitList *[]Permit) *([](map[string]interface{})) {
-	var result = make([](map[string]interface{}), 0)
+func (this *Permit) orgPermitSepData(childPermitList *[]Permit, leftTopId string) *([](map[string]interface{})) {
 	var childPermit = make(map[string][]interface{})
-
 	for _, v := range *childPermitList {
 		params := make(map[string]string)
 		tmp := this.OrgAdminPermit(v, params)
@@ -247,25 +254,81 @@ func (this *Permit) orgPermitSepData(permitList *[]Permit, childPermitList *[]Pe
 		obj["Permit"] = *tmp
 		obj["Active"] = false
 		obj["ChildList"] = make([]interface{}, 0)
-		childPermit[v.UppermitId] = append(childPermit[v.UppermitId], &obj)
+		childPermit[v.UppermitId] = append(childPermit[v.UppermitId], obj)
 	}
+	var result = make([](map[string]interface{}), 0)
 
-	for _, v := range *permitList {
+	if _, ok := childPermit[leftTopId]; ok {
+		result = childPermit[leftTopId]
 
-		everyData := make(map[string]interface{})
-		params := make(map[string]string)
-		everyData["Permit"] = this.OrgAdminPermit(v, params)
-		everyData["Active"] = false //默认设置不为选中的状态
-		everyData["ChildList"] = make([]interface{}, 0)
+		if len(result) > 0 {
 
-		//判断内容是否存在，相当于PHP中的isset函数
-		if _, ok := childPermit[v.Id]; ok {
-			everyData["ChildList"] = childPermit[v.Id]
+			for k, v := range result {
+				permit := v["Permit"].(Permit)
+				if _, ok := childPermit[permit.Id]; ok {
+					result[k]["ChildList"] = childPermit[permit.Id]
+
+					if len(result[k]["ChildList"]) > 0 {
+
+					}
+				}
+			}
 		}
-		result = append(result, everyData)
+
 	}
+	result := this.iteration(childPermit)
+	return result
+}
+func (this *Permit) iteration(everyData Permit, childPermit map[string][]interface{}) *[]map[string]interface{} {
+	var result = make([](map[string]interface{}), 0)
+
+	if _, ok := childPermit[permit.Id]; ok {
+		if len(childPermit[permit.Id]) > 0 {
+			result[k]["ChildList"] = childPermit[permit.Id]
+
+			for k, v := range result[k]["ChildList"] {
+
+			}
+		}
+
+		//this.iteration(,childPermit)
+
+	}
+
 	return &result
 }
+
+//func (this *Permit) iteration(childPermit map[string][]interface{}) *[]map[string]interface{} {
+//	var result = make([](map[string]interface{}), 0)
+
+//	for _, v := range *permitList {
+
+//		everyData := make(map[string]interface{})
+
+//		everyData["Permit"] = &v
+
+//		everyData["Active"] = false //默认设置不为选中的状态
+//		everyData["ChildList"] = make([]interface{}, 0)
+
+//		//判断内容是否存在，相当于PHP中的isset函数
+//		if _, ok := childPermit[v.Id]; ok {
+//			tmp := childPermit[v.Id]
+
+//			if len(tmp) > 0 {
+//				tmp1 := make([]PermitAdmin, 0)
+//				for _, v := range tmp {
+//					tmp1 = append(tmp1, v["Permit"].(PermitAdmin))
+//				}
+//				//	tmp := this.iteration(&tmp1, childPermit)
+//			}
+//			everyData["ChildList"] = tmp
+
+//		}
+
+//		result = append(result, everyData)
+//	}
+//	return &result
+//}
 
 /**
 * @author karl.zhao<zhaocj2009@hotmail.com>

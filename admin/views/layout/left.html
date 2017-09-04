@@ -28,11 +28,9 @@
 			{{$childPermitList:=.ChildList}}
 			{{/* 如果不为空 */}}
 			{{if $childPermitList}}
-			{{if $active}}
-			 <li class="treeview active">
-			{{else}}
-			<li class="treeview">
-			{{end}}
+			
+			 <li class="treeview {{if $active}}active{{else}}{{end}}">
+			
                     <a href="javascript:void(0);">
                         <i class="fa {{if eq $nowPermit.Csscode ""}}fa-laptop{{else}}{{$nowPermit.Csscode}}{{end}}"></i>
                         <span>{{$nowPermit.Name}}</span>
@@ -40,13 +38,13 @@
                     </a>
                     <ul class="treeview-menu">
 					{{range $key, $elem := $childPermitList}}
-					 <li>
-						{{if eq $elem.UrlString ""}}
+					 <li {{if $elem.Active}}class="active"{{end}}>
+						{{if eq $elem.Permit.UrlString ""}}
 						 	<a href="javascript:void(0);" style="margin-left: 10px;"> 
 						{{else}}
-						 	<a href="{{$elem.UrlString | html}}" style="margin-left: 10px;">
+						 	<a href="{{$elem.Permit.UrlString | html}}" style="margin-left: 10px;">
 						{{end}}
-					<i class="fa fa-angle-double-right"></i> {{.Name}}</a></li>
+					<i class="fa fa-angle-double-right"></i> {{.Permit.Name}}</a></li>
 					{{end}}  
                     </ul>
                 </li>

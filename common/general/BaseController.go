@@ -33,7 +33,7 @@ func (this *BaseController) Debug(data interface{}) {
 	log.Println("")
 	log.Println("")
 	log.Println("--------------------Debug----------------------")
-	log.Println(data)
+	log.Print(data)
 	log.Println("------------------- Debug-----------------------")
 	log.Println("")
 	log.Println("")

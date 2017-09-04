@@ -125,10 +125,12 @@ func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []string,
 	permitModel := new(modelsAdmin.Permit)
 	permitData, _ := this.getNowPermitData()
 	if nil == permitData {
-		return nil, nil, nil
+		//默认的上级机构必须查询
+		uponPermitId = *utils.SliceUnshiftString(uponPermitId, "")
+		return nil, uponPermitId, nil
 	}
-	//默认的上级机构必须查询
-	uponPermitId = *utils.SliceUnshiftString(uponPermitId, "")
+
+	uponPermitId = *utils.SliceUnshiftString(uponPermitId, permitData.Id)
 
 	var permitModelList *[]modelsAdmin.Permit
 	i := 0
@@ -159,6 +161,9 @@ func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []string,
 		result = *utils.SliceUnshift(result, permitDataTmp)
 
 	}
+
+	//默认的上级机构必须查询
+	uponPermitId = *utils.SliceUnshiftString(uponPermitId, "")
 	return &result, uponPermitId, err1
 }
 
@@ -179,11 +184,11 @@ func (this *AdminController) getNowNotSuperAdminAndAllUponPermit(groupIds *[]str
 
 	permitData, _ := this.getNowPermitData()
 	if nil == permitData {
+		//默认的上级机构必须查询
+		uponPermitId = *utils.SliceUnshiftString(uponPermitId, "")
 		return nil, nil, err1
 	}
-	//默认的上级机构必须查询
-	uponPermitId = *utils.SliceUnshiftString(uponPermitId, "")
-
+	uponPermitId = *utils.SliceUnshiftString(uponPermitId, permitData.Id)
 	var permitModelList *[]modelsAdmin.Permit
 
 	i := 0
@@ -205,6 +210,9 @@ func (this *AdminController) getNowNotSuperAdminAndAllUponPermit(groupIds *[]str
 		result = *utils.SliceUnshift(result, permitData)
 
 	}
+
+	//默认的上级机构必须查询
+	uponPermitId = *utils.SliceUnshiftString(uponPermitId, "")
 	return &result, uponPermitId, err1
 }
 
@@ -254,7 +262,10 @@ func (this *AdminController) initAllShowSuperAdminPermit() {
 	permit["Header"] = headerPermitList
 	permit["HeaderActive"], leftTopId = this.getHeaderDefaultActive(*permitUpon)
 
-	leftPermit := this.PermitService.GetLeftPermit(leftTopId)
+	var args = make(map[string]interface{})
+	args["LeftTopId"] = leftTopId
+	args["SuperAdmin"] = true
+	leftPermit := this.PermitService.GetLeftPermit(args)
 
 	//设置左侧权限active
 	var err2 error
@@ -361,7 +372,12 @@ func (this *AdminController) initAllShowNotSuperAdminPermit() {
 	}
 
 	//左侧边栏权限列表
-	leftPermit := this.PermitService.GetLeftPermitByGroupId(leftTopId, this.ConContext.GroupIds)
+	var args = make(map[string]interface{})
+	args["SuperAdmin"] = false
+	args["LeftTopId"] = leftTopId
+	args["GroupIds"] = this.ConContext.GroupIds
+	leftPermit := this.PermitService.GetLeftPermit(args)
+
 	var err2 error
 	leftPermit, err2 = this.setLeftActive(leftPermit, activeUponId)
 	if nil != err2 {
@@ -369,9 +385,6 @@ func (this *AdminController) initAllShowNotSuperAdminPermit() {
 	}
 	permit["Left"] = leftPermit
 	this.Data["Permit"] = permit
-
-	//log.Println(activeUponId)
-	//log.Println(permitUpon)
 }
 
 /**
@@ -384,40 +397,45 @@ func (this *AdminController) setLeftActive(leftPermit *[](map[string]interface{}
 	var res = make([](map[string]interface{}), 0)
 	var errR error
 	//	this.Debug(leftPermit)
-	//	this.Debug(activeUponId)
-	if len(activeUponId) < 2 {
+	//如果没有数据，说明没有标明选中项
+	if len(activeUponId) < 3 {
 		return leftPermit, nil
 	}
 
 	//去掉第一，第二条数据为空字符串
-	activeUponId = activeUponId[1:]
-
-	//如果没有数据，说明没有标明选中项
-	if len(activeUponId) < 1 {
-		return leftPermit, nil
-	}
+	activeUponId = activeUponId[2:]
 
 	for _, v := range *leftPermit {
 
 		//将数据转换为Permit格式
 		p := v["Permit"].(*modelsAdmin.PermitAdmin)
-
 		//如果ID相等
 		if p.Id == activeUponId[0] {
+
+			//设置当前为高亮选中
 			v["Active"] = true
 			childList := v["ChildList"].([]interface{})
+			cList := make([]map[string]interface{}, 0)
+
+			for _, v := range childList {
+				cList = append(cList, v.(map[string]interface{}))
+			}
+
 			//如果有子选项
 			if len(childList) > 0 {
 
 				//此处为一个递归处理
-				v["ChildList"], errR = this.setLeftActive(&childList, activeUponId[1:])
+				v["ChildList"], errR = this.setLeftActive(&cList, activeUponId[1:])
 				if nil != errR {
 					panic(errR)
 				}
 			}
+
 		}
+
 		res = append(res, v)
 	}
+
 	return &res, nil
 }
 
