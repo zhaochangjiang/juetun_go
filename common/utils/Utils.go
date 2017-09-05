@@ -156,6 +156,10 @@ func TrimRight(s string, cutset string) string {
 		return s
 	}
 	maxi := strings.LastIndex(s, cutset)
+	if maxi < 0 {
+		return s
+	}
+
 	rs := []rune(s)
 	return string(rs[0:maxi])
 }
