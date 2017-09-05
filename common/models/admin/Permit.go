@@ -3,8 +3,9 @@ package admin
 import (
 	"juetun/common/general"
 	"log"
-
 	"strings"
+
+	favDebug "github.com/favframework/debug"
 
 	"github.com/astaxie/beego/orm"
 )
@@ -118,7 +119,7 @@ func (this *Permit) FetchDefaultPermitByModuleString(moduleString string, contro
 
 	var leftTopId string
 
-	var args map[string]interface{}
+	var args = make(map[string]interface{})
 	args["SuperAdmin"] = controllerContext.IsSuperAdmin
 	if controllerContext.IsSuperAdmin == true {
 		var fetchParams = make(map[string]string)
@@ -256,79 +257,36 @@ func (this *Permit) orgPermitSepData(childPermitList *[]Permit, leftTopId string
 		obj["ChildList"] = make([]interface{}, 0)
 		childPermit[v.UppermitId] = append(childPermit[v.UppermitId], obj)
 	}
-	var result = make([](map[string]interface{}), 0)
 
-	if _, ok := childPermit[leftTopId]; ok {
-		result = childPermit[leftTopId]
+	result := this.iteration(leftTopId, childPermit)
 
-		if len(result) > 0 {
-
-			for k, v := range result {
-				permit := v["Permit"].(Permit)
-				if _, ok := childPermit[permit.Id]; ok {
-					result[k]["ChildList"] = childPermit[permit.Id]
-
-					if len(result[k]["ChildList"]) > 0 {
-
-					}
-				}
-			}
-		}
-
-	}
-	result := this.iteration(childPermit)
 	return result
 }
-func (this *Permit) iteration(everyData Permit, childPermit map[string][]interface{}) *[]map[string]interface{} {
-	var result = make([](map[string]interface{}), 0)
 
-	if _, ok := childPermit[permit.Id]; ok {
-		if len(childPermit[permit.Id]) > 0 {
-			result[k]["ChildList"] = childPermit[permit.Id]
+/**
+*
+* 递归获得子选项
+* @author karl.zhao<zhaochangjiang@huoyunren.com>
+* @date 20170905
+*
+*
+ */
+func (this *Permit) iteration(topId string, childPermit map[string][]interface{}) *[]map[string]interface{} {
+	var childList = make([](map[string]interface{}), 0)
+	if _, ok := childPermit[topId]; ok {
 
-			for k, v := range result[k]["ChildList"] {
+		if len(childPermit[topId]) > 0 {
+			for _, v := range childPermit[topId] {
+				vk := v.(map[string]interface{})
+				v1 := vk["Permit"].(PermitAdmin)
+				vk["ChildList"] = this.iteration(v1.Id, childPermit)
 
+				childList = append(childList, vk)
 			}
 		}
-
-		//this.iteration(,childPermit)
-
 	}
-
-	return &result
+	return &childList
 }
-
-//func (this *Permit) iteration(childPermit map[string][]interface{}) *[]map[string]interface{} {
-//	var result = make([](map[string]interface{}), 0)
-
-//	for _, v := range *permitList {
-
-//		everyData := make(map[string]interface{})
-
-//		everyData["Permit"] = &v
-
-//		everyData["Active"] = false //默认设置不为选中的状态
-//		everyData["ChildList"] = make([]interface{}, 0)
-
-//		//判断内容是否存在，相当于PHP中的isset函数
-//		if _, ok := childPermit[v.Id]; ok {
-//			tmp := childPermit[v.Id]
-
-//			if len(tmp) > 0 {
-//				tmp1 := make([]PermitAdmin, 0)
-//				for _, v := range tmp {
-//					tmp1 = append(tmp1, v["Permit"].(PermitAdmin))
-//				}
-//				//	tmp := this.iteration(&tmp1, childPermit)
-//			}
-//			everyData["ChildList"] = tmp
-
-//		}
-
-//		result = append(result, everyData)
-//	}
-//	return &result
-//}
 
 /**
 * @author karl.zhao<zhaocj2009@hotmail.com>

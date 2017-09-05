@@ -408,21 +408,21 @@ func (this *AdminController) setLeftActive(leftPermit *[](map[string]interface{}
 	for _, v := range *leftPermit {
 
 		//将数据转换为Permit格式
-		p := v["Permit"].(*modelsAdmin.PermitAdmin)
+		p := v["Permit"].(modelsAdmin.PermitAdmin)
 		//如果ID相等
 		if p.Id == activeUponId[0] {
 
 			//设置当前为高亮选中
 			v["Active"] = true
-			childList := v["ChildList"].([]interface{})
+			childList := v["ChildList"].(*[]map[string]interface{})
 			cList := make([]map[string]interface{}, 0)
 
-			for _, v := range childList {
-				cList = append(cList, v.(map[string]interface{}))
+			for _, v := range *childList {
+				cList = append(cList, v)
 			}
 
 			//如果有子选项
-			if len(childList) > 0 {
+			if len(cList) > 0 {
 
 				//此处为一个递归处理
 				v["ChildList"], errR = this.setLeftActive(&cList, activeUponId[1:])
