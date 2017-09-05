@@ -10,6 +10,7 @@ type PermitController struct {
 }
 
 func (this *PermitController) List() {
-	this.Data["HtmlSearchForm"] = "layout/search.html"
-	this.LoadCommon("layout/list.html")
+
+	this.SetListPageMessage()
+	this.LoadCommon("permit/list.html")
 }

@@ -30,6 +30,12 @@ func (this *AdminController) List() {
 	this.Debug("AdminController_List")
 	this.LoadCommon("layout/list.html")
 }
+func (this *AdminController) SetListPageMessage() {
+	this.ConContext.JsFileAfter = append(this.ConContext.JsFileAfter, "plugins/datatables/jquery.dataTables.js")
+	this.ConContext.JsFileAfter = append(this.ConContext.JsFileAfter, "plugins/datatables/dataTables.bootstrap.js")
+	this.ConContext.CssFile = append(this.ConContext.CssFile, "datatables/dataTables.bootstrap.css")
+
+}
 
 /**
 * 返回当前后台的权限列表
@@ -79,7 +85,9 @@ func (this *AdminController) getNowPermitData() (*modelsAdmin.Permit, error) {
 	defaultController, actionString := this.DefaultControllerAndAction()
 
 	fetchParams := make(map[string]string)
-	fetchParams["Controller"], fetchParams["Action"] = this.GetControllerAndAction()
+
+	fetchParams["Controller"] = this.ConContext.Controller
+	fetchParams["Action"] = this.ConContext.Action
 	fetchParams["Controller"] = strings.ToLower(utils.Substr(fetchParams["Controller"], 0, strings.Index(fetchParams["Controller"], "Controller")))
 	fetchParams["Action"] = strings.ToLower(fetchParams["Action"])
 
@@ -269,7 +277,7 @@ func (this *AdminController) initAllShowSuperAdminPermit() {
 
 	//设置左侧权限active
 	var err2 error
-	leftPermit, err2 = this.setLeftActive(leftPermit, activeUponId)
+	leftPermit, err2 = this.setLeftActive(leftPermit, activeUponId, false)
 	if nil != err2 {
 		panic(err2)
 	}
@@ -379,7 +387,7 @@ func (this *AdminController) initAllShowNotSuperAdminPermit() {
 	leftPermit := this.PermitService.GetLeftPermit(args)
 
 	var err2 error
-	leftPermit, err2 = this.setLeftActive(leftPermit, activeUponId)
+	leftPermit, err2 = this.setLeftActive(leftPermit, activeUponId, false)
 	if nil != err2 {
 		panic(err2)
 	}
@@ -393,22 +401,29 @@ func (this *AdminController) initAllShowNotSuperAdminPermit() {
 * @Date 2017/08/16
 * @return *[](map[string]interface{}), error
  */
-func (this *AdminController) setLeftActive(leftPermit *[](map[string]interface{}), activeUponId []string) (*[](map[string]interface{}), error) {
+func (this *AdminController) setLeftActive(leftPermit *[](map[string]interface{}), activeUponId []string, needDevid bool) (*[](map[string]interface{}), error) {
 	var res = make([](map[string]interface{}), 0)
 	var errR error
-	//	this.Debug(leftPermit)
-	//如果没有数据，说明没有标明选中项
-	if len(activeUponId) < 3 {
+
+	if len(activeUponId) == 0 {
 		return leftPermit, nil
 	}
+	if needDevid != true {
+		//	this.Debug(leftPermit)
+		//如果没有数据，说明没有标明选中项
+		if len(activeUponId) < 3 {
+			return leftPermit, nil
+		}
 
-	//去掉第一，第二条数据为空字符串
-	activeUponId = activeUponId[2:]
+		//去掉第一，第二条数据为空字符串
+		activeUponId = activeUponId[2:]
+	}
 
 	for _, v := range *leftPermit {
 
 		//将数据转换为Permit格式
 		p := v["Permit"].(modelsAdmin.PermitAdmin)
+
 		//如果ID相等
 		if p.Id == activeUponId[0] {
 
@@ -425,7 +440,7 @@ func (this *AdminController) setLeftActive(leftPermit *[](map[string]interface{}
 			if len(cList) > 0 {
 
 				//此处为一个递归处理
-				v["ChildList"], errR = this.setLeftActive(&cList, activeUponId[1:])
+				v["ChildList"], errR = this.setLeftActive(&cList, activeUponId[1:], true)
 				if nil != errR {
 					panic(errR)
 				}
@@ -449,7 +464,7 @@ func (this *AdminController) InitPageScript() {
 
 	this.Data["PageVersion"] = "1.0"
 
-	this.Data["CssFile"] = [...]string{
+	this.Data["CssFile"] = []string{
 		"bootstrap.min.css",
 		"font-awesome.min.css",
 		"ionicons.min.css",
@@ -461,14 +476,14 @@ func (this *AdminController) InitPageScript() {
 		"AdminLTE.css",
 		"fileinput/fileinput.css"}
 
-	this.Data["JsFileBefore"] = [...]string{
+	this.Data["JsFileBefore"] = []string{
 		"jquery.min.js",
 		"jquery-ui-1.10.3.min.js",
 		"bootstrap.min.js",
 		"fileinput/fileinput.js",
 		"fileinput/fileinput_locale_zh.js"}
 
-	this.Data["JsFileAfter"] = [...]string{
+	this.Data["JsFileAfter"] = []string{
 		"raphael-min.js",
 		//     'plugins/morris/morris.min.js',
 		"plugins/sparkline/jquery.sparkline.min.js",
@@ -480,7 +495,18 @@ func (this *AdminController) InitPageScript() {
 		"plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js",
 		"plugins/iCheck/icheck.min.js",
 		"AdminLTE/app.js",
-		"AdminLTE/dashboard.js"}
+		"AdminLTE/dashboard.js",
+	}
+
+}
+
+func (this *AdminController) initConContextControllerAndAction() {
+	con, act := this.GetControllerAndAction()
+	con = strings.ToLower(con)
+	con = utils.TrimRight(con, "controller")
+	act = strings.ToLower(act)
+	this.ConContext.Controller = con
+	this.ConContext.Action = act
 }
 
 /**
@@ -490,6 +516,8 @@ func (this *AdminController) InitPageScript() {
 *
  */
 func (this *AdminController) Prepare() {
+
+	this.initConContextControllerAndAction()
 
 	this.Data["SiteName"] = beego.AppConfig.String(beego.BConfig.RunMode + "::sitename")
 	time := time.Now()
@@ -609,4 +637,59 @@ func (this *AdminController) LoadCommon(tplName string) {
 	this.LayoutSections["HtmlSideBar"] = "layout/left.html"
 	this.LayoutSections["HtmlScriptsAfter"] = "layout/scriptsafter.html"
 
+	this.Data["PageVersion"] = "1.0"
+
+	CssFile := []string{
+		"bootstrap.min.css",
+		"font-awesome.min.css",
+		"ionicons.min.css",
+		"morris/morris.css",
+		"jvectormap/jquery-jvectormap-1.2.2.css",
+		"fullcalendar/fullcalendar.css",
+		"daterangepicker/daterangepicker-bs3.css",
+		"bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css",
+		"AdminLTE.css",
+		"fileinput/fileinput.css"}
+
+	jsFileBefore := []string{
+		"jquery.min.js",
+		"jquery-ui-1.10.3.min.js",
+		"bootstrap.min.js",
+		"fileinput/fileinput.js",
+		"fileinput/fileinput_locale_zh.js"}
+
+	jsFileAfter := []string{
+		"raphael-min.js",
+		//     'plugins/morris/morris.min.js',
+		"plugins/sparkline/jquery.sparkline.min.js",
+		"plugins/jvectormap/jquery-jvectormap-1.2.2.min.js",
+		"plugins/jvectormap/jquery-jvectormap-world-mill-en.js",
+		"plugins/fullcalendar/fullcalendar.min.js",
+		"plugins/jqueryKnob/jquery.knob.js",
+		"plugins/daterangepicker/daterangepicker.js",
+		"plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js",
+		"plugins/iCheck/icheck.min.js",
+		"AdminLTE/app.js",
+		"AdminLTE/dashboard.js",
+	}
+	otherJs := "themes/" + this.ConContext.Controller + "_" + this.ConContext.Action + ".js"
+
+	for _, v := range this.ConContext.JsFileBefore {
+		jsFileBefore = append(jsFileBefore, v)
+	}
+	for _, v := range this.ConContext.CssFile {
+		CssFile = append(CssFile, v)
+	}
+	for _, v := range this.ConContext.JsFileAfter {
+		jsFileAfter = append(jsFileAfter, v)
+	}
+	jsFileAfter = append(jsFileAfter, otherJs)
+
+	this.ConContext.JsFileBefore = jsFileBefore
+	this.ConContext.JsFileAfter = jsFileAfter
+	this.ConContext.CssFile = CssFile
+
+	this.Data["JsFileAfter"] = this.ConContext.JsFileAfter
+	this.Data["JsFileBefore"] = this.ConContext.JsFileBefore
+	this.Data["CssFile"] = this.ConContext.CssFile
 }

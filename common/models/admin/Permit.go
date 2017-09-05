@@ -2,10 +2,7 @@ package admin
 
 import (
 	"juetun/common/general"
-	"log"
 	"strings"
-
-	favDebug "github.com/favframework/debug"
 
 	"github.com/astaxie/beego/orm"
 )
@@ -156,7 +153,7 @@ func (this *Permit) FetchDefaultPermitByModuleString(moduleString string, contro
 	leftPermit = this.GetLeftPermit(args)
 
 	for _, v := range *leftPermit {
-		p := (v["Permit"]).(*PermitAdmin)
+		p := (v["Permit"]).(PermitAdmin)
 		if p.Controller != "" && p.Action != "" {
 			this.Controller = p.Controller
 			this.Action = p.Action
@@ -164,9 +161,9 @@ func (this *Permit) FetchDefaultPermitByModuleString(moduleString string, contro
 			break
 		}
 		var flag = 0
-		childList := v["ChildList"].([]PermitAdmin)
-		for _, permitAdmin := range childList {
-			//permitAdmin := v1.(PermitAdmin)
+		childList := v["ChildList"].(*[]map[string]interface{})
+		for _, v := range *childList {
+			permitAdmin := v["Permit"].(PermitAdmin)
 			if permitAdmin.Controller != "" && permitAdmin.Action != "" {
 				this.Controller = permitAdmin.Controller
 				this.Action = permitAdmin.Action
@@ -319,7 +316,7 @@ func (this *Permit) FetchPermitByGroupIdAndUppermit(groupIds []string, uppermitI
 
 	qb, _ := orm.NewQueryBuilder("mysql")
 	sql := qb.Select(nowTableName + ".*").From(nowTableName).
-		LeftJoin(leftTableName).On(leftTableName + ".permit_id=" + nowTableName + ".id").Where(where).OrderBy(nowTableName + ".obyid").Asc().String()
+		LeftJoin(leftTableName).On(leftTableName + ".permit_id=" + nowTableName + ".id").Where(where).OrderBy(nowTableName + ".obyid").Desc().String()
 	_, err := this.getOrm().Raw(sql, sliceParams).QueryRows(&permitList)
 	if nil != err {
 		panic(err)
@@ -380,12 +377,11 @@ func (this *Permit) FetchPermitByCondition(condition map[string]interface{}) *[]
 			//查询上级权限为leftTopId的权限列表
 			where += " AND " + leftTableName + ".`group_id` in (\"" + strings.Join(groupIds, "\",\"") + "\")"
 		}
-
 	}
 
 	qb, _ := orm.NewQueryBuilder("mysql")
 	sql := qb.Select(nowTableName + ".*").From(nowTableName).
-		LeftJoin(leftTableName).On(leftTableName + ".`permit_id`=" + nowTableName + ".id").Where(where).OrderBy(nowTableName + ".obyid").Asc().String()
+		LeftJoin(leftTableName).On(leftTableName + ".`permit_id`=" + nowTableName + ".id").Where(where).OrderBy(nowTableName + ".obyid").Desc().String()
 	_, err := this.getOrm().Raw(sql, sliceParams).QueryRows(&permitList)
 	if nil != err {
 		panic(err)

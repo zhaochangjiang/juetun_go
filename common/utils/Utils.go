@@ -145,6 +145,21 @@ func getMacAddress() *[]string {
 	return &mac
 }
 
+/**
+* strings.TrimRight切割 参数为 permitcontroller,permit时异常的自编方法
+* @author karl.zhao<zhaocj2009@hotmail.com>
+* @date 2017/09/05
+*
+ */
+func TrimRight(s string, cutset string) string {
+	if s == "" || cutset == "" {
+		return s
+	}
+	maxi := strings.LastIndex(s, cutset)
+	rs := []rune(s)
+	return string(rs[0:maxi])
+}
+
 //切片的头追加数据
 func SliceUnshift(oSlice []interface{}, content interface{}) *[]interface{} {
 	slice := []interface{}{content}
