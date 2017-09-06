@@ -7,11 +7,24 @@ import (
 	"juetun/common/utils"
 	"strings"
 	"time"
+
+	wetalkutils "github.com/beego/wetalk/modules/utils"
 )
 
 //跳转控制界面处理
 type LocController struct {
 	acommon.AdminController
+}
+
+func (this *LocController) SetPaginator(per int, nums int64) *wetalkutils.Paginator {
+	p := wetalkutils.NewPaginator(this.Ctx.Request, per, nums)
+	this.Data["paginator"] = p
+	return p
+}
+func (this *LocController) Test() {
+	this.SetPaginator(20, 100)
+
+	this.LoadCommon("layout/pageinator.html")
 }
 
 /**
