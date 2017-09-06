@@ -88,8 +88,6 @@ func (this *AdminController) getNowPermitData() (*modelsAdmin.Permit, error) {
 
 	fetchParams["Controller"] = this.ConContext.Controller
 	fetchParams["Action"] = this.ConContext.Action
-	fetchParams["Controller"] = strings.ToLower(utils.Substr(fetchParams["Controller"], 0, strings.Index(fetchParams["Controller"], "Controller")))
-	fetchParams["Action"] = strings.ToLower(fetchParams["Action"])
 
 	//如果
 	if defaultController == fetchParams["Controller"] && actionString == fetchParams["Action"] {
@@ -517,7 +515,9 @@ func (this *AdminController) initConContextControllerAndAction() {
  */
 func (this *AdminController) Prepare() {
 
+	//初始化一些必要的参数
 	this.initConContextControllerAndAction()
+	this.ConContext.NeedRenderJs = false
 
 	this.Data["SiteName"] = beego.AppConfig.String(beego.BConfig.RunMode + "::sitename")
 	time := time.Now()
@@ -683,7 +683,10 @@ func (this *AdminController) LoadCommon(tplName string) {
 	for _, v := range this.ConContext.JsFileAfter {
 		jsFileAfter = append(jsFileAfter, v)
 	}
-	jsFileAfter = append(jsFileAfter, otherJs)
+	if this.ConContext.NeedRenderJs == true {
+		jsFileAfter = append(jsFileAfter, otherJs)
+
+	}
 
 	this.ConContext.JsFileBefore = jsFileBefore
 	this.ConContext.JsFileAfter = jsFileAfter
