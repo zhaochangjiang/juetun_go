@@ -30,6 +30,7 @@ func (this *AdminController) List() {
 	this.Debug("AdminController_List")
 	this.LoadCommon("layout/list.html")
 }
+
 func (this *AdminController) SetListPageMessage() {
 	this.ConContext.JsFileAfter = append(this.ConContext.JsFileAfter, "plugins/datatables/jquery.dataTables.js")
 	this.ConContext.JsFileAfter = append(this.ConContext.JsFileAfter, "plugins/datatables/dataTables.bootstrap.js")
@@ -517,7 +518,7 @@ func (this *AdminController) Prepare() {
 
 	//初始化一些必要的参数
 	this.initConContextControllerAndAction()
-	this.ConContext.NeedRenderJs = false
+	this.ConContext.NeedRenderJs = true
 
 	this.Data["SiteName"] = beego.AppConfig.String(beego.BConfig.RunMode + "::sitename")
 	time := time.Now()

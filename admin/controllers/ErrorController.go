@@ -30,9 +30,8 @@ func (this *ErrorController) Prepare() {
 *
  */
 func (this *ErrorController) Error404() {
-	this.Data["Content"] = "page not found"
+	this.Data["Content"] = "Oops! Page not found."
 	this.LoadCommon("error/404.html")
-	//this.TplName = "404.tpl"
 }
 
 /**

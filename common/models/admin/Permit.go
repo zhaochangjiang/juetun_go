@@ -467,7 +467,7 @@ func (this *Permit) getDefaultModuleControllerAction(v Permit) *Permit {
 func (this *Permit) getModuleDefaultPermit(permit Permit) *Permit {
 
 	//默认访问地址
-	permit.Controller = "main"
+	permit.Controller = "loc"
 	permit.Action = "goto"
 	return &permit
 }
