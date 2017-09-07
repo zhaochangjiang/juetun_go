@@ -62,21 +62,21 @@ func (this *Permit) FetchPermit(argument map[string]interface{}) (*[]Permit, err
 	var permitList = make([]Permit, 0)
 	querySeter := this.getQuerySeter()
 	var flag = false
+	log.Println("--------------------")
+	log.Println(argument)
 	for k, v := range argument {
 		switch v.(type) {
-		case uint8, uint16, uint32, int64, string, int8, int16:
-		case int32, float32: //int64,, float64
-		case int:
+		case uint8, uint16, uint32, int64, string, int8, int16, int, int32, float32, float64:
 			querySeter = querySeter.Filter(k, v)
 			flag = true
 			break
 		case []string:
 			tmp := v.([]string)
-			con := make([]interface{}, 0)
-			for _, v1 := range tmp {
-				con = append(con, v1)
-			}
-			if len(con) > 0 {
+			if len(tmp) > 0 {
+				con := make([]interface{}, 0)
+				for _, v1 := range tmp {
+					con = append(con, v1)
+				}
 				flag = true
 				querySeter = querySeter.Filter(k, con...)
 
@@ -569,9 +569,13 @@ func (this *Permit) getAllChildByPids(pidsPointer *[]string, isSuperAdmin bool, 
  */
 func (this *Permit) getAllUponByPid(pid string, isSuperAdmin bool, groupIdsPointer *[]string) (*[]string, *[]PermitAdmin) {
 	var pList = make([]PermitAdmin, 0)
-	var pids = make([]string, 0)
 
 	permitData := this.GetPermitByPid(pid, isSuperAdmin, groupIdsPointer)
+
+	//将当前信息放入进去
+	params := make(map[string]string)
+	permitDataTmp := this.OrgAdminPermit(*permitData, params)
+	pList = append(pList, *permitDataTmp)
 
 	if nil != permitData {
 
@@ -582,7 +586,6 @@ func (this *Permit) getAllUponByPid(pid string, isSuperAdmin bool, groupIdsPoint
 			if i > 6 {
 				break
 			}
-			pids = *utils.SliceUnshiftString(pids, permitData.UppermitId)
 
 			permitData = this.GetPermitByPid(permitData.UppermitId, isSuperAdmin, groupIdsPointer)
 			//如果没有查询到数据，那么跳出循环
@@ -600,9 +603,10 @@ func (this *Permit) getAllUponByPid(pid string, isSuperAdmin bool, groupIdsPoint
 		}
 	}
 
-	var permitDataTmp = new(PermitAdmin)
-	permitDataTmp.Id = ""
-	slice := []PermitAdmin{*permitDataTmp}
+	var pids = make([]string, 0)
+	var permitDataTmpCommon = new(PermitAdmin)
+	permitDataTmpCommon.Id = ""
+	slice := []PermitAdmin{*permitDataTmpCommon}
 	pList = append(slice, pList...)
 
 	for _, v := range pList {
@@ -611,6 +615,7 @@ func (this *Permit) getAllUponByPid(pid string, isSuperAdmin bool, groupIdsPoint
 
 	return &pids, &pList
 }
+
 func (this *Permit) GetPermitByPid(pid string, isSuperAdmin bool, groupIdsPointer *[]string) *Permit {
 	var permitModelList *[]Permit
 
@@ -618,6 +623,9 @@ func (this *Permit) GetPermitByPid(pid string, isSuperAdmin bool, groupIdsPointe
 	var params = make(map[string]interface{})
 	params["id"] = pid
 	if isSuperAdmin == true {
+		log.Println("-GetPermitByPid-")
+		log.Println(params)
+		log.Println("-GetPermitByPid-")
 
 		permitModelList, _ = this.FetchPermit(params)
 	} else {
