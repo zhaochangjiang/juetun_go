@@ -146,7 +146,7 @@ func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []string,
 		i++
 
 		//判断如果循环超过5次还没中断，则强制中断，防止程序异常
-		if "" == permitData.UppermitId || "0" == permitData.UppermitId || i > 5 {
+		if "" == permitData.UppermitId || "0" == permitData.UppermitId || i > 6 {
 			break
 		}
 		uponPermitId = *utils.SliceUnshiftString(uponPermitId, permitData.UppermitId)

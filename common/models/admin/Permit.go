@@ -2,6 +2,7 @@ package admin
 
 import (
 	"juetun/common/general"
+	"juetun/common/utils"
 	"strings"
 
 	"github.com/astaxie/beego/orm"
@@ -470,4 +471,159 @@ func (this *Permit) getModuleDefaultPermit(permit Permit) *Permit {
 	permit.Controller = "loc"
 	permit.Action = "goto"
 	return &permit
+}
+
+func (this *Permit) GetList(args map[string]interface{}) *[][]PermitAdmin {
+
+	pid, isSuperAdmin, groupIdsPointer := this.getDefaultArgs(&args)
+
+	pidsPointer, _ := this.getAllUponByPid(pid, isSuperAdmin, groupIdsPointer)
+
+	pList := this.getAllChildByPids(pid, isSuperAdmin, groupIdsPointer)
+
+	var res = make([][]PermitAdmin, 0)
+	for _, v := range *pidsPointer {
+		tmp := make([]PermitAdmin, 0)
+		if v == "" {
+			v = "-1"
+		}
+
+		if _, ok := (*pList)[v]; ok {
+			res = append(res, (*pList)[v])
+		} else {
+			res = append(res, tmp)
+		}
+
+	}
+	return &res
+}
+
+/**
+*获得子权限
+*
+ */
+func (this *Permit) getAllChildByPids(pid string, isSuperAdmin bool, groupIdsPointer *[]string) *map[string][]PermitAdmin {
+	var childList []PermitAdmin
+	var res = make(map[string][]PermitAdmin)
+
+	//如果是超级管理员
+	if isSuperAdmin == true {
+		var params = make(map[string]string)
+		params["uppermit_id"] = pid
+		tmp, _ := this.FetchPermit(params)
+		for _, v := range *tmp {
+			params := make(map[string]string)
+			permitDataTmp := this.OrgAdminPermit(v, params)
+			childList = append(childList, *permitDataTmp)
+		}
+	} else { //如果不是超级管理员
+		groupPermit := new(GroupPermit)
+		var upPermitIds = make([]string, 0)
+		upPermitIds = append(upPermitIds, pid)
+		tmp, _ := groupPermit.GetGroupPermitList(*groupIdsPointer, upPermitIds)
+		childList = *tmp
+	}
+
+	for _, v := range childList {
+		upid := v.UppermitId
+		if upid == "" {
+			upid = "-1"
+		}
+		if _, ok := res[upid]; ok {
+			res[upid] = append(res[upid], v)
+		} else {
+			res[upid] = make([]PermitAdmin, 0)
+			res[upid] = append(res[upid], v)
+		}
+	}
+	return &res
+}
+
+/**
+* 获得所有上级权限
+*
+*
+ */
+func (this *Permit) getAllUponByPid(pid string, isSuperAdmin bool, groupIdsPointer *[]string) (*[]string, *[]PermitAdmin) {
+	var pList = make([]PermitAdmin, 0)
+	var pids = make([]string, 0)
+
+	permitData := this.GetPermitByPid(pid, isSuperAdmin, groupIdsPointer)
+
+	if nil != permitData {
+
+		i := 0
+		for {
+			i++
+			//判断如果循环超过5次还没中断，则强制中断，防止程序异常
+			if "" == permitData.UppermitId || "0" == permitData.UppermitId || i > 6 {
+				break
+			}
+			pids = *utils.SliceUnshiftString(pids, permitData.UppermitId)
+
+			permitData = this.GetPermitByPid(permitData.UppermitId, isSuperAdmin, groupIdsPointer)
+			//如果没有查询到数据，那么跳出循环
+			if permitData == nil {
+				break
+			}
+
+			params := make(map[string]string)
+			permitDataTmp := this.OrgAdminPermit(*permitData, params)
+
+			//往队列的队首添加数据
+			slice := []PermitAdmin{*permitDataTmp}
+			pList = append(slice, pList...)
+
+		}
+	}
+
+	var permitDataTmp = new(PermitAdmin)
+	permitDataTmp.Id = ""
+	slice := []PermitAdmin{*permitDataTmp}
+	pList = append(slice, pList...)
+
+	for _, v := range pList {
+		pids = append(pids, v.Id)
+	}
+	return &pids, &pList
+}
+func (this *Permit) GetPermitByPid(pid string, isSuperAdmin bool, groupIdsPointer *[]string) *Permit {
+	var permitModelList *[]Permit
+
+	var params = make(map[string]string)
+	var permitData Permit
+	if isSuperAdmin == true {
+
+		params["id"] = pid
+		permitModelList, _ = this.FetchPermit(params)
+	} else {
+		params["id"] = pid
+		permitModelList, _ = this.FetchPermitByGroupId(*groupIdsPointer, params)
+	}
+	if len(*permitModelList) > 0 {
+		permitData = (*permitModelList)[0]
+	}
+	return &permitData
+}
+func (this *Permit) getDefaultArgs(args *map[string]interface{}) (string, bool, *[]string) {
+	var pid = ""
+	var isSuperAdmin = true
+	var groupIds = make([]string, 0)
+	if utils.Isset("IsSuperAdmin", *args) == false {
+		panic("args is not exists key names 'IsSuperAdmin'")
+	} else {
+		isSuperAdmin = (*args)["IsSuperAdmin"].(bool)
+	}
+
+	if utils.Isset("Pid", *args) == false {
+		panic("args is not exists key names 'Pid'")
+	} else {
+		pid = (*args)["Pid"].(string)
+	}
+	if utils.Isset("GroupIds", *args) == false {
+		panic("args is not exists key names 'GroupIds'")
+	} else {
+		groupIds = (*args)["GroupIds"].([]string)
+	}
+	return pid, isSuperAdmin, &groupIds
 }

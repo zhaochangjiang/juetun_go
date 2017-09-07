@@ -35,7 +35,7 @@ func (this *GroupPermit) getOrm() orm.Ormer {
 func (this *GroupPermit) DeleteByGroupIds(groupIds []string) (bool, error) {
 
 	//删除表头信息
-	_, err := this.getQuerySeter().Filter("permit_id__in", groupIds).Delete()
+	_, err := this.getQuerySeter().Filter("group_id__in", groupIds).Delete()
 	if nil != err {
 		return false, err
 	}
@@ -47,7 +47,7 @@ func (this *GroupPermit) DeleteByGroupIds(groupIds []string) (bool, error) {
 func (this *GroupPermit) DeleteByPermitIds(permitIds []string) (bool, error) {
 
 	//删除表头信息
-	_, err := this.getQuerySeter().Filter("group_id__in", permitIds).Delete()
+	_, err := this.getQuerySeter().Filter("permit_id__in", permitIds).Delete()
 	if nil != err {
 		return false, err
 	}
