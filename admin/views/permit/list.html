@@ -1,3 +1,15 @@
+
+<div class="box-body">
+	<ul class="list-group">
+	{{range $index, $elem :=.PList}}
+		<li class="list-group-item">
+		{{range $i, $permit :=$elem}}
+			<a class="btn btn-default btn-flat" href=""><i class="fa {{$permit.Csscode}}"></i>{{$permit.Name}}</a>
+		{{end}}   
+		</li>
+	{{end}} 
+	</ul>
+</div>
 <div class="row">
     <div class="col-xs-12">
         <div class="box">

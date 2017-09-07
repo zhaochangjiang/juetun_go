@@ -3,6 +3,7 @@ package admin
 import (
 	"juetun/common/general"
 	"juetun/common/utils"
+	"log"
 	"strings"
 
 	"github.com/astaxie/beego/orm"
@@ -56,12 +57,34 @@ func (this *Permit) FetchPermitListByUponId(uponid []interface{}) (*[]PermitAdmi
 }
 
 //查询单个权限
-func (this *Permit) FetchPermit(argument map[string]string) (*[]Permit, error) {
+func (this *Permit) FetchPermit(argument map[string]interface{}) (*[]Permit, error) {
 
-	var permitList []Permit
+	var permitList = make([]Permit, 0)
 	querySeter := this.getQuerySeter()
+	var flag = false
 	for k, v := range argument {
-		querySeter = querySeter.Filter(k, v)
+		switch v.(type) {
+		case uint8, uint16, uint32, int64, string, int8, int16:
+		case int32, float32: //int64,, float64
+		case int:
+			querySeter = querySeter.Filter(k, v)
+			flag = true
+			break
+		case []string:
+			tmp := v.([]string)
+			con := make([]interface{}, 0)
+			for _, v1 := range tmp {
+				con = append(con, v1)
+			}
+			if len(con) > 0 {
+				flag = true
+				querySeter = querySeter.Filter(k, con...)
+
+			}
+		}
+	}
+	if flag == false {
+		return &permitList, nil
 	}
 	_, err := querySeter.All(&permitList)
 
@@ -120,7 +143,7 @@ func (this *Permit) FetchDefaultPermitByModuleString(moduleString string, contro
 	var args = make(map[string]interface{})
 	args["SuperAdmin"] = controllerContext.IsSuperAdmin
 	if controllerContext.IsSuperAdmin == true {
-		var fetchParams = make(map[string]string)
+		var fetchParams = make(map[string]interface{})
 		fetchParams["mod"] = moduleString
 		fetchParams["uppermit_id"] = ""
 		permit, err := this.FetchPermit(fetchParams)
@@ -394,7 +417,7 @@ func (this *Permit) FetchPermitByCondition(condition map[string]interface{}) *[]
 * @author karl.zhao<zhaocj2009@hotmail.com>
 * @date 2017/07/20
  */
-func (this *Permit) FetchPermitByGroupId(groupIds []string, condition map[string]string) (*[]Permit, error) {
+func (this *Permit) FetchPermitByGroupId(groupIds []string, condition map[string]interface{}) (*[]Permit, error) {
 
 	var sliceParams []string
 	var where string
@@ -418,7 +441,8 @@ func (this *Permit) FetchPermitByGroupId(groupIds []string, condition map[string
 	//查询上级权限为leftTopId的权限列表
 	where += leftTableName + ".group_id in (\"" + strings.Join(groupIds, "\",\"") + "\")"
 	for k, v := range condition {
-		where += " AND " + nowTableName + "." + k + " = \"" + v + "\""
+
+		where += " AND " + nowTableName + "." + k + " = \"" + v.(string) + "\""
 	}
 
 	qb, _ := orm.NewQueryBuilder("mysql")
@@ -479,7 +503,7 @@ func (this *Permit) GetList(args map[string]interface{}) *[][]PermitAdmin {
 
 	pidsPointer, _ := this.getAllUponByPid(pid, isSuperAdmin, groupIdsPointer)
 
-	pList := this.getAllChildByPids(pid, isSuperAdmin, groupIdsPointer)
+	pList := this.getAllChildByPids(pidsPointer, isSuperAdmin, groupIdsPointer)
 
 	var res = make([][]PermitAdmin, 0)
 	for _, v := range *pidsPointer {
@@ -502,14 +526,14 @@ func (this *Permit) GetList(args map[string]interface{}) *[][]PermitAdmin {
 *获得子权限
 *
  */
-func (this *Permit) getAllChildByPids(pid string, isSuperAdmin bool, groupIdsPointer *[]string) *map[string][]PermitAdmin {
+func (this *Permit) getAllChildByPids(pidsPointer *[]string, isSuperAdmin bool, groupIdsPointer *[]string) *map[string][]PermitAdmin {
 	var childList []PermitAdmin
 	var res = make(map[string][]PermitAdmin)
 
 	//如果是超级管理员
 	if isSuperAdmin == true {
-		var params = make(map[string]string)
-		params["uppermit_id"] = pid
+		var params = make(map[string]interface{})
+		params["uppermit_id__in"] = *pidsPointer
 		tmp, _ := this.FetchPermit(params)
 		for _, v := range *tmp {
 			params := make(map[string]string)
@@ -518,9 +542,8 @@ func (this *Permit) getAllChildByPids(pid string, isSuperAdmin bool, groupIdsPoi
 		}
 	} else { //如果不是超级管理员
 		groupPermit := new(GroupPermit)
-		var upPermitIds = make([]string, 0)
-		upPermitIds = append(upPermitIds, pid)
-		tmp, _ := groupPermit.GetGroupPermitList(*groupIdsPointer, upPermitIds)
+
+		tmp, _ := groupPermit.GetGroupPermitList(*groupIdsPointer, *pidsPointer)
 		childList = *tmp
 	}
 
@@ -556,7 +579,7 @@ func (this *Permit) getAllUponByPid(pid string, isSuperAdmin bool, groupIdsPoint
 		for {
 			i++
 			//判断如果循环超过5次还没中断，则强制中断，防止程序异常
-			if "" == permitData.UppermitId || "0" == permitData.UppermitId || i > 6 {
+			if i > 6 {
 				break
 			}
 			pids = *utils.SliceUnshiftString(pids, permitData.UppermitId)
@@ -585,24 +608,26 @@ func (this *Permit) getAllUponByPid(pid string, isSuperAdmin bool, groupIdsPoint
 	for _, v := range pList {
 		pids = append(pids, v.Id)
 	}
+
 	return &pids, &pList
 }
 func (this *Permit) GetPermitByPid(pid string, isSuperAdmin bool, groupIdsPointer *[]string) *Permit {
 	var permitModelList *[]Permit
 
-	var params = make(map[string]string)
 	var permitData Permit
+	var params = make(map[string]interface{})
+	params["id"] = pid
 	if isSuperAdmin == true {
 
-		params["id"] = pid
 		permitModelList, _ = this.FetchPermit(params)
 	} else {
-		params["id"] = pid
+
 		permitModelList, _ = this.FetchPermitByGroupId(*groupIdsPointer, params)
 	}
-	if len(*permitModelList) > 0 {
-		permitData = (*permitModelList)[0]
+	if len(*permitModelList) <= 0 {
+		return nil
 	}
+	permitData = (*permitModelList)[0]
 	return &permitData
 }
 func (this *Permit) getDefaultArgs(args *map[string]interface{}) (string, bool, *[]string) {

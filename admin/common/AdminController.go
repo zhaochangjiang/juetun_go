@@ -85,7 +85,7 @@ func (this *AdminController) getNowPermitData() (*modelsAdmin.Permit, error) {
 	//获得默认的访问连接路由
 	defaultController, actionString := this.DefaultControllerAndAction()
 
-	fetchParams := make(map[string]string)
+	fetchParams := make(map[string]interface{})
 
 	fetchParams["Controller"] = this.ConContext.Controller
 	fetchParams["Action"] = this.ConContext.Action
@@ -151,7 +151,7 @@ func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []string,
 		}
 		uponPermitId = *utils.SliceUnshiftString(uponPermitId, permitData.UppermitId)
 
-		fetchParams := make(map[string]string)
+		fetchParams := make(map[string]interface{})
 		fetchParams["id"] = permitData.UppermitId
 		permitModelList, err1 = permitModel.FetchPermit(fetchParams)
 
@@ -204,7 +204,7 @@ func (this *AdminController) getNowNotSuperAdminAndAllUponPermit(groupIds *[]str
 		if "" == permitData.UppermitId || i > 5 {
 			break
 		}
-		fetchParams := make(map[string]string)
+		fetchParams := make(map[string]interface{})
 		fetchParams["id"] = permitData.UppermitId
 		uponPermitId = *utils.SliceUnshiftString(uponPermitId, permitData.UppermitId)
 

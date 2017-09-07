@@ -11,9 +11,10 @@ type PermitController struct {
 }
 
 func (this *PermitController) List() {
-	var id = this.GetString("id")
+	this.Debug("--------------start--------------")
+	var id = this.GetString("pid")
 	this.Data["PList"] = this.getPermitList(id)
-
+	this.Debug(this.Data["PList"])
 	this.SetListPageMessage()
 	this.LoadCommon("permit/list.html")
 }
