@@ -3,7 +3,6 @@ package admin
 import (
 	"juetun/common/general"
 	"juetun/common/utils"
-	"log"
 	"strings"
 
 	"github.com/astaxie/beego/orm"
@@ -62,8 +61,6 @@ func (this *Permit) FetchPermit(argument map[string]interface{}) (*[]Permit, err
 	var permitList = make([]Permit, 0)
 	querySeter := this.getQuerySeter()
 	var flag = false
-	log.Println("--------------------")
-	log.Println(argument)
 	for k, v := range argument {
 		switch v.(type) {
 		case uint8, uint16, uint32, int64, string, int8, int16, int, int32, float32, float64:
@@ -639,9 +636,6 @@ func (this *Permit) GetPermitByPid(pid string, isSuperAdmin bool, groupIdsPointe
 	var params = make(map[string]interface{})
 	params["id"] = pid
 	if isSuperAdmin == true {
-		log.Println("-GetPermitByPid-")
-		log.Println(params)
-		log.Println("-GetPermitByPid-")
 
 		permitModelList, _ = this.FetchPermit(params)
 	} else {

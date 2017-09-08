@@ -43,6 +43,10 @@ func (this *LocController) Goto() {
 
 		//获得默认的moduleString值
 		if len(paramsL) == 2 {
+			if paramsL[1] == "dashboard" {
+				this.Redirect("/", 301)
+				return
+			}
 			//获得本module默认的访问路径
 			permit.FetchDefaultPermitByModuleString(paramsL[1], this.ConContext)
 			if permit.Controller == "" {
