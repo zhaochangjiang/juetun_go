@@ -18,6 +18,7 @@ func (this *PermitController) List() {
 	this.ConContext.IncludePageProperty.HaveTable = true
 	this.ConContext.IncludePageProperty.HaveCheckbox = true
 	this.Data["TableTitle"] = "权限管理"
+	this.Data["Breadcrumbs"] = "fsafasdf"
 	this.LoadCommon("permit/list.html")
 }
 

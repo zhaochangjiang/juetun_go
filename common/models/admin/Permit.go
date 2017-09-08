@@ -1,6 +1,7 @@
 package admin
 
 import (
+	"fmt"
 	"juetun/common/general"
 	"juetun/common/utils"
 	"strings"
@@ -120,6 +121,11 @@ type PermitAdmin struct {
 	Domain    string            //域名mapkey
 	UrlString string            //Url字符串
 	Active    bool              //当前是否为选中项
+}
+
+func (this *PermitAdmin) GetOperate() (string, error) {
+	fmt.Println("-----------")
+	return "213123", nil
 }
 
 /**
