@@ -119,9 +119,10 @@ type PermitLeft struct {
 //后台结构体
 type PermitAdmin struct {
 	Permit
-	Params    map[string]string
-	Domain    string
-	UrlString string
+	Params    map[string]string //其他参数
+	Domain    string            //域名mapkey
+	UrlString string            //Url字符串
+	Active    bool              //当前是否为选中项
 }
 
 /**
@@ -468,7 +469,7 @@ func (this *Permit) OrgAdminPermit(v Permit, params map[string]string) *PermitAd
 	//获得链接字符串
 	urlString := general.CreateUrl(v.Controller, v.Action, params, v.DomainMap)
 
-	permitLeft := PermitAdmin{*m, params, domain, urlString}
+	permitLeft := PermitAdmin{*m, params, domain, urlString, false}
 	return &permitLeft
 }
 
@@ -497,7 +498,7 @@ func (this *Permit) getModuleDefaultPermit(permit Permit) *Permit {
 	return &permit
 }
 
-func (this *Permit) GetList(args map[string]interface{}) *[][]PermitAdmin {
+func (this *Permit) GetList(args map[string]interface{}) (*[][]PermitAdmin, *[]PermitAdmin) {
 
 	pid, isSuperAdmin, groupIdsPointer := this.getDefaultArgs(&args)
 
@@ -506,6 +507,7 @@ func (this *Permit) GetList(args map[string]interface{}) *[][]PermitAdmin {
 	pList := this.getAllChildByPids(pidsPointer, isSuperAdmin, groupIdsPointer)
 
 	var res = make([][]PermitAdmin, 0)
+	var resChild = make([]PermitAdmin, 0)
 	for _, v := range *pidsPointer {
 		tmp := make([]PermitAdmin, 0)
 		if v == "" {
@@ -519,7 +521,23 @@ func (this *Permit) GetList(args map[string]interface{}) *[][]PermitAdmin {
 		}
 
 	}
-	return &res
+
+	for k, v := range res {
+		for k1, v1 := range v {
+			for _, v2 := range *pidsPointer {
+				if v2 == v1.Id {
+					res[k][k1].Active = true
+				}
+			}
+		}
+	}
+	lenRes := len(res)
+	if lenRes > 0 {
+		f := (lenRes - 1)
+		resChild = res[f]
+	}
+
+	return &res, &resChild
 }
 
 /**
@@ -572,13 +590,11 @@ func (this *Permit) getAllUponByPid(pid string, isSuperAdmin bool, groupIdsPoint
 
 	permitData := this.GetPermitByPid(pid, isSuperAdmin, groupIdsPointer)
 
-	//将当前信息放入进去
-	params := make(map[string]string)
-	permitDataTmp := this.OrgAdminPermit(*permitData, params)
-	pList = append(pList, *permitDataTmp)
-
 	if nil != permitData {
-
+		//将当前信息放入进去
+		params := make(map[string]string)
+		permitDataTmp := this.OrgAdminPermit(*permitData, params)
+		pList = append(pList, *permitDataTmp)
 		i := 0
 		for {
 			i++

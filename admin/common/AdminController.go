@@ -32,9 +32,18 @@ func (this *AdminController) List() {
 }
 
 func (this *AdminController) SetListPageMessage() {
-	this.ConContext.JsFileAfter = append(this.ConContext.JsFileAfter, "plugins/datatables/jquery.dataTables.js")
-	this.ConContext.JsFileAfter = append(this.ConContext.JsFileAfter, "plugins/datatables/dataTables.bootstrap.js")
-	this.ConContext.CssFile = append(this.ConContext.CssFile, "datatables/dataTables.bootstrap.css")
+
+	if this.ConContext.IncludePageProperty.HaveTable {
+		this.ConContext.JsFileAfter = append(this.ConContext.JsFileAfter, []string{"plugins/datatables/jquery.dataTables.js", "plugins/datatables/dataTables.bootstrap.js"}...)
+		this.ConContext.CssFile = append(this.ConContext.CssFile, []string{"datatables/dataTables.bootstrap.css"}...)
+	}
+	//如果页面属性中有checkbox
+	if this.ConContext.IncludePageProperty.HaveCheckbox {
+
+		this.ConContext.JsFileAfter = append(this.ConContext.JsFileAfter, []string{"plugins/iCheck/icheck.min.js"}...)
+		this.ConContext.CssFile = append(this.ConContext.CssFile, []string{"iCheck/minimal/blue.css"}...)
+
+	}
 
 }
 
@@ -633,7 +642,7 @@ func (this *AdminController) LoadCommon(tplName string) {
 
 	this.Layout = "layout/main.html"
 	this.TplName = tplName
-
+	this.SetListPageMessage()
 	this.LayoutSections["HtmlHead"] = "layout/header.html"
 	this.LayoutSections["HtmlSideBar"] = "layout/left.html"
 	this.LayoutSections["HtmlScriptsAfter"] = "layout/scriptsafter.html"

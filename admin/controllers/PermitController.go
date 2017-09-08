@@ -13,12 +13,15 @@ type PermitController struct {
 func (this *PermitController) List() {
 	var id = this.GetString("pid")
 
-	this.Data["PList"] = this.getPermitList(id)
-	this.SetListPageMessage()
+	this.Data["PList"], this.Data["NowChidList"] = this.getPermitList(id)
+
+	this.ConContext.IncludePageProperty.HaveTable = true
+	this.ConContext.IncludePageProperty.HaveCheckbox = true
+	this.Data["TableTitle"] = "权限管理"
 	this.LoadCommon("permit/list.html")
 }
 
-func (this *PermitController) getPermitList(id string) *[][]modelsAdmin.PermitAdmin {
+func (this *PermitController) getPermitList(id string) (*[][]modelsAdmin.PermitAdmin, *[]modelsAdmin.PermitAdmin) {
 	var args = make(map[string]interface{})
 
 	args["IsSuperAdmin"] = this.ConContext.IsSuperAdmin
