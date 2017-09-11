@@ -510,7 +510,7 @@ func (this *Permit) GetList(args map[string]interface{}) (*[][]PermitAdmin, *[]P
 
 	pidsPointer, _ := this.getAllUponByPid(pid, isSuperAdmin, groupIdsPointer)
 
-	pList := this.getAllChildByPids(pidsPointer, isSuperAdmin, groupIdsPointer)
+	pList := this.GetAllChildByPids(pidsPointer, isSuperAdmin, groupIdsPointer)
 
 	var res = make([][]PermitAdmin, 0)
 	var resChild = make([]PermitAdmin, 0)
@@ -546,13 +546,8 @@ func (this *Permit) GetList(args map[string]interface{}) (*[][]PermitAdmin, *[]P
 	return &res, &resChild
 }
 
-/**
-*获得子权限
-*
- */
-func (this *Permit) getAllChildByPids(pidsPointer *[]string, isSuperAdmin bool, groupIdsPointer *[]string) *map[string][]PermitAdmin {
+func (this *Permit) GetAllChildListByPids(pidsPointer *[]string, isSuperAdmin bool, groupIdsPointer *[]string) *[]PermitAdmin {
 	var childList []PermitAdmin
-	var res = make(map[string][]PermitAdmin)
 
 	//如果是超级管理员
 	if isSuperAdmin == true {
@@ -570,8 +565,18 @@ func (this *Permit) getAllChildByPids(pidsPointer *[]string, isSuperAdmin bool, 
 		tmp, _ := groupPermit.GetGroupPermitList(*groupIdsPointer, *pidsPointer)
 		childList = *tmp
 	}
+	return &childList
+}
 
-	for _, v := range childList {
+/**
+*获得子权限
+*
+ */
+func (this *Permit) GetAllChildByPids(pidsPointer *[]string, isSuperAdmin bool, groupIdsPointer *[]string) *map[string][]PermitAdmin {
+
+	var res = make(map[string][]PermitAdmin)
+	childList := this.GetAllChildListByPids(pidsPointer, isSuperAdmin, groupIdsPointer)
+	for _, v := range *childList {
 		upid := v.UppermitId
 		if upid == "" {
 			upid = "-1"

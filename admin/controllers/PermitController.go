@@ -10,6 +10,7 @@ type PermitController struct {
 	acommon.AdminController
 }
 
+//列表界面
 func (this *PermitController) List() {
 	var id = this.GetString("pid")
 	var nowChidList = new([]modelsAdmin.PermitAdmin)
@@ -18,9 +19,16 @@ func (this *PermitController) List() {
 	this.ConContext.IncludePageProperty.HaveTable = true
 	this.ConContext.IncludePageProperty.HaveCheckbox = true
 	this.Data["PageSmallTitle"], this.Data["TableTitle"] = "权限管理", "权限管理"
-
+	this.Data["Pid"] = id
 	this.LoadCommon("permit/list.html")
 }
+
+//编辑界面
+func (this *PermitController) Edit() {
+	this.LoadCommon("permit/edit.html")
+}
+
+//处理上级权限名称
 func (this *PermitController) leftJoinUponPermit(list *[]modelsAdmin.PermitAdmin) *[]modelsAdmin.PermitAdmin {
 
 	var ids = this.getUponIdList(list)
@@ -35,6 +43,7 @@ func (this *PermitController) leftJoinUponPermit(list *[]modelsAdmin.PermitAdmin
 	}
 	per := permit.GetModuleDefaultPermit(*permit)
 	for k, v := range *list {
+		//如果上级权限信息查询到了
 		if _, ok := permitListMap[v.UppermitId]; ok {
 			(*list)[k].UppermitId = permitListMap[v.UppermitId].Name
 
@@ -55,6 +64,7 @@ func (this *PermitController) getUponIdList(list *[]modelsAdmin.PermitAdmin) *[]
 	}
 	return &ids
 }
+
 func (this *PermitController) getPermitList(id string) (*[][]modelsAdmin.PermitAdmin, *[]modelsAdmin.PermitAdmin) {
 	var args = make(map[string]interface{})
 

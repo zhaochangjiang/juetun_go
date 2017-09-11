@@ -64,13 +64,15 @@ func (this *AdminController) InitPermitItem() {
 	var headerActive string
 	var getLeftPermitArgs = make(map[string]interface{})
 
+	var nowChildList = new([]modelsAdmin.PermitAdmin)
+
 	if this.ConContext.IsSuperAdmin != true { //如果不是超级管理员
 
 		//用户组权限ID列表
 		var groupPermit modelsAdmin.GroupPermit
 
 		// 获得当前页面的所有上级权限
-		permitUpon, activeUponId, _ = this.getNowNotSuperAdminAndAllUponPermit(&this.ConContext.GroupIds)
+		permitUpon, activeUponId, nowChildList, _ = this.getNowNotSuperAdminAndAllUponPermit(&this.ConContext.GroupIds)
 
 		//如果没有查询到当前信息
 		if len(activeUponId) <= 0 {
@@ -97,7 +99,7 @@ func (this *AdminController) InitPermitItem() {
 	} else { //如果是超级管理员
 
 		// 获得当前页面的所有上级权限
-		permitUpon, activeUponId, _ = this.getNowAndAllUponPermit()
+		permitUpon, activeUponId, nowChildList, _ = this.getNowAndAllUponPermit()
 
 		//如果当前权限没查到,则直接跳转404
 		if len(activeUponId) <= 0 {
@@ -117,6 +119,14 @@ func (this *AdminController) InitPermitItem() {
 
 	}
 
+	//获得当前权限的子权限列表(此处值设置为int为了后期扩展用)
+	var permitShow = make(map[string]int)
+	for _, v := range *nowChildList {
+		keys := v.Mod + "_" + v.Controller + "_" + v.Action
+		permitShow[keys] = 1
+	}
+	this.Data["PermitShow"] = permitShow
+	this.Debug(permitShow)
 	leftPermit = this.PermitService.GetLeftPermit(getLeftPermitArgs)
 	leftPermit, _ = this.setLeftActive(leftPermit, activeUponId, false)
 
@@ -205,18 +215,22 @@ func (this *AdminController) getNowPermitData() (*modelsAdmin.Permit, error) {
 * @Date 2017/08/01
 * @return *[]interface{}, []interface{}, error
  */
-func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []string, error) {
+func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []string, *[]modelsAdmin.PermitAdmin, error) {
 	var err1 error
-	result := make([]interface{}, 0)
-	uponPermitId := make([]string, 0)
+	var result = make([]interface{}, 0)
+	var uponPermitId = make([]string, 0)
+	var nowChildList = new([]modelsAdmin.PermitAdmin)
 
 	permitModel := new(modelsAdmin.Permit)
 	permitData, _ := this.getNowPermitData()
 	if nil == permitData {
 		//默认的上级机构必须查询
 		uponPermitId = *utils.SliceUnshiftString(uponPermitId, "")
-		return &result, uponPermitId, nil
+		return &result, uponPermitId, nowChildList, nil
 	}
+
+	var ids = []string{permitData.Id}
+	nowChildList = permitModel.GetAllChildListByPids(&ids, this.ConContext.IsSuperAdmin, &this.ConContext.GroupIds)
 
 	uponPermitId = *utils.SliceUnshiftString(uponPermitId, permitData.Id)
 
@@ -252,7 +266,7 @@ func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []string,
 
 	//默认的上级机构必须查询
 	uponPermitId = *utils.SliceUnshiftString(uponPermitId, "")
-	return &result, uponPermitId, err1
+	return &result, uponPermitId, nowChildList, err1
 }
 
 /**
@@ -261,13 +275,15 @@ func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []string,
 * @Date 2017/08/01
 *
  */
-func (this *AdminController) getNowNotSuperAdminAndAllUponPermit(groupIds *[]string) (*[]interface{}, []string, error) {
+func (this *AdminController) getNowNotSuperAdminAndAllUponPermit(groupIds *[]string) (*[]interface{}, []string, *[]modelsAdmin.PermitAdmin, error) {
 
 	var err1 error = nil
 	var uponPermitId = make([]string, 0)
 	var result = make([]interface{}, 0)
+	var nowChildList = new([]modelsAdmin.PermitAdmin)
+
 	if len(*groupIds) <= 0 {
-		return &result, uponPermitId, err1
+		return &result, uponPermitId, nowChildList, err1
 	}
 
 	permitModel := new(modelsAdmin.Permit)
@@ -276,8 +292,13 @@ func (this *AdminController) getNowNotSuperAdminAndAllUponPermit(groupIds *[]str
 	if nil == permitData {
 		//默认的上级机构必须查询
 		uponPermitId = *utils.SliceUnshiftString(uponPermitId, "")
-		return nil, nil, err1
+		return nil, nil, nowChildList, err1
 	}
+
+	//获得当前权限的所有子权限
+	var ids = []string{permitData.Id}
+	nowChildList = permitModel.GetAllChildListByPids(&ids, this.ConContext.IsSuperAdmin, &this.ConContext.GroupIds)
+
 	uponPermitId = *utils.SliceUnshiftString(uponPermitId, permitData.Id)
 	var permitModelList *[]modelsAdmin.Permit
 
@@ -303,7 +324,7 @@ func (this *AdminController) getNowNotSuperAdminAndAllUponPermit(groupIds *[]str
 
 	//默认的上级机构必须查询
 	uponPermitId = *utils.SliceUnshiftString(uponPermitId, "")
-	return &result, uponPermitId, err1
+	return &result, uponPermitId, nowChildList, err1
 }
 
 /**

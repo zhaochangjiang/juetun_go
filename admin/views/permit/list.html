@@ -17,18 +17,20 @@
     <div class="col-xs-12">
         <div class="box ">
             <div class="box-header">
-                <h3 class="box-title">{{.TableTitle}}</h3>                                    
+                <h3 class="box-title">{{.TableTitle}}</h3> 
+				{{if eq (index .PermitShow "system_permit_edit") 1 }}
+				<div class="box-tools">            
+					<a href="{{urlfor "PermitController.Edit"  "pid" .Pid "act" "add"}}" class="no-margin pull-right btn  bg-orange">添加</a>       
+                 </div>
+			    {{end}}                        
             </div><!-- /.box-header -->
             <div class="box-body table-responsive">
+			
                <!--  <table id="example2" class="table table-bordered table-hover table-mailbox">-->
                 <table id="example2" class="table table-bordered table-hover table-mailbox">
                     <thead>
                         <tr class="">
-							<th class="text-center">
-							<label>
-                                                <input type="checkbox" id="check-all"/>
-                                            </label>
-							</th>
+							<th class="text-center"><label><input type="checkbox" id="check-all"/></label></th>
                             <th class="text-center">名称</th>
                             <th class="text-center">模块</th>
                             <th class="text-center">Controller</th>
@@ -55,9 +57,7 @@
 							 <td class="text-center"></td>
                         </tr>
 					{{end}}
-                        
                     </tbody>
-                   
                 </table>
             </div><!-- /.box-body -->
         </div>
