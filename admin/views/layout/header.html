@@ -10,12 +10,8 @@
         <div class="navbar-right">
             <ul class="nav navbar-nav">
 			{{range .Permit.Header}}
-			{{if eq .Mod  $.Permit.HeaderActive}}
-			<li class="dropdown user user-menu open">
-			{{else}}
-			  <li class="dropdown user user-menu">
-			{{end}}
-			<a href = "{{createurl .Controller .Action .Params .DomainMap}}" class = "dropdown-toggle" >
+			<li class="dropdown user user-menu {{if .Active}} open{{end}}">
+			<a href = "{{.UrlString}}" class = "dropdown-toggle" >
 			<i class="glyphicon {{.Csscode}}"></i>
 			<span>{{.Name}}</span>
 			</a> 

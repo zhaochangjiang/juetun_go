@@ -30,6 +30,7 @@ func Unescaped(x string) interface{} {
 func CreateUrl(p ...interface{}) string {
 	length := len(p)
 	var url string
+
 	switch length {
 	case 1:
 		p0, err := convertInterfaceToString(p[0])
@@ -75,13 +76,16 @@ func CreateUrl(p ...interface{}) string {
 * @date 2017/08/22
  */
 func getThreeParams(p []interface{}) string {
-	url := "/"
+	url := ""
 	for i := 0; i < 2; i++ {
 		p0, err := convertInterfaceToString(p[i])
 		if nil != err {
 			panic(err.Error())
 		}
-		url += p0 + "/"
+		if p0 != "" {
+			url += p0 + "/"
+		}
+
 	}
 	switch p[2].(type) { //多选语句switch
 	case string: //是字符时做的事情
@@ -95,6 +99,9 @@ func getThreeParams(p []interface{}) string {
 		url += strings.Join(params, "&")
 	default:
 		panic("The arguments is error!")
+	}
+	if url != "" {
+		url = "/" + url
 	}
 	return url
 }

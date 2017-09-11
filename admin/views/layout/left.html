@@ -29,7 +29,7 @@
 			{{/* 如果不为空 */}}
 			{{if $childPermitList}}
 			
-			 <li class="treeview {{if $active}}active{{else}}{{end}}">
+			 <li class="treeview{{if $active}} active{{end}}">
 			
                     <a href="javascript:void(0);">
                         <i class="fa {{if eq $nowPermit.Csscode ""}}fa-laptop{{else}}{{$nowPermit.Csscode}}{{end}}"></i>

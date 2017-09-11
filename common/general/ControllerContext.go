@@ -24,5 +24,5 @@ type ControllerContext struct {
 	CssFile               []string     //样式文件
 	NeedRenderJs          bool         //是否需要引入必要的渲染JS文件，controller_action.js文件,
 	Breadcrumbs           []Breadcrumb //面包屑对象,
-	Permit                map[string]interface{}
+	Permit                *map[string]interface{}
 }

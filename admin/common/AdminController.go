@@ -63,33 +63,23 @@ func (this *AdminController) InitPermitItem() {
 	var leftTopId string
 	var headerActive string
 	var getLeftPermitArgs = make(map[string]interface{})
+
 	if this.ConContext.IsSuperAdmin != true { //如果不是超级管理员
 
 		//用户组权限ID列表
 		var groupPermit modelsAdmin.GroupPermit
 
-		//如果用户组不存在，则不用继续操作了
-		if len(this.ConContext.GroupIds) == 0 {
-			return
-		}
-
 		// 获得当前页面的所有上级权限
 		permitUpon, activeUponId, _ = this.getNowNotSuperAdminAndAllUponPermit(&this.ConContext.GroupIds)
 
-		//如果没有查询到当前的权限
-		if permitUpon == nil {
-			//如果没有查询到信息，则直接跳转到未找到页面
-			this.Abort("404")
-			return
-		}
 		//如果没有查询到当前信息
-		if nil == activeUponId {
+		if len(activeUponId) <= 0 {
 			this.Data["Permit"] = permit
 			return
 		}
 		//根据当前用户的用户组获得用户的权限
 		//Header信息列表
-		headerPermit, _ = groupPermit.GetGroupPermitList(this.ConContext.GroupIds, []string{"0", ""})
+		headerPermit, _ = groupPermit.GetGroupPermitList(this.ConContext.GroupIds, []string{""})
 
 		//处理当前头部选中的选项
 		permitArray := make([]interface{}, 0)
@@ -99,8 +89,7 @@ func (this *AdminController) InitPermitItem() {
 
 		headerActive, leftTopId = this.getHeaderDefaultActive(permitArray)
 
-		//左侧边栏权限列表
-
+		//左侧边栏权限查询参数
 		getLeftPermitArgs["SuperAdmin"] = false
 		getLeftPermitArgs["LeftTopId"] = leftTopId
 		getLeftPermitArgs["GroupIds"] = this.ConContext.GroupIds
@@ -111,12 +100,13 @@ func (this *AdminController) InitPermitItem() {
 		permitUpon, activeUponId, _ = this.getNowAndAllUponPermit()
 
 		//如果当前权限没查到,则直接跳转404
-		if permitUpon == nil {
-			this.Abort("404")
+		if len(activeUponId) <= 0 {
+			this.Data["Permit"] = permit
 			return
 		}
 		//获得页面头部的信息
-		headerPermit, _, _ = this.PermitService.FetchPermitListByUponId([]interface{}{0})
+		headerPermit, _, _ = this.PermitService.FetchPermitListByUponId(&[]string{""})
+
 		//Header信息列表
 		//如果是超级管理员，那么权限对于此账号无效
 
@@ -127,20 +117,27 @@ func (this *AdminController) InitPermitItem() {
 
 	}
 
-	if "" != headerActive {
-		permit["HeaderActive"] = headerActive
-	} else {
-		permit["HeaderActive"] = "-1"
-	}
 	leftPermit = this.PermitService.GetLeftPermit(getLeftPermitArgs)
 	leftPermit, _ = this.setLeftActive(leftPermit, activeUponId, false)
 
 	//Header信息列表
-	permit["Header"] = headerPermit
+	permit["Header"] = this.setHeaderActive(headerPermit, headerActive)
 
 	//左侧边栏权限列表
 	permit["Left"] = leftPermit
+	this.ConContext.Permit = &permit
 	this.Data["Permit"] = permit
+}
+
+func (this *AdminController) setHeaderActive(headerPermit *[]modelsAdmin.PermitAdmin, headerActiveId string) *[]modelsAdmin.PermitAdmin {
+
+	for k, v := range *headerPermit {
+
+		if headerActiveId == v.Mod {
+			(*headerPermit)[k].Active = true
+		}
+	}
+	return headerPermit
 }
 
 /**
@@ -218,7 +215,7 @@ func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []string,
 	if nil == permitData {
 		//默认的上级机构必须查询
 		uponPermitId = *utils.SliceUnshiftString(uponPermitId, "")
-		return nil, uponPermitId, nil
+		return &result, uponPermitId, nil
 	}
 
 	uponPermitId = *utils.SliceUnshiftString(uponPermitId, permitData.Id)
@@ -266,12 +263,14 @@ func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []string,
  */
 func (this *AdminController) getNowNotSuperAdminAndAllUponPermit(groupIds *[]string) (*[]interface{}, []string, error) {
 
-	var err1 error
+	var err1 error = nil
+	var uponPermitId = make([]string, 0)
+	var result = make([]interface{}, 0)
+	if len(*groupIds) <= 0 {
+		return &result, uponPermitId, err1
+	}
 
 	permitModel := new(modelsAdmin.Permit)
-	result := make([]interface{}, 0)
-
-	uponPermitId := make([]string, 0)
 
 	permitData, _ := this.getNowPermitData()
 	if nil == permitData {
@@ -493,14 +492,13 @@ func (this *AdminController) Prepare() {
 	this.initConContextControllerAndAction()
 	this.ConContext.NeedRenderJs = true
 
-	this.Data["SiteName"] = beego.AppConfig.String(beego.BConfig.RunMode + "::sitename")
+	siteName := beego.AppConfig.String(beego.BConfig.RunMode + "::sitename")
+	this.Data["SiteName"] = siteName
 	time := time.Now()
-	y := time.Year()
-	this.Data["Copyright"] = "Copyright " + strconv.Itoa(y-1) + "-" + strconv.Itoa(y) + " " + beego.AppConfig.String("appname") + " Corporation. All Rights Reserved."
+	this.Data["Copyright"] = "Copyright " + strconv.Itoa(time.Year()-1) + "-" + strconv.Itoa(time.Year()) + " " + beego.AppConfig.String("appname") + " Corporation. All Rights Reserved."
+	this.Data["PageTitle"] = siteName + "-后台管理中心"
 
-	this.Data["PageTitle"] = " 后台管理中心"
 	//设置登录信息
-
 	this.Data["NowHourAndMinute"] = strconv.Itoa(time.Hour()) + ":" + strconv.Itoa(time.Minute())
 
 	//引入页面内容
@@ -676,34 +674,48 @@ func (this *AdminController) LoadCommon(tplName string) {
 func (this *AdminController) initBreadcrumbParams() {
 
 	//设置面包屑
-	this.ConContext.Breadcrumbs = []general.Breadcrumb{general.Breadcrumb{"/", "fa fa-dashboard", "主页", false}, general.Breadcrumb{"/", "", "主页", true}}
+	this.ConContext.Breadcrumbs = []general.Breadcrumb{general.Breadcrumb{"/", "fa-dashboard", "主页", false}}
 	if this.ConContext.Permit != nil {
-		if _, ok := this.ConContext.Permit["Header"]; ok {
-			for _, v := range this.ConContext.Permit["Header"].([]interface{}) {
-				tmp := v.(modelsAdmin.PermitAdmin)
-				if tmp.Mod == this.ConContext.Permit["HeaderActive"] {
+
+		if _, ok := (*this.ConContext.Permit)["Header"]; ok {
+			for _, v := range *(*this.ConContext.Permit)["Header"].(*[]modelsAdmin.PermitAdmin) {
+				if v.Active == true {
 					bc := new(general.Breadcrumb)
-					bc.Name = tmp.Name
-					bc.Href = tmp.UrlString
-					bc.FaCss = tmp.Csscode
+					bc.Name = v.Name
+					bc.Href = v.UrlString
+					bc.FaCss = v.Csscode
 					bc.Active = false
 					this.ConContext.Breadcrumbs = append(this.ConContext.Breadcrumbs, *bc)
 				}
 
 			}
 		}
-		if _, ok := this.ConContext.Permit["Left"]; ok {
-			for _, v := range this.ConContext.Permit["Left"].([]interface{}) {
-				tmp := v.(modelsAdmin.PermitAdmin)
-				if tmp.Mod == this.ConContext.Permit["HeaderActive"] {
+
+		if _, ok := (*this.ConContext.Permit)["Left"]; ok {
+			for _, tmp1 := range *(*this.ConContext.Permit)["Left"].(*[]map[string]interface{}) {
+				if tmp1["Active"].(bool) == true {
+					tmp2Permit := tmp1["Permit"].(modelsAdmin.PermitAdmin)
 					bc := new(general.Breadcrumb)
-					bc.Name = tmp.Name
-					bc.Href = tmp.UrlString
-					bc.FaCss = tmp.Csscode
+					bc.Name = tmp2Permit.Name
+					bc.Href = tmp2Permit.UrlString
+					bc.FaCss = tmp2Permit.Csscode
 					bc.Active = false
 					this.ConContext.Breadcrumbs = append(this.ConContext.Breadcrumbs, *bc)
 				}
-
+				childList := tmp1["ChildList"].(*[]map[string]interface{})
+				if len(*childList) > 0 {
+					for _, tmp2 := range *childList {
+						if tmp2["Active"].(bool) == true {
+							tmp2Permit := tmp2["Permit"].(modelsAdmin.PermitAdmin)
+							bc := new(general.Breadcrumb)
+							bc.Name = tmp2Permit.Name
+							bc.Href = tmp2Permit.UrlString
+							bc.FaCss = tmp2Permit.Csscode
+							bc.Active = false
+							this.ConContext.Breadcrumbs = append(this.ConContext.Breadcrumbs, *bc)
+						}
+					}
+				}
 			}
 		}
 	}
@@ -725,7 +737,7 @@ func (this *AdminController) InitBreadcrumb() {
 			active = "class =\"active\""
 		}
 		if v.FaCss != "" {
-			fa = "<i class=\"" + v.FaCss + "\"></i>"
+			fa = "<i class=\"fa " + v.FaCss + "\"></i>"
 		}
 		s += "<li " + active + "><a href=\"" + v.Href + "\">" + fa + v.Name + "</a></li>"
 	}

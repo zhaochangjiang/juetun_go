@@ -22,6 +22,22 @@ type Permit struct {
 	Csscode    string `orm:varchar(500);orm:"column(csscode)"`
 }
 
+//左侧权限结构体
+type PermitLeft struct {
+	Permit
+	ChildList []Permit
+	Active    bool
+}
+
+//后台结构体
+type PermitAdmin struct {
+	Permit
+	Params    map[string]string //其他参数
+	Domain    string            //域名mapkey
+	UrlString string            //Url字符串
+	Active    bool              //当前是否为选中项
+}
+
 func init() {
 	permit := new(Permit)
 	orm.RegisterModelWithPrefix(permit.GetTablePrefix(), permit)
@@ -40,12 +56,14 @@ func (this *Permit) getQuerySeter() orm.QuerySeter {
 }
 
 //根据上级权限，查询所有下级权限
-func (this *Permit) FetchPermitListByUponId(uponid []interface{}) (*[]PermitAdmin, int64, error) {
+func (this *Permit) FetchPermitListByUponId(uponid *[]string) (*[]PermitAdmin, int64, error) {
 	var permitList []Permit
-	var querySeter orm.QuerySeter
 
-	querySeter = this.getQuerySeter().Filter("uppermit_id__in", uponid...).OrderBy("-id")
-	num, err := querySeter.All(&permitList)
+	var uponidParams = make([]interface{}, 0)
+	for _, v := range *uponid {
+		uponidParams = append(uponidParams, v)
+	}
+	num, err := this.getQuerySeter().Filter("uppermit_id__in", uponidParams...).OrderBy("-id").All(&permitList)
 
 	result := make([]PermitAdmin, 0)
 	for _, v := range permitList {
@@ -105,22 +123,6 @@ func (this *Permit) DeletePermit(permitIds []string) (bool, error) {
 		return false, err
 	}
 	return true, err
-}
-
-//左侧权限结构体
-type PermitLeft struct {
-	Permit
-	ChildList []Permit
-	Active    bool
-}
-
-//后台结构体
-type PermitAdmin struct {
-	Permit
-	Params    map[string]string //其他参数
-	Domain    string            //域名mapkey
-	UrlString string            //Url字符串
-	Active    bool              //当前是否为选中项
 }
 
 func (this *PermitAdmin) GetOperate() (string, error) {
@@ -469,10 +471,11 @@ func (this *Permit) OrgAdminPermit(v Permit, params map[string]string) *PermitAd
 
 	m := this.getDefaultModuleControllerAction(v)
 
-	//获得链接字符串
-	urlString := general.CreateUrl(v.Controller, v.Action, params, v.DomainMap)
+	permitLeft := PermitAdmin{*m, params, domain, "", false}
 
-	permitLeft := PermitAdmin{*m, params, domain, urlString, false}
+	//获得链接字符串
+	permitLeft.UrlString = general.CreateUrl(m.Controller, m.Action, params, m.DomainMap)
+
 	return &permitLeft
 }
 
@@ -483,8 +486,8 @@ func (this *Permit) OrgAdminPermit(v Permit, params map[string]string) *PermitAd
 func (this *Permit) getDefaultModuleControllerAction(v Permit) *Permit {
 
 	//判断是否为header属性
-	if "" == v.Controller && "" == v.Action && "" != v.Mod {
-		return this.getModuleDefaultPermit(v)
+	if "" == strings.Trim(v.Controller, "") && "" == strings.Trim(v.Action, "") && "" != strings.Trim(v.Mod, "") {
+		return this.GetModuleDefaultPermit(v)
 	}
 	return &v
 }
@@ -493,7 +496,7 @@ func (this *Permit) getDefaultModuleControllerAction(v Permit) *Permit {
 * @author karl.zhao<zhaocj2009@hotmail.com>
 * @date 2017/07/20
  */
-func (this *Permit) getModuleDefaultPermit(permit Permit) *Permit {
+func (this *Permit) GetModuleDefaultPermit(permit Permit) *Permit {
 
 	//默认访问地址
 	permit.Controller = "loc"

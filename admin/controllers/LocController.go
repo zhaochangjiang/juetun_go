@@ -56,7 +56,7 @@ func (this *LocController) Goto() {
 				return
 			}
 			gotoUrl := general.CreateUrl(permit.Controller, permit.Action, permit.Params, permit.Domain)
-			time.Sleep(1 * time.Second)
+			time.Sleep(500 * time.Microsecond)
 			this.Redirect(gotoUrl, 301)
 			return
 		}

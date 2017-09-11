@@ -12,16 +12,49 @@ type PermitController struct {
 
 func (this *PermitController) List() {
 	var id = this.GetString("pid")
-
-	this.Data["PList"], this.Data["NowChidList"] = this.getPermitList(id)
-
+	var nowChidList = new([]modelsAdmin.PermitAdmin)
+	this.Data["PList"], nowChidList = this.getPermitList(id)
+	this.Data["NowChidList"] = this.leftJoinUponPermit(nowChidList)
 	this.ConContext.IncludePageProperty.HaveTable = true
 	this.ConContext.IncludePageProperty.HaveCheckbox = true
 	this.Data["PageSmallTitle"], this.Data["TableTitle"] = "权限管理", "权限管理"
 
 	this.LoadCommon("permit/list.html")
 }
+func (this *PermitController) leftJoinUponPermit(list *[]modelsAdmin.PermitAdmin) *[]modelsAdmin.PermitAdmin {
 
+	var ids = this.getUponIdList(list)
+	permit := new(modelsAdmin.Permit)
+
+	var args = make(map[string]interface{})
+	args["id__in"] = *ids
+	permitList, _ := permit.FetchPermit(args)
+	var permitListMap = make(map[string]modelsAdmin.Permit)
+	for _, v := range *permitList {
+		permitListMap[v.Id] = v
+	}
+	per := permit.GetModuleDefaultPermit(*permit)
+	for k, v := range *list {
+		if _, ok := permitListMap[v.UppermitId]; ok {
+			(*list)[k].UppermitId = permitListMap[v.UppermitId].Name
+
+		}
+		if v.Controller == (*per).Controller {
+			(*list)[k].Controller = ""
+		}
+		if v.Action == (*per).Action {
+			(*list)[k].Action = ""
+		}
+	}
+	return list
+}
+func (this *PermitController) getUponIdList(list *[]modelsAdmin.PermitAdmin) *[]string {
+	var ids = make([]string, 0)
+	for _, v := range *list {
+		ids = append(ids, v.UppermitId)
+	}
+	return &ids
+}
 func (this *PermitController) getPermitList(id string) (*[][]modelsAdmin.PermitAdmin, *[]modelsAdmin.PermitAdmin) {
 	var args = make(map[string]interface{})
 
