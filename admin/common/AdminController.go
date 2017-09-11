@@ -58,12 +58,15 @@ func (this *AdminController) InitPermitItem() {
 	var permit = make(map[string]interface{})
 	var headerPermit = new([]modelsAdmin.PermitAdmin)
 	var leftPermit = new([](map[string]interface{}))
+	var permitUpon = new([]interface{})
+	var activeUponId = make([]string, 0)
+	var leftTopId string
+	var headerActive string
+	var getLeftPermitArgs = make(map[string]interface{})
 	if this.ConContext.IsSuperAdmin != true { //如果不是超级管理员
 
 		//用户组权限ID列表
 		var groupPermit modelsAdmin.GroupPermit
-
-		//var headerPermitList *[]modelsAdmin.GroupPermit
 
 		//如果用户组不存在，则不用继续操作了
 		if len(this.ConContext.GroupIds) == 0 {
@@ -71,10 +74,10 @@ func (this *AdminController) InitPermitItem() {
 		}
 
 		// 获得当前页面的所有上级权限
-		res, activeUponId, _ := this.getNowNotSuperAdminAndAllUponPermit(&this.ConContext.GroupIds)
+		permitUpon, activeUponId, _ = this.getNowNotSuperAdminAndAllUponPermit(&this.ConContext.GroupIds)
 
 		//如果没有查询到当前的权限
-		if res == nil {
+		if permitUpon == nil {
 			//如果没有查询到信息，则直接跳转到未找到页面
 			this.Abort("404")
 			return
@@ -86,7 +89,7 @@ func (this *AdminController) InitPermitItem() {
 		}
 		//根据当前用户的用户组获得用户的权限
 		//Header信息列表
-		headerPermit, _ := groupPermit.GetGroupPermitList(this.ConContext.GroupIds, []string{"0", ""})
+		headerPermit, _ = groupPermit.GetGroupPermitList(this.ConContext.GroupIds, []string{"0", ""})
 
 		//处理当前头部选中的选项
 		permitArray := make([]interface{}, 0)
@@ -94,30 +97,18 @@ func (this *AdminController) InitPermitItem() {
 			permitArray = append(permitArray, &v)
 		}
 
-		headerActive, leftTopId := this.getHeaderDefaultActive(permitArray)
-
-		if "" != headerActive {
-			permit["HeaderActive"] = headerActive
-		}
+		headerActive, leftTopId = this.getHeaderDefaultActive(permitArray)
 
 		//左侧边栏权限列表
-		var args = make(map[string]interface{})
-		args["SuperAdmin"] = false
-		args["LeftTopId"] = leftTopId
-		args["GroupIds"] = this.ConContext.GroupIds
-		leftPermit = this.PermitService.GetLeftPermit(args)
 
-		var err2 error
-		leftPermit, err2 = this.setLeftActive(leftPermit, activeUponId, false)
-		if nil != err2 {
-			panic(err2)
-		}
+		getLeftPermitArgs["SuperAdmin"] = false
+		getLeftPermitArgs["LeftTopId"] = leftTopId
+		getLeftPermitArgs["GroupIds"] = this.ConContext.GroupIds
 
 	} else { //如果是超级管理员
-		var leftTopId string
 
 		// 获得当前页面的所有上级权限
-		permitUpon, activeUponId, _ := this.getNowAndAllUponPermit()
+		permitUpon, activeUponId, _ = this.getNowAndAllUponPermit()
 
 		//如果当前权限没查到,则直接跳转404
 		if permitUpon == nil {
@@ -129,17 +120,20 @@ func (this *AdminController) InitPermitItem() {
 		//Header信息列表
 		//如果是超级管理员，那么权限对于此账号无效
 
-		permit["HeaderActive"], leftTopId = this.getHeaderDefaultActive(*permitUpon)
+		headerActive, leftTopId = this.getHeaderDefaultActive(*permitUpon)
 
-		var args = make(map[string]interface{})
-		args["LeftTopId"] = leftTopId
-		args["SuperAdmin"] = true
-		leftPermit = this.PermitService.GetLeftPermit(args)
-
-		//设置左侧权限active
-		leftPermit, _ = this.setLeftActive(leftPermit, activeUponId, false)
+		getLeftPermitArgs["LeftTopId"] = leftTopId
+		getLeftPermitArgs["SuperAdmin"] = true
 
 	}
+
+	if "" != headerActive {
+		permit["HeaderActive"] = headerActive
+	} else {
+		permit["HeaderActive"] = "-1"
+	}
+	leftPermit = this.PermitService.GetLeftPermit(getLeftPermitArgs)
+	leftPermit, _ = this.setLeftActive(leftPermit, activeUponId, false)
 
 	//Header信息列表
 	permit["Header"] = headerPermit
