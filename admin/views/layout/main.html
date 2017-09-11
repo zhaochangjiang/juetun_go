@@ -21,7 +21,7 @@
             <h1>{{.UserId}}
                 {{.PageTitle}}
                 <small> {{.PageSmallTitle}}</small>
-            </h1>{{.Breadcrumbs}}
+            </h1>{{str2html .Breadcrumbs}}
          </section>
         <section class="content">
           {{.LayoutContent}}

@@ -26,7 +26,7 @@ type langType struct {
 type BaseController struct {
 	beego.Controller
 	i18n.Locale
-	Database orm.Ormer //数据库操作对象
+	Database orm.Ormer //数据库操作对象,
 }
 
 func (this *BaseController) Debug(data interface{}) {

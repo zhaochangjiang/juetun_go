@@ -55,17 +55,98 @@ func (this *AdminController) SetListPageMessage() {
  */
 func (this *AdminController) InitPermitItem() {
 
-	if this.ConContext.IsSuperAdmin != true {
+	var permit = make(map[string]interface{})
+	var headerPermit = new([]modelsAdmin.PermitAdmin)
+	var leftPermit = new([](map[string]interface{}))
+	if this.ConContext.IsSuperAdmin != true { //如果不是超级管理员
 
-		//如果不是超级管理员
-		this.initAllShowNotSuperAdminPermit()
+		//用户组权限ID列表
+		var groupPermit modelsAdmin.GroupPermit
 
-	} else {
+		//var headerPermitList *[]modelsAdmin.GroupPermit
 
-		//如果是超级管理员
-		this.initAllShowSuperAdminPermit()
+		//如果用户组不存在，则不用继续操作了
+		if len(this.ConContext.GroupIds) == 0 {
+			return
+		}
+
+		// 获得当前页面的所有上级权限
+		res, activeUponId, _ := this.getNowNotSuperAdminAndAllUponPermit(&this.ConContext.GroupIds)
+
+		//如果没有查询到当前的权限
+		if res == nil {
+			//如果没有查询到信息，则直接跳转到未找到页面
+			this.Abort("404")
+			return
+		}
+		//如果没有查询到当前信息
+		if nil == activeUponId {
+			this.Data["Permit"] = permit
+			return
+		}
+		//根据当前用户的用户组获得用户的权限
+		//Header信息列表
+		headerPermit, _ := groupPermit.GetGroupPermitList(this.ConContext.GroupIds, []string{"0", ""})
+
+		//处理当前头部选中的选项
+		permitArray := make([]interface{}, 0)
+		for _, v := range *headerPermit {
+			permitArray = append(permitArray, &v)
+		}
+
+		headerActive, leftTopId := this.getHeaderDefaultActive(permitArray)
+
+		if "" != headerActive {
+			permit["HeaderActive"] = headerActive
+		}
+
+		//左侧边栏权限列表
+		var args = make(map[string]interface{})
+		args["SuperAdmin"] = false
+		args["LeftTopId"] = leftTopId
+		args["GroupIds"] = this.ConContext.GroupIds
+		leftPermit = this.PermitService.GetLeftPermit(args)
+
+		var err2 error
+		leftPermit, err2 = this.setLeftActive(leftPermit, activeUponId, false)
+		if nil != err2 {
+			panic(err2)
+		}
+
+	} else { //如果是超级管理员
+		var leftTopId string
+
+		// 获得当前页面的所有上级权限
+		permitUpon, activeUponId, _ := this.getNowAndAllUponPermit()
+
+		//如果当前权限没查到,则直接跳转404
+		if permitUpon == nil {
+			this.Abort("404")
+			return
+		}
+		//获得页面头部的信息
+		headerPermit, _, _ = this.PermitService.FetchPermitListByUponId([]interface{}{0})
+		//Header信息列表
+		//如果是超级管理员，那么权限对于此账号无效
+
+		permit["HeaderActive"], leftTopId = this.getHeaderDefaultActive(*permitUpon)
+
+		var args = make(map[string]interface{})
+		args["LeftTopId"] = leftTopId
+		args["SuperAdmin"] = true
+		leftPermit = this.PermitService.GetLeftPermit(args)
+
+		//设置左侧权限active
+		leftPermit, _ = this.setLeftActive(leftPermit, activeUponId, false)
+
 	}
 
+	//Header信息列表
+	permit["Header"] = headerPermit
+
+	//左侧边栏权限列表
+	permit["Left"] = leftPermit
+	this.Data["Permit"] = permit
 }
 
 /**
@@ -252,51 +333,6 @@ func (this *AdminController) getHeaderDefaultActive(permitUpon []interface{}) (s
 }
 
 /**
-*获得超级管理员具备的页面展示权限
-* @author karl.zhao<zhaocj2009@126.com>
-* @Date 2017/08/01
-* @param isSuperAdmin 是否为超级管理员
-*
- */
-func (this *AdminController) initAllShowSuperAdminPermit() {
-	var leftTopId string
-	permit := make(map[string]interface{})
-	// 获得当前页面的所有上级权限
-	permitUpon, activeUponId, _ := this.getNowAndAllUponPermit()
-
-	//如果当前权限没查到,则直接跳转404
-	if permitUpon == nil {
-		this.Abort("404")
-		return
-	}
-	//获得页面头部的信息
-	headerPermitList, _, _ := this.PermitService.FetchPermitListByUponId([]interface{}{0})
-	//Header信息列表
-	//如果是超级管理员，那么权限对于此账号无效
-
-	//Header信息列表
-	permit["Header"] = headerPermitList
-	permit["HeaderActive"], leftTopId = this.getHeaderDefaultActive(*permitUpon)
-
-	var args = make(map[string]interface{})
-	args["LeftTopId"] = leftTopId
-	args["SuperAdmin"] = true
-	leftPermit := this.PermitService.GetLeftPermit(args)
-
-	//设置左侧权限active
-	var err2 error
-	leftPermit, err2 = this.setLeftActive(leftPermit, activeUponId, false)
-	if nil != err2 {
-		panic(err2)
-	}
-
-	//左侧边栏权限列表
-	permit["Left"] = leftPermit
-	this.Data["Permit"] = permit
-
-}
-
-/**
 * @author karl.zhao<zhaocj2009@126.com>
 * @Date 2017/08/01
 *
@@ -335,72 +371,6 @@ func (this *AdminController) getNowUserGroupId() []string {
 		groupIds = append(groupIds, v.GroupId)
 	}
 	return groupIds
-}
-
-/**
-* 处理当前非超级管理员的权限
-* @author karl.zhao<zhaocj2009@126.com>
-* @Date 2017/08/01
-*
- */
-func (this *AdminController) initAllShowNotSuperAdminPermit() {
-
-	//用户组权限ID列表
-	var groupPermit modelsAdmin.GroupPermit
-	permit := make(map[string]interface{})
-
-	//var headerPermitList *[]modelsAdmin.GroupPermit
-
-	//如果用户组不存在，则不用继续操作了
-	if len(this.ConContext.GroupIds) == 0 {
-		return
-	}
-
-	// 获得当前页面的所有上级权限
-	res, activeUponId, _ := this.getNowNotSuperAdminAndAllUponPermit(&this.ConContext.GroupIds)
-
-	//如果没有查询到当前的权限
-	if res == nil {
-		//如果没有查询到信息，则直接跳转到未找到页面
-		this.Abort("404")
-		return
-	}
-	//如果没有查询到当前信息
-	if nil == activeUponId {
-		this.Data["Permit"] = permit
-		return
-	}
-	//根据当前用户的用户组获得用户的权限
-	//Header信息列表
-	headerPermit, _ := groupPermit.GetGroupPermitList(this.ConContext.GroupIds, []string{"0", ""})
-	permit["Header"] = headerPermit
-
-	//处理当前头部选中的选项
-	permitArray := make([]interface{}, 0)
-	for _, v := range *headerPermit {
-		permitArray = append(permitArray, &v)
-	}
-
-	headerActive, leftTopId := this.getHeaderDefaultActive(permitArray)
-
-	if "" != headerActive {
-		permit["HeaderActive"] = headerActive
-	}
-
-	//左侧边栏权限列表
-	var args = make(map[string]interface{})
-	args["SuperAdmin"] = false
-	args["LeftTopId"] = leftTopId
-	args["GroupIds"] = this.ConContext.GroupIds
-	leftPermit := this.PermitService.GetLeftPermit(args)
-
-	var err2 error
-	leftPermit, err2 = this.setLeftActive(leftPermit, activeUponId, false)
-	if nil != err2 {
-		panic(err2)
-	}
-	permit["Left"] = leftPermit
-	this.Data["Permit"] = permit
 }
 
 /**
@@ -705,4 +675,67 @@ func (this *AdminController) LoadCommon(tplName string) {
 	this.Data["JsFileAfter"] = this.ConContext.JsFileAfter
 	this.Data["JsFileBefore"] = this.ConContext.JsFileBefore
 	this.Data["CssFile"] = this.ConContext.CssFile
+
+	this.initBreadcrumbParams()
+	this.InitBreadcrumb()
+}
+func (this *AdminController) initBreadcrumbParams() {
+
+	//设置面包屑
+	this.ConContext.Breadcrumbs = []general.Breadcrumb{general.Breadcrumb{"/", "fa fa-dashboard", "主页", false}, general.Breadcrumb{"/", "", "主页", true}}
+	if this.ConContext.Permit != nil {
+		if _, ok := this.ConContext.Permit["Header"]; ok {
+			for _, v := range this.ConContext.Permit["Header"].([]interface{}) {
+				tmp := v.(modelsAdmin.PermitAdmin)
+				if tmp.Mod == this.ConContext.Permit["HeaderActive"] {
+					bc := new(general.Breadcrumb)
+					bc.Name = tmp.Name
+					bc.Href = tmp.UrlString
+					bc.FaCss = tmp.Csscode
+					bc.Active = false
+					this.ConContext.Breadcrumbs = append(this.ConContext.Breadcrumbs, *bc)
+				}
+
+			}
+		}
+		if _, ok := this.ConContext.Permit["Left"]; ok {
+			for _, v := range this.ConContext.Permit["Left"].([]interface{}) {
+				tmp := v.(modelsAdmin.PermitAdmin)
+				if tmp.Mod == this.ConContext.Permit["HeaderActive"] {
+					bc := new(general.Breadcrumb)
+					bc.Name = tmp.Name
+					bc.Href = tmp.UrlString
+					bc.FaCss = tmp.Csscode
+					bc.Active = false
+					this.ConContext.Breadcrumbs = append(this.ConContext.Breadcrumbs, *bc)
+				}
+
+			}
+		}
+	}
+
+}
+func (this *AdminController) InitBreadcrumb() {
+
+	this.Data["Breadcrumbs"] = ""
+	if len(this.ConContext.Breadcrumbs) <= 0 {
+		return
+	}
+	var s = "<ol class=\"breadcrumb\">"
+	for _, v := range this.ConContext.Breadcrumbs {
+		if v.Href == "" {
+			v.Href = "javascript:void(0);"
+		}
+		var active, fa string = "", ""
+		if v.Active == true {
+			active = "class =\"active\""
+		}
+		if v.FaCss != "" {
+			fa = "<i class=\"" + v.FaCss + "\"></i>"
+		}
+		s += "<li " + active + "><a href=\"" + v.Href + "\">" + fa + v.Name + "</a></li>"
+	}
+
+	this.Data["Breadcrumbs"] = s + "</ol>"
+	return
 }
