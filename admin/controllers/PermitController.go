@@ -16,8 +16,13 @@ func (this *PermitController) List() {
 	var nowChidList = new([]modelsAdmin.PermitAdmin)
 	this.Data["PList"], nowChidList = this.getPermitList(id)
 	this.Data["NowChidList"] = this.leftJoinUponPermit(nowChidList)
+
+	//设置有表格属性
 	this.ConContext.IncludePageProperty.HaveTable = true
+
+	//设置有checkbox属性
 	this.ConContext.IncludePageProperty.HaveCheckbox = true
+
 	this.Data["PageSmallTitle"], this.Data["TableTitle"] = "权限管理", "权限管理"
 	this.Data["Pid"] = id
 	this.LoadCommon("permit/list.html")
@@ -26,6 +31,14 @@ func (this *PermitController) List() {
 //编辑界面
 func (this *PermitController) Edit() {
 	this.LoadCommon("permit/edit.html")
+}
+
+//编辑界面
+func (this *PermitController) IframeEdit() {
+	request := this.Ctx.Request
+	request.ParseForm()
+	this.Debug(request.Form)
+
 }
 
 //处理上级权限名称

@@ -126,7 +126,6 @@ func (this *AdminController) InitPermitItem() {
 		permitShow[keys] = 1
 	}
 	this.Data["PermitShow"] = permitShow
-	this.Debug(permitShow)
 	leftPermit = this.PermitService.GetLeftPermit(getLeftPermitArgs)
 	leftPermit, _ = this.setLeftActive(leftPermit, activeUponId, false)
 
@@ -676,6 +675,7 @@ func (this *AdminController) LoadCommon(tplName string) {
 	for _, v := range this.ConContext.JsFileAfter {
 		jsFileAfter = append(jsFileAfter, v)
 	}
+
 	if this.ConContext.NeedRenderJs == true {
 		jsFileAfter = append(jsFileAfter, otherJs)
 

@@ -25,8 +25,10 @@ func (this *MainController) Prepare() {
 
 		//设置本页面不需要验证权限
 		this.ConContext.NotNeedValidatePermit = true
-	}
 
+	}
+	//不需要加载本页的JS
+	this.ConContext.NeedRenderJs = false
 	this.AdminController.Prepare()
 }
 

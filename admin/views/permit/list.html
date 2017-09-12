@@ -1,4 +1,9 @@
-
+{{/*编辑权限判断*/}}
+{{$permitEdit :=(eq (index .PermitShow "system_permit_edit") 1)}}
+{{/*删除权限判断*/}}
+{{$permitDelete :=(eq (index .PermitShow "system_permit_delete") 1)}}
+{{/*删除权限判断*/}}
+{{$permitOperate :=$permitEdit}}
 <div class="box-body">
 	<ul class="list-group">
 	{{range $index, $elem :=.PList}}
@@ -18,19 +23,18 @@
         <div class="box ">
             <div class="box-header">
                 <h3 class="box-title">{{.TableTitle}}</h3> 
-				{{if eq (index .PermitShow "system_permit_edit") 1 }}
+				{{if and  $permitEdit $permitDelete }}
 				<div class="box-tools">            
 					<a href="{{urlfor "PermitController.Edit"  "pid" .Pid "act" "add"}}" class="no-margin pull-right btn  bg-orange">添加</a>       
                  </div>
 			    {{end}}                        
-            </div><!-- /.box-header -->
+            </div>
             <div class="box-body table-responsive">
-			
-               <!--  <table id="example2" class="table table-bordered table-hover table-mailbox">-->
                 <table id="example2" class="table table-bordered table-hover table-mailbox">
                     <thead>
                         <tr class="">
-							<th class="text-center"><label><input type="checkbox" id="check-all"/></label></th>
+						<!--	<th class="text-center"><label><input type="checkbox" id="check-all"/></label></th>-->
+							<th class="text-center">-</th>
                             <th class="text-center">名称</th>
                             <th class="text-center">模块</th>
                             <th class="text-center">Controller</th>
@@ -39,13 +43,19 @@
 							<th class="text-center">域名映射</th>
                             <th class="text-center">排序值</th>
                             <th class="text-center">样式</th>
+							{{if $permitOperate}}
 							<th class="text-center">操作</th>
+							{{end}}
                         </tr>
                     </thead>
                     <tbody>
 					{{range $index, $elem :=.NowChidList}}
                         <tr>
-						    <td class="text-center small-col"><input type="checkbox" name="pids[]" value="{{$elem.Id}}"/></td>
+						<!--    <td class="text-center small-col"><input type="checkbox" name="pids[]" value="{{$elem.Id}}"/></td>-->
+							<td class="text-center">{{if $permitDelete}}
+									<a class="fa fa-times" onclick="deletePermit('{{$elem.Id}}');return;" href="javascript:void(0);"  title="删除"></a>
+									{{end}}
+							</td>
                             <td class="text-center">{{$elem.Name}}</td>
                             <td class="text-center">{{$elem.Mod}}</td>
                             <td class="text-center">{{$elem.Controller}}</td>
@@ -54,13 +64,23 @@
                             <td class="text-center">{{$elem.DomainMap}}</td>
                             <td class="text-center">{{$elem.Obyid}}</td>
                             <td>{{if ne $elem.Csscode ""}}<i class="fa {{$elem.Csscode}}"></i> {{end}}{{$elem.Csscode}}</td>
-							 <td class="text-center"></td>
+							
+							{{if $permitOperate}}
+							 <td class="text-center" style="font-size:1.2em;">
+								{{if $permitEdit}}
+								<a class="fa fa-edit" href="{{urlfor "PermitController.Edit"  "pid" $elem.Id "act" "edit"}}" title="编辑"></a>
+								{{end}}
+							</td>
+							{{end}}
                         </tr>
 					{{end}}
                     </tbody>
                 </table>
             </div><!-- /.box-body -->
-        </div>
+       
+	<div class="overlay"></div>
+    <div class="loading-img"></div>
+	 </div>
     </div>
 </div>
 

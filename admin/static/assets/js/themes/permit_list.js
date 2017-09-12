@@ -1,4 +1,6 @@
-  
+function deletePermit(id){
+	alert(id)
+}
 function checkboxManager(){
 	//iCheck for checkbox and radio inputs
         $('input[type="checkbox"]').iCheck({
