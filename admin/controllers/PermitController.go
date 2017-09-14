@@ -6,11 +6,15 @@ import (
 )
 
 //权限设置相关功能
+//@author karl.zhao<zhaocj2009@hotmail.com>
+//@date 2017/09/12
 type PermitController struct {
 	acommon.AdminController
 }
 
 //列表界面
+//@author karl.zhao<zhaocj2009@hotmail.com>
+//@date 2017/09/12
 func (this *PermitController) List() {
 	var id = this.GetString("pid")
 	var nowChidList = new([]modelsAdmin.PermitAdmin)
@@ -29,11 +33,18 @@ func (this *PermitController) List() {
 }
 
 //编辑界面
+//@author karl.zhao<zhaocj2009@hotmail.com>
+//@date 2017/09/12
 func (this *PermitController) Edit() {
+	var id = this.GetString("pid")
+	this.Data["PList"], nowChidList = this.getPermitList(id)
+	this.Data["NowChidList"] = this.leftJoinUponPermit(nowChidList)
 	this.LoadCommon("permit/edit.html")
 }
 
 //编辑界面
+//@author karl.zhao<zhaocj2009@hotmail.com>
+//@date 2017/09/12
 func (this *PermitController) IframeEdit() {
 	request := this.Ctx.Request
 	request.ParseForm()
@@ -42,6 +53,8 @@ func (this *PermitController) IframeEdit() {
 }
 
 //处理上级权限名称
+//@author karl.zhao<zhaocj2009@hotmail.com>
+//@date 2017/09/12
 func (this *PermitController) leftJoinUponPermit(list *[]modelsAdmin.PermitAdmin) *[]modelsAdmin.PermitAdmin {
 
 	var ids = this.getUponIdList(list)
@@ -70,6 +83,9 @@ func (this *PermitController) leftJoinUponPermit(list *[]modelsAdmin.PermitAdmin
 	}
 	return list
 }
+
+//@author karl.zhao<zhaocj2009@hotmail.com>
+//@date 2017/09/12
 func (this *PermitController) getUponIdList(list *[]modelsAdmin.PermitAdmin) *[]string {
 	var ids = make([]string, 0)
 	for _, v := range *list {
@@ -78,6 +94,8 @@ func (this *PermitController) getUponIdList(list *[]modelsAdmin.PermitAdmin) *[]
 	return &ids
 }
 
+//@author karl.zhao<zhaocj2009@hotmail.com>
+//@date 2017/09/12
 func (this *PermitController) getPermitList(id string) (*[][]modelsAdmin.PermitAdmin, *[]modelsAdmin.PermitAdmin) {
 	var args = make(map[string]interface{})
 
