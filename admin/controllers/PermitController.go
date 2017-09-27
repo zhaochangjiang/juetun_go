@@ -37,6 +37,7 @@ func (this *PermitController) List() {
 //@date 2017/09/12
 func (this *PermitController) Edit() {
 	var id = this.GetString("pid")
+	var nowChidList = new([]modelsAdmin.PermitAdmin)
 	this.Data["PList"], nowChidList = this.getPermitList(id)
 	this.Data["NowChidList"] = this.leftJoinUponPermit(nowChidList)
 	this.LoadCommon("permit/edit.html")
