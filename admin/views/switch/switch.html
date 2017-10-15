@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>RoleResource</title>
+    <script type="text/javascript" src="http://libs.baidu.com/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+<style type="text/css">
+    .line-top, .node-line-top {
+        border-right: 1px solid #cccccc;
+        height: 10px;
+        width: 50%
+    }
+
+    .node-one .node-text-center {
+        text-align: center
+    }
+
+    .node-one .node-line-li {
+        float: left;
+    }
+
+    .node-one .line {
+        border-bottom: 1px solid #cccccc;
+    }
+
+    .node > span {
+        border: 1px solid #cccccc;
+        padding: 0 5px;
+        display: inline-block;
+    }
+</style>
+<div class="node-one" style="width:500px;">
+    <div class="node-line">
+        <div class="node-text-center"><span class="node"><span>1213123</span></span></div>
+        <div class="line-top"></div>
+    </div>
+    <div class="line"></div>
+    <div class="node-line">
+        <div class="node-line-li">
+            <div class="node-line-top"></div>
+            <div class="node-one">
+                <div class="node-line node-text-center">
+                    <span class="node"><span>2123123123</span></span>
+                    <div class="line-top"></div>
+                </div>
+                <div class="line"></div>
+                <div class="node-line">
+                    <div class="node-line-li">
+                        <div class="node-line-top"></div>
+                        <div class="node-text-center"><span class="node"><span>1</span></span></div>
+                    </div>
+                    <div class="node-line-li">
+                        <div class="node-line-top"></div>
+                        <div class="node-text-center"><span class="node"><span>2</span></span></div>
+                    </div>
+                    <div class="node-line-li">
+                        <div class="node-line-top"></div>
+                        <div class="node-text-center"><span class="node"><span>3</span></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="node-line-li">
+            <div class="node-line-top"></div>
+            <div class="node-one">
+                <div class="node-line node-text-center">
+                    <span class="node"><span>2123123123</span></span>
+                    <div class="line-top"></div>
+                </div>
+                <div class="line"></div>
+                <div class="node-line">
+                    <div class="node-line-li">
+                        <div class="node-line-top"></div>
+                        <div class="node-text-center"><span class="node"><span>1</span></span></div>
+                    </div>
+                    <div class="node-line-li">
+                        <div class="node-line-top"></div>
+                        <div class="node-text-center"><span class="node"><span>2</span></span></div>
+                    </div>
+                    <div class="node-line-li">
+                        <div class="node-line-top"></div>
+                        <div class="node-text-center"><span class="node"><span>3</span></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="node-line-li">
+            <div class="node-line-top"></div>
+            <div class="node-one">
+                <div class="node-text-center"><span class="node"><span>3123123</span></span></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $('.node-line').each(function (i) {
+        var thO = $(this);
+        var liO = thO.children('.node-line-li');
+        var w = Math.floor($(this).width() / liO.length);
+        var margin = Math.ceil(w / 2);
+        thO.find('.node-line-li').width(w + 'px');
+        thO.prev('.line').css({marginLeft: margin + 'px', marginRight: margin + 'px'})
+    });
+</script>
+</body>
+</html>

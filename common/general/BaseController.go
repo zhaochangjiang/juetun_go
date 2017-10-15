@@ -29,6 +29,13 @@ type BaseController struct {
 	Database orm.Ormer //数据库操作对象,
 }
 
+func (this *BaseController) Println(p interface{}) {
+	c, a := this.GetControllerAndAction()
+	log.Println("--------------" + c + "-" + a + "-start---------------------")
+	log.Println(p)
+	log.Println("--------------" + c + "-" + a + "-over---------------------")
+
+}
 func (this *BaseController) Debug(data interface{}) {
 	log.Println("")
 	log.Println("")

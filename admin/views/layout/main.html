@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{{.PageTitle}}</title>
+    <title>{{.PageTitle}}{{.DashboardTitle}}</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 {{range $index, $elem := .CssFile}}
 <link rel="stylesheet" href="/assets/css/{{$elem}}?v={{$.PageVersion}}" />{{end}}{{range $index, $elem := .JsFileBefore}} 

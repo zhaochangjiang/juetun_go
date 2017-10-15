@@ -14,9 +14,11 @@ type Passport struct {
 
 //实现本结构体的基本加载，本文件中所有的界面不需要验证登录
 func (this *Passport) Prepare() {
-	//设置本页面不需要登录
+	//是否加载前后端分离的JS文件
 	this.ConContext.NotNeedLogin = true
+	//设置本页面不需要登录
 	this.AdminController.Prepare()
+
 }
 
 //登录页面

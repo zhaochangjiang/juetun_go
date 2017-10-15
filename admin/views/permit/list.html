@@ -4,6 +4,7 @@
 {{$permitDelete :=(eq (index .PermitShow "system_permit_delete") 1)}}
 {{/*删除权限判断*/}}
 {{$permitOperate :=$permitEdit}}
+{{$currenturl:=.Currenturl}}
 <div class="box-body">
 	<ul class="list-group">
 	{{range $index, $elem :=.PList}}
@@ -25,7 +26,7 @@
                 <h3 class="box-title">{{.TableTitle}}</h3> 
 				{{if and  $permitEdit $permitDelete }}
 				<div class="box-tools">            
-					<a href="{{urlfor "PermitController.Edit"  "pid" .Pid "act" "add"}}" class="no-margin pull-right btn  bg-orange">添加</a>       
+					<a href="{{urlfor "PermitController.Edit"  "pid" .Pid "act" "add" "goto" $currenturl}}" class="no-margin pull-right btn  bg-orange">添加</a>       
                  </div>
 			    {{end}}                        
             </div>
@@ -53,7 +54,8 @@
                         <tr>
 						<!--    <td class="text-center small-col"><input type="checkbox" name="pids[]" value="{{$elem.Id}}"/></td>-->
 							<td class="text-center">{{if $permitDelete}}
-									<a class="fa fa-times" onclick="deletePermit('{{$elem.Id}}');return;" href="javascript:void(0);"  title="删除"></a>
+									{{$delUrl:=urlfor "PermitController.Del" "pid" $elem.Id}}
+									<a class="fa fa-times" onclick="deletePermit('{{$delUrl}}','{{$currenturl}}');return;" href="javascript:void(0);"  title="删除"></a>
 									{{end}}
 							</td>
                             <td class="text-center">{{$elem.Name}}</td>
@@ -64,11 +66,10 @@
                             <td class="text-center">{{$elem.DomainMap}}</td>
                             <td class="text-center">{{$elem.Obyid}}</td>
                             <td>{{if ne $elem.Csscode ""}}<i class="fa {{$elem.Csscode}}"></i> {{end}}{{$elem.Csscode}}</td>
-							
 							{{if $permitOperate}}
 							 <td class="text-center" style="font-size:1.2em;">
 								{{if $permitEdit}}
-								<a class="fa fa-edit" href="{{urlfor "PermitController.Edit"  "pid" $elem.Id "act" "edit"}}" title="编辑"></a>
+								<a class="fa fa-edit" href="{{urlfor "PermitController.Edit"  "pid" $elem.Id "act" "edit" "goto" $currenturl}}" title="编辑"></a>
 								{{end}}
 							</td>
 							{{end}}
@@ -78,8 +79,10 @@
                 </table>
             </div><!-- /.box-body -->
        
+	<!--
 	<div class="overlay"></div>
     <div class="loading-img"></div>
+	-->
 	 </div>
     </div>
 </div>

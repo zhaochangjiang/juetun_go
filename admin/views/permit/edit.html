@@ -1,18 +1,80 @@
+
+{{$pid:=.Pid}}
 <div class="box box-info">
 	<div class="box-header">
-		<h3 class="box-title">Input Addon</h3>
+		<h3 class="box-title">{{.PageTitle}}</h3>
+		{{if ne .Goto ""}}
+		<div class="box-tools">            
+		<a href="{{.Goto}}" class="no-margin pull-right btn  bg-orange">返回</a>       
+        </div>
+		{{end}}
 	</div>
 	<div class="box-body">
-		
-		{{range key,$value:=.PList}}
-		<div class="form-group">
-		<select class="form-control">
-		{{range k,$val:=$value}}
-		<option>{{$val.Name}}</option>
+	<form class="form-horizontal">
+	  <div class="form-group" loadUppid="{{urlfor "PermitController.GetChild"}}" id="loadUppid">
+	    <label class="col-xs-2 control-label">上级权限</label>
+		{{range $key,$value:=.PList}}
+		<div class="col-xs-2">
+		<select class="form-control" name="uppid[]"  onchange="changeUppid($(this));return;" >
+		<option value="-1">--请选择--</option>
+		{{range $k,$val:=$value}}
+		<option {{if $val.Active}} selected="selected"{{end}} value="{{$val.Id}}">{{$val.Name}}</option>
 		{{end}}
 		</select>
 		</div>
 		{{end}}
-	
+	  </div>
+	  <div class="form-group">
+	    <label class="col-sm-2 control-label">名称</label>
+	    <div class="col-xs-2">
+	      <input type="text" class="form-control" id="name" name="name" placeholder="名称">
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label class="col-sm-2 control-label">模块</label>
+	    <div class="col-xs-2">
+	      <input type="text" class="form-control" id="module"  name="module" placeholder="模块">
+	    </div>
+	  </div>
+	 <div class="form-group">
+	    <label class="col-sm-2 control-label">Controller</label>
+	    <div class="col-xs-2">
+	      <input type="text" class="form-control" id="controller" name="controller" placeholder="Controller">
+	    </div>
+	  </div>
+	 <div class="form-group">
+	    <label class="col-sm-2 control-label">Action</label>
+	    <div class="col-xs-2">
+	      <input type="text" class="form-control" id="action" name="action" placeholder="Action">
+	    </div>
+	  </div>
+	 <div class="form-group">
+	    <label class="col-sm-2 control-label">域名映射</label>
+	    <div class="col-xs-2">
+	      <input type="text" class="form-control" id="domainMap" name="domainMap" placeholder="domainMap">
+	    </div>
+	  </div>
+	 <div class="form-group">
+	    <label class="col-sm-2 control-label">排序值</label>
+	    <div class="col-xs-2">
+	      <input type="text" class="form-control" id="sort" name="sort" placeholder="排序值">
+	    </div>
+	  </div>
+	 <div class="form-group">
+	    <label class="col-sm-2 control-label">样式</label>
+	    <div class="col-xs-2">
+	      <input type="text" class="form-control" id="csscode" name="csscode" placeholder="样式">
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <div class="col-xs-offset-2 col-xs-10">
+	     {{if eq .DoAct "add"}}
+		<button type="submit" class="btn btn-success btn-flat">添加</button>
+		{{else}}
+		<button type="submit" class="btn btn-primary btn-flat">修改</button>
+		{{end}}
+	    </div>
+	  </div>
+	</form>
 	</div><!-- /.box-body -->
 </div>

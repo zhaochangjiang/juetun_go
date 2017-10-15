@@ -18,7 +18,6 @@ type MainController struct {
  */
 func (this *MainController) Prepare() {
 	_, a := this.GetControllerAndAction()
-
 	//设置不需要登录的Action
 	var notNeedLogin = []interface{}{"Get"}
 	if utils.InArrayOrSlice(a, notNeedLogin) {
@@ -27,9 +26,11 @@ func (this *MainController) Prepare() {
 		this.ConContext.NotNeedValidatePermit = true
 
 	}
-	//不需要加载本页的JS
-	this.ConContext.NeedRenderJs = false
+
 	this.AdminController.Prepare()
+
+	//不需要加载本页的JS,必须放在Prepare方法之后
+	this.ConContext.NeedRenderJs = false
 }
 
 /**

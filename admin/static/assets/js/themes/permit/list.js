@@ -1,5 +1,14 @@
-function deletePermit(id){
-	alert(id)
+function deletePermit(act,g){
+	$.post(act,null,function(r){
+		o=eval('('+r+')');
+		alert(o.message);	
+		if(parseInt(o.code)==0){
+			alert(o.message);		
+		}else{
+			
+		}
+	});
+	return;
 }
 function checkboxManager(){
 	//iCheck for checkbox and radio inputs

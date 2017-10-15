@@ -472,7 +472,8 @@ func (this *AdminController) InitPageScript() {
 		"jquery-ui-1.10.3.min.js",
 		"bootstrap.min.js",
 		"fileinput/fileinput.js",
-		"fileinput/fileinput_locale_zh.js"}
+		"fileinput/fileinput_locale_zh.js",
+		"common.js"}
 
 	this.Data["JsFileAfter"] = []string{
 		"raphael-min.js",
@@ -512,12 +513,16 @@ func (this *AdminController) Prepare() {
 	this.initConContextControllerAndAction()
 	this.ConContext.NeedRenderJs = true
 
+	this.ConContext.OutputResult.Code = 0
+	this.ConContext.OutputResult.Message = "操作成功"
+	this.ConContext.OutputResult.Data = nil
+
 	siteName := beego.AppConfig.String(beego.BConfig.RunMode + "::sitename")
 	this.Data["SiteName"] = siteName
 	time := time.Now()
 	this.Data["Copyright"] = "Copyright " + strconv.Itoa(time.Year()-1) + "-" + strconv.Itoa(time.Year()) + " " + beego.AppConfig.String("appname") + " Corporation. All Rights Reserved."
-	this.Data["PageTitle"] = siteName + "-后台管理中心"
-
+	this.Data["PageTitle"] = siteName
+	this.Data["DashboardTitle"] = "-后台管理中心[" + siteName + "]"
 	//设置登录信息
 	this.Data["NowHourAndMinute"] = strconv.Itoa(time.Hour()) + ":" + strconv.Itoa(time.Minute())
 
@@ -664,7 +669,7 @@ func (this *AdminController) LoadCommon(tplName string) {
 		"AdminLTE/app.js",
 		"AdminLTE/dashboard.js",
 	}
-	otherJs := "themes/" + this.ConContext.Controller + "_" + this.ConContext.Action + ".js"
+	otherJs := "themes/" + this.ConContext.Controller + "/" + this.ConContext.Action + ".js"
 
 	for _, v := range this.ConContext.JsFileBefore {
 		jsFileBefore = append(jsFileBefore, v)
