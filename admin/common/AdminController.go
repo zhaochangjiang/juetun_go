@@ -473,7 +473,7 @@ func (this *AdminController) InitPageScript() {
 		"bootstrap.min.js",
 		"fileinput/fileinput.js",
 		"fileinput/fileinput_locale_zh.js",
-		"common.js"}
+		"base.js"}
 
 	this.Data["JsFileAfter"] = []string{
 		"raphael-min.js",
@@ -653,7 +653,7 @@ func (this *AdminController) LoadCommon(tplName string) {
 		"jquery-ui-1.10.3.min.js",
 		"bootstrap.min.js",
 		"fileinput/fileinput.js",
-		"fileinput/fileinput_locale_zh.js"}
+		"fileinput/fileinput_locale_zh.js", "base.js"}
 
 	jsFileAfter := []string{
 		"raphael-min.js",

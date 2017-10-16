@@ -3,6 +3,6 @@ $.extend({
        $.post(url,params,function(r){
 		callback(r);
 		});
-	  retrun;
+	  return;
     }
 })

@@ -66,17 +66,22 @@ func (this *PermitController) Del() {
 	this.ServeJSON()
 
 }
+
+//获得当前权限的子权限
+//@author karl.zhao<zhaochangjiang@huoyuren.com>
+//@date 2017/10/16
+//@params  pid string
+//@return json字符串
 func (this *PermitController) GetChild() {
 	var id = this.GetString("pid")
 	if id == "" {
 		this.ConContext.OutputResult.Code = 100
 		this.ConContext.OutputResult.Message = "您输入的id为空!"
 	} else {
-
+		this.Debug(this.ConContext.IsSuperAdmin)
 		permitAdmin := new(modelsAdmin.PermitAdmin)
 		this.ConContext.OutputResult.Data = permitAdmin.GetAllChildByPids(&[]string{id},
-			//this.ConContext.IsSuperAdmin,
-			true,
+			this.ConContext.IsSuperAdmin,
 			&this.ConContext.GroupIds)
 	}
 	this.Data["json"] = this.ConContext.OutputResult
