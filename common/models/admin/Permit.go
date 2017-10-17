@@ -11,15 +11,15 @@ import (
 
 type Permit struct {
 	CommonModel
-	Id         string `orm:"column(id);pk" json:"id"`
-	Name       string `orm:varchar(50);orm:"column(name)"`
-	Mod        string `orm:varchar(30);orm:"column(mod)"`
-	Controller string `orm:varchar(30);orm:"column(controller)"`
-	Action     string `orm:varchar(30);orm:"column(action)"`
-	UppermitId string `orm:int(10);orm:"column(uppermit_id)"`
-	DomainMap  string `orm:"column(domain_map)"`
-	Obyid      string `orm:"column(obyid)"`
-	Csscode    string `orm:varchar(500);orm:"column(csscode)"`
+	Id         string `orm:"column(id);pk" json:"id";form:"-"`
+	Name       string `orm:varchar(50);orm:"column(name)";form:"name"`
+	Mod        string `orm:varchar(30);orm:"column(mod)";form:"mod"`
+	Controller string `orm:varchar(30);orm:"column(controller)";form:"controller"`
+	Action     string `orm:varchar(30);orm:"column(action)";form:"action"`
+	UppermitId string `orm:int(10);orm:"column(uppermit_id)";form:"uppermit_id"`
+	DomainMap  string `orm:"column(domain_map)";form:"domain_map"`
+	Obyid      string `orm:"column(obyid)";form:"obyid"`
+	Csscode    string `orm:varchar(500);orm:"column(csscode)";form:"csscode"`
 }
 
 //左侧权限结构体

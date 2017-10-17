@@ -4,6 +4,7 @@ import (
 	acommon "juetun/admin/common"
 	modelsAdmin "juetun/common/models/admin"
 	"juetun/common/utils"
+	"net/url"
 )
 
 //权限设置相关功能
@@ -45,7 +46,7 @@ func (this *PermitController) List() {
 
 	this.Data["PageSmallTitle"], this.Data["TableTitle"] = "权限管理", "权限管理"
 	this.Data["Pid"] = id
-	this.Data["Currenturl"] = this.Ctx.Request.RequestURI
+	this.Data["Currenturl"] = url.QueryEscape(this.Ctx.Request.RequestURI)
 	this.LoadCommon("permit/list.html")
 }
 
@@ -96,14 +97,37 @@ func (this *PermitController) Edit() {
 	var act = this.GetString("act")
 	var gotoUrl = this.GetString("goto")
 
+	this.Data["Error"] = ""
+	var parent_id = "0"
 	var nowChidList = new([]modelsAdmin.PermitAdmin)
+	switch act {
+	case "update":
 
-	this.Data["PList"], nowChidList = this.getPermitList(id)
+		var fetchParams = make(map[string]interface{})
+		fetchParams["id"] = id
+		dataSingleton, _ := new(modelsAdmin.PermitAdmin).FetchPermit(fetchParams)
+
+		if len(*dataSingleton) > 0 {
+			this.Data["DataSingleton"] = (*dataSingleton)[0]
+			parent_id = (*dataSingleton)[0].UppermitId
+
+		} else {
+			if gotoUrl == "" {
+				gotoUrl = "/permit/list/"
+			}
+			this.Data["Error"] = "你要操作的权限不存在或已删除!"
+		}
+
+		break
+	default:
+		break
+	}
+	this.Data["PList"], nowChidList = this.getPermitList(parent_id)
 	this.Data["NowChidList"] = this.leftJoinUponPermit(nowChidList)
 	this.Data["PageTitle"] = "编辑"
 	this.Data["DoAct"] = act
-	this.Data["Goto"] = gotoUrl
 	this.Data["Pid"] = id
+	this.Data["Goto"] = gotoUrl
 	this.LoadCommon("permit/edit.html")
 }
 
@@ -111,10 +135,18 @@ func (this *PermitController) Edit() {
 //@author karl.zhao<zhaocj2009@hotmail.com>
 //@date 2017/09/12
 func (this *PermitController) IframeEdit() {
-	request := this.Ctx.Request
-	request.ParseForm()
-	this.Debug(request.Form)
+	var permitEdit = modelsAdmin.Permit{}
+	if err := this.ParseForm(&permitEdit); err != nil {
+		this.Ctx.WriteString(err.Error())
+		return
+	}
+	this.Debug(permitEdit)
+	this.LoadCommon("layout/iframe.html")
+}
+func (this *PermitController) getIframeEditParams() *(map[string]interface{}) {
+	var params = make(map[string]interface{})
 
+	return &params
 }
 
 //处理上级权限名称

@@ -1,4 +1,6 @@
 
+
+
 {{$pid:=.Pid}}
 <div class="box box-info">
 	<div class="box-header">
@@ -10,7 +12,23 @@
 		{{end}}
 	</div>
 	<div class="box-body">
-	<form class="form-horizontal">
+	{{if(ne .Error "") }}
+	
+		<div class="callout callout-danger">
+		<h4>{{.Error}}</h4>
+		<p><span  id="timeout">5</span>秒后将返回 <a href="{{.Goto}}" id="timeoutReturn">立即返回</a></p>
+		</div>
+		 <script type="text/javascript">
+		setInterval(function(){
+			var t=parseInt($("#timeout").html());
+			if(t==0){t=5;}
+			if(t==1){location.href=$("#timeoutReturn").attr("href");return;}
+			$("#timeout").html(t-1);return;
+		},1000);
+		</script>
+	{{else}}
+	<form class="form-horizontal" action="{{urlfor "PermitController.IframeEdit" "act" "add"}}" method="post" target="iframe-s">
+	
 	  <div class="form-group" loadUppid="{{urlfor "PermitController.GetChild"}}" id="loadUppid">
 	    <label class="col-xs-2 control-label">上级权限</label>
 		{{range $key,$value:=.PList}}
@@ -27,25 +45,25 @@
 	  <div class="form-group">
 	    <label class="col-sm-2 control-label">名称</label>
 	    <div class="col-xs-2">
-	      <input type="text" class="form-control" id="name" name="name" value="{{}}" placeholder="名称">
+	      <input type="text" class="form-control" id="name" name="name" value="{{.DataSingleton.Name}}" placeholder="名称">
 	    </div>
 	  </div>
 	  <div class="form-group">
 	    <label class="col-sm-2 control-label">模块</label>
 	    <div class="col-xs-2">
-	      <input type="text" class="form-control" id="module"  name="module" placeholder="模块">
+	      <input type="text" class="form-control" id="module"  value="{{.DataSingleton.Mod}}" name="module" placeholder="模块">
 	    </div>
 	  </div>
 	 <div class="form-group">
 	    <label class="col-sm-2 control-label">Controller</label>
 	    <div class="col-xs-2">
-	      <input type="text" class="form-control" id="controller" name="controller" placeholder="Controller">
+	      <input type="text" class="form-control" id="controller" value="{{.DataSingleton.Controller}}" name="controller" placeholder="Controller">
 	    </div>
 	  </div>
 	 <div class="form-group">
 	    <label class="col-sm-2 control-label">Action</label>
 	    <div class="col-xs-2">
-	      <input type="text" class="form-control" id="action" name="action" placeholder="Action">
+	      <input type="text" class="form-control" id="action" name="action"  value="{{.DataSingleton.Action}}" placeholder="Action">
 	    </div>
 	  </div>
 	 <div class="form-group">
@@ -57,13 +75,13 @@
 	 <div class="form-group">
 	    <label class="col-sm-2 control-label">排序值</label>
 	    <div class="col-xs-2">
-	      <input type="text" class="form-control" id="sort" name="sort" placeholder="排序值">
+	      <input type="text" class="form-control" id="obyid" value="{{.DataSingleton.Obyid}}" name="obyid" placeholder="排序值">
 	    </div>
 	  </div>
 	 <div class="form-group">
 	    <label class="col-sm-2 control-label">样式</label>
 	    <div class="col-xs-2">
-	      <input type="text" class="form-control" id="csscode" name="csscode" placeholder="样式">
+	      <input type="text" class="form-control" id="csscode" name="csscode" {{.DataSingleton.Csscode}} placeholder="样式">
 	    </div>
 	  </div>
 	  <div class="form-group">
@@ -75,6 +93,8 @@
 		{{end}}
 	    </div>
 	  </div>
+	{{end}}
+	<iframe name="iframe-s" style="display:block"></iframe>
 	</form>
 	</div><!-- /.box-body -->
 </div>
