@@ -5,6 +5,7 @@ import (
 	modelsAdmin "juetun/common/models/admin"
 	"juetun/common/utils"
 	"net/url"
+	//	"strconv"
 )
 
 //权限设置相关功能
@@ -89,6 +90,18 @@ func (this *PermitController) GetChild() {
 	this.ServeJSON()
 }
 
+//根据id获得权限信息
+func (tihis *PermitController) getPermitById(id string) modelsAdmin.Permit {
+	var fetchParams = make(map[string]interface{})
+	fetchParams["id"] = id
+	dataSingleton, _ := new(modelsAdmin.PermitAdmin).FetchPermit(fetchParams)
+	var permit modelsAdmin.Permit
+	if len(*dataSingleton) > 0 {
+		permit = (*dataSingleton)[0]
+	}
+	return permit
+}
+
 //编辑界面
 //@author karl.zhao<zhaocj2009@hotmail.com>
 //@date 2017/09/12
@@ -96,32 +109,28 @@ func (this *PermitController) Edit() {
 	var id = this.GetString("pid")
 	var act = this.GetString("act")
 	var gotoUrl = this.GetString("goto")
-
-	this.Data["Error"] = ""
-	var parent_id = "0"
 	var nowChidList = new([]modelsAdmin.PermitAdmin)
+	this.Data["Error"] = ""
+	var parent_id = ""
 	switch act {
-	case "update":
-
-		var fetchParams = make(map[string]interface{})
-		fetchParams["id"] = id
-		dataSingleton, _ := new(modelsAdmin.PermitAdmin).FetchPermit(fetchParams)
-
-		if len(*dataSingleton) > 0 {
-			this.Data["DataSingleton"] = (*dataSingleton)[0]
-			parent_id = (*dataSingleton)[0].UppermitId
-
+	case "edit":
+		permit := this.getPermitById(id)
+		this.Data["DataSingleton"] = &permit
+		this.Debug(permit)
+		if permit.Id != "" {
+			parent_id = permit.UppermitId
 		} else {
 			if gotoUrl == "" {
 				gotoUrl = "/permit/list/"
 			}
 			this.Data["Error"] = "你要操作的权限不存在或已删除!"
 		}
-
 		break
 	default:
 		break
 	}
+
+	this.Data["DomainConfig"] = this.getDomainConfig()
 	this.Data["PList"], nowChidList = this.getPermitList(parent_id)
 	this.Data["NowChidList"] = this.leftJoinUponPermit(nowChidList)
 	this.Data["PageTitle"] = "编辑"
@@ -131,17 +140,51 @@ func (this *PermitController) Edit() {
 	this.LoadCommon("permit/edit.html")
 }
 
+func (this *PermitController) getDomainConfig() *[]map[string]string {
+
+	var res = make([]map[string]string, 0)
+	var config = (new(modelsAdmin.Config)).GetConfigByLikeKey("domain_")
+	this.Debug(config)
+	for _, v := range *config {
+		var domain = make(map[string]string)
+		domain["DomainMap"] = v.Key
+		domain["Name"] = v.Name
+		res = append(res, domain)
+	}
+	return &res
+}
+
 //编辑界面
 //@author karl.zhao<zhaocj2009@hotmail.com>
 //@date 2017/09/12
 func (this *PermitController) IframeEdit() {
-	var permitEdit = modelsAdmin.Permit{}
-	if err := this.ParseForm(&permitEdit); err != nil {
-		this.Ctx.WriteString(err.Error())
-		return
-	}
-	this.Debug(permitEdit)
+	var permit = new(modelsAdmin.Permit)
+	permit.UppermitId = this.dealUpid()
+	permit.DomainMap = this.GetString("domainMap")
+	permit.Name = this.GetString("name")
+	permit.Controller = this.GetString("controller")
+	//	var err error
+	permit.Obyid = this.GetString("obyid")
+	//	if nil != err {
+	//		panic(err.Error())
+	//	}
+	permit.Mod = this.GetString("module")
+	permit.Action = this.GetString("action ")
+
+	this.Debug(permit)
 	this.LoadCommon("layout/iframe.html")
+}
+func (this *PermitController) dealUpid() string {
+	var pids = this.GetStrings("uppid[]")
+	var pid = ""
+	for _, v := range pids {
+		if v != "-1" {
+			pid = v
+		} else {
+			break
+		}
+	}
+	return pid
 }
 func (this *PermitController) getIframeEditParams() *(map[string]interface{}) {
 	var params = make(map[string]interface{})

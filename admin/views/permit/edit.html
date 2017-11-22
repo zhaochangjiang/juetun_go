@@ -1,6 +1,3 @@
-
-
-
 {{$pid:=.Pid}}
 <div class="box box-info">
 	<div class="box-header">
@@ -28,7 +25,6 @@
 		</script>
 	{{else}}
 	<form class="form-horizontal" action="{{urlfor "PermitController.IframeEdit" "act" "add"}}" method="post" target="iframe-s">
-	
 	  <div class="form-group" loadUppid="{{urlfor "PermitController.GetChild"}}" id="loadUppid">
 	    <label class="col-xs-2 control-label">上级权限</label>
 		{{range $key,$value:=.PList}}
@@ -44,32 +40,38 @@
 	  </div>
 	  <div class="form-group">
 	    <label class="col-sm-2 control-label">名称</label>
-	    <div class="col-xs-2">
+	    <div class="col-xs-5">
 	      <input type="text" class="form-control" id="name" name="name" value="{{.DataSingleton.Name}}" placeholder="名称">
 	    </div>
 	  </div>
 	  <div class="form-group">
 	    <label class="col-sm-2 control-label">模块</label>
-	    <div class="col-xs-2">
+	    <div class="col-xs-3">
 	      <input type="text" class="form-control" id="module"  value="{{.DataSingleton.Mod}}" name="module" placeholder="模块">
 	    </div>
 	  </div>
 	 <div class="form-group">
 	    <label class="col-sm-2 control-label">Controller</label>
-	    <div class="col-xs-2">
-	      <input type="text" class="form-control" id="controller" value="{{.DataSingleton.Controller}}" name="controller" placeholder="Controller">
+	    <div class="col-xs-3">
+	      <input type="text" class="form-control" id="controller" value="{{.DataSingleton.Controller}}" name="controller" >
 	    </div>
 	  </div>
 	 <div class="form-group">
 	    <label class="col-sm-2 control-label">Action</label>
-	    <div class="col-xs-2">
-	      <input type="text" class="form-control" id="action" name="action"  value="{{.DataSingleton.Action}}" placeholder="Action">
+	    <div class="col-xs-3">
+	      <input type="text" class="form-control" id="action" name="action"  value="{{.DataSingleton.Action}}" >
 	    </div>
 	  </div>
 	 <div class="form-group">
 	    <label class="col-sm-2 control-label">域名映射</label>
 	    <div class="col-xs-2">
-	      <input type="text" class="form-control" id="domainMap" name="domainMap" placeholder="domainMap">
+		<select name="domainMap" class="form-control">
+		<option value="">--请选择--</option>
+		{{$dmap:=.DataSingleton.DomainMap}}
+		{{range $key,$value:=.DomainConfig}}
+		<option 	{{if(ne $dmap $value.DomainMap) }} selected="selected" {{end}} value="{{$value.DomainMap}}">{{$value.Name}}</option>
+		{{end}}
+		</select>
 	    </div>
 	  </div>
 	 <div class="form-group">
@@ -80,7 +82,7 @@
 	  </div>
 	 <div class="form-group">
 	    <label class="col-sm-2 control-label">样式</label>
-	    <div class="col-xs-2">
+	    <div class="col-xs-3">
 	      <input type="text" class="form-control" id="csscode" name="csscode" {{.DataSingleton.Csscode}} placeholder="样式">
 	    </div>
 	  </div>
@@ -94,7 +96,7 @@
 	    </div>
 	  </div>
 	{{end}}
-	<iframe name="iframe-s" style="display:block"></iframe>
+	<iframe name="iframe-s" style="display:none"></iframe>
 	</form>
 	</div><!-- /.box-body -->
 </div>
