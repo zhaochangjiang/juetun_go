@@ -1,0 +1,236 @@
+2017/11/22 14:18:44 [I] [main.go:12] the server is starting... 
+2017/11/22 14:20:25 [I] [main.go:12] the server is starting... 
+2017/11/22 14:21:55 [I] [main.go:12] the server is starting... 
+2017/11/22 14:23:58 [I] [main.go:12] the server is starting... 
+2017/11/22 14:26:56 [I] [main.go:12] the server is starting... 
+2017/11/22 14:36:59 [I] [main.go:12] the server is starting... 
+2017/11/22 14:50:27 [I] [main.go:12] the server is starting... 
+2017/11/22 15:06:02 [I] [main.go:12] the server is starting... 
+2017/11/22 15:07:04 [I] [main.go:12] the server is starting... 
+2017/11/22 15:07:41 [I] [main.go:12] the server is starting... 
+2017/11/22 15:07:41 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/22 15:07:55 [D] [server.go:2568] |      127.0.0.1|[47m 301 [0m|   1.377061ms|   match|[44m GET     [0m /     r:/
+2017/11/22 15:07:55 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   2.607575ms|   match|[44m GET     [0m /passport/login/   r:/passport/login/*
+2017/11/22 15:07:55 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   2.073221ms|   match|[44m GET     [0m /assets/vendor/bootstrap/css/bootstrap.css
+2017/11/22 15:07:55 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.718437ms|   match|[44m GET     [0m /assets/vendor/magnific-popup/magnific-popup.css
+2017/11/22 15:07:55 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   2.713026ms|   match|[44m GET     [0m /assets/vendor/font-awesome/css/font-awesome.css
+2017/11/22 15:07:55 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   3.029961ms|   match|[44m GET     [0m /assets/vendor/bootstrap-datepicker/css/datepicker3.css
+2017/11/22 15:07:55 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   4.791002ms|   match|[44m GET     [0m /assets/stylesheets/theme.css
+2017/11/22 15:07:55 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   5.284553ms|   match|[44m GET     [0m /assets/stylesheets/skins/default.css
+2017/11/22 15:07:55 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    343.496µs|   match|[44m GET     [0m /assets/stylesheets/theme-custom.css
+2017/11/22 15:07:55 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    458.631µs|   match|[44m GET     [0m /assets/vendor/modernizr/modernizr.js
+2017/11/22 15:07:55 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    288.498µs|   match|[44m GET     [0m /assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js
+2017/11/22 15:07:55 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   2.869518ms|   match|[44m GET     [0m /assets/vendor/jquery/jquery.js
+2017/11/22 15:07:55 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    341.376µs|   match|[44m GET     [0m /assets/vendor/jquery-placeholder/jquery.placeholder.js
+2017/11/22 15:07:55 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.021992ms|   match|[44m GET     [0m /assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js
+2017/11/22 15:07:55 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.411786ms|   match|[44m GET     [0m /assets/vendor/nanoscroller/nanoscroller.js
+2017/11/22 15:07:55 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   2.129212ms|   match|[44m GET     [0m /assets/vendor/bootstrap/js/bootstrap.js
+2017/11/22 15:07:55 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   2.910253ms|   match|[44m GET     [0m /assets/vendor/magnific-popup/magnific-popup.js
+2017/11/22 15:07:55 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     944.99µs|   match|[44m GET     [0m /assets/javascripts/theme.js
+2017/11/22 15:07:55 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    322.918µs|   match|[44m GET     [0m /assets/javascripts/theme.custom.js
+2017/11/22 15:07:55 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    404.465µs|   match|[44m GET     [0m /assets/javascripts/theme.init.js
+2017/11/22 15:07:55 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.615041ms|   match|[44m GET     [0m /assets/vendor/font-awesome/fonts/fontawesome-webfont.woff
+2017/11/22 15:07:56 [D] [server.go:2568] |      127.0.0.1|[43m 404 [0m|   16.52165ms| nomatch|[44m GET     [0m /favicon.ico
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  12.528745ms|   match|[46m POST    [0m /passport/iframelogin   r:/passport/iframelogin/*
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[47m 301 [0m|    378.399µs|   match|[44m GET     [0m /passport/login/   r:/passport/login/*
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  30.866245ms|   match|[44m GET     [0m /     r:/
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.066937ms|   match|[44m GET     [0m /assets/css/bootstrap.min.css
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.554591ms|   match|[44m GET     [0m /assets/css/ionicons.min.css
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    2.21749ms|   match|[44m GET     [0m /assets/css/font-awesome.min.css
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   2.530002ms|   match|[44m GET     [0m /assets/css/morris/morris.css
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   2.834467ms|   match|[44m GET     [0m /assets/css/jvectormap/jquery-jvectormap-1.2.2.css
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   3.246429ms|   match|[44m GET     [0m /assets/css/fullcalendar/fullcalendar.css
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.945725ms|   match|[44m GET     [0m /assets/js/jquery.min.js
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    2.26512ms|   match|[44m GET     [0m /assets/css/AdminLTE.css
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   2.744867ms|   match|[44m GET     [0m /assets/css/fileinput/fileinput.css
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   2.901587ms|   match|[44m GET     [0m /assets/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     3.2136ms|   match|[44m GET     [0m /assets/css/daterangepicker/daterangepicker-bs3.css
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   5.035149ms|   match|[44m GET     [0m /assets/js/jquery-ui-1.10.3.min.js
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    668.346µs|   match|[44m GET     [0m /assets/js/bootstrap.min.js
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   3.421469ms|   match|[44m GET     [0m /assets/js/fileinput/fileinput.js
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   2.006255ms|   match|[44m GET     [0m /assets/js/base.js
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   3.821811ms|   match|[44m GET     [0m /assets/js/fileinput/fileinput_locale_zh.js
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   3.871828ms|   match|[44m GET     [0m /assets/js/raphael-min.js
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     779.38µs|   match|[44m GET     [0m /assets/js/plugins/sparkline/jquery.sparkline.min.js
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.082982ms|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.096466ms|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    658.656µs|   match|[44m GET     [0m /assets/js/plugins/fullcalendar/fullcalendar.min.js
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    461.646µs|   match|[44m GET     [0m /assets/js/plugins/jqueryKnob/jquery.knob.js
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    733.926µs|   match|[44m GET     [0m /assets/js/plugins/daterangepicker/daterangepicker.js
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.061502ms|   match|[44m GET     [0m /assets/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    308.445µs|   match|[44m GET     [0m /assets/js/plugins/iCheck/icheck.min.js
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    727.449µs|   match|[44m GET     [0m /assets/js/AdminLTE/app.js
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    2.00254ms|   match|[44m GET     [0m /assets/js/AdminLTE/dashboard.js
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    425.995µs|   match|[44m GET     [0m /assets/img/avatar3.png
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    702.357µs|   match|[44m GET     [0m /assets/fonts/fontawesome-webfont.woff
+2017/11/22 15:08:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    911.233µs|   match|[44m GET     [0m /assets/fonts/glyphicons-halflings-regular.woff
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  16.065639ms|   match|[44m GET     [0m /     r:/
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    239.643µs|   match|[44m GET     [0m /assets/css/bootstrap.min.css
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    125.243µs|   match|[44m GET     [0m /assets/css/font-awesome.min.css
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    153.892µs|   match|[44m GET     [0m /assets/css/ionicons.min.css
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     52.446µs|   match|[44m GET     [0m /assets/css/morris/morris.css
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     39.646µs|   match|[44m GET     [0m /assets/css/jvectormap/jquery-jvectormap-1.2.2.css
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    126.306µs|   match|[44m GET     [0m /assets/css/fullcalendar/fullcalendar.css
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    220.094µs|   match|[44m GET     [0m /assets/js/jquery.min.js
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    112.916µs|   match|[44m GET     [0m /assets/css/fileinput/fileinput.css
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    141.639µs|   match|[44m GET     [0m /assets/css/AdminLTE.css
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     47.862µs|   match|[44m GET     [0m /assets/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     62.057µs|   match|[44m GET     [0m /assets/css/daterangepicker/daterangepicker-bs3.css
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     277.05µs|   match|[44m GET     [0m /assets/js/jquery-ui-1.10.3.min.js
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    220.245µs|   match|[44m GET     [0m /assets/js/bootstrap.min.js
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     157.83µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput.js
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     67.717µs|   match|[44m GET     [0m /assets/js/base.js
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     52.273µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput_locale_zh.js
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    188.056µs|   match|[44m GET     [0m /assets/js/raphael-min.js
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    174.899µs|   match|[44m GET     [0m /assets/js/plugins/sparkline/jquery.sparkline.min.js
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    114.258µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    251.901µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    178.797µs|   match|[44m GET     [0m /assets/js/plugins/fullcalendar/fullcalendar.min.js
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    113.878µs|   match|[44m GET     [0m /assets/js/plugins/jqueryKnob/jquery.knob.js
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    117.582µs|   match|[44m GET     [0m /assets/js/plugins/daterangepicker/daterangepicker.js
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    177.707µs|   match|[44m GET     [0m /assets/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|      109.5µs|   match|[44m GET     [0m /assets/js/plugins/iCheck/icheck.min.js
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    118.364µs|   match|[44m GET     [0m /assets/js/AdminLTE/app.js
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    101.976µs|   match|[44m GET     [0m /assets/js/AdminLTE/dashboard.js
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    107.748µs|   match|[44m GET     [0m /assets/img/avatar3.png
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    116.391µs|   match|[44m GET     [0m /assets/fonts/fontawesome-webfont.woff
+2017/11/22 15:09:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     87.286µs|   match|[44m GET     [0m /assets/fonts/glyphicons-halflings-regular.woff
+2017/11/22 15:10:55 [D] [server.go:2568] |      127.0.0.1|[47m 301 [0m|   2.973904ms|   match|[44m GET     [0m /loc/goto/mod-system   r:/loc/goto/*
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   16.03147ms|   match|[44m GET     [0m /user/list/   r:/user/list/*
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    179.146µs|   match|[44m GET     [0m /assets/css/bootstrap.min.css
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     98.753µs|   match|[44m GET     [0m /assets/css/font-awesome.min.css
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     78.221µs|   match|[44m GET     [0m /assets/css/morris/morris.css
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    128.484µs|   match|[44m GET     [0m /assets/css/ionicons.min.css
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    122.563µs|   match|[44m GET     [0m /assets/css/fullcalendar/fullcalendar.css
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     37.613µs|   match|[44m GET     [0m /assets/css/jvectormap/jquery-jvectormap-1.2.2.css
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     190.58µs|   match|[44m GET     [0m /assets/css/daterangepicker/daterangepicker-bs3.css
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    246.775µs|   match|[44m GET     [0m /assets/js/jquery-ui-1.10.3.min.js
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    152.071µs|   match|[44m GET     [0m /assets/js/jquery.min.js
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    102.706µs|   match|[44m GET     [0m /assets/css/fileinput/fileinput.css
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    101.352µs|   match|[44m GET     [0m /assets/css/AdminLTE.css
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     52.777µs|   match|[44m GET     [0m /assets/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    115.424µs|   match|[44m GET     [0m /assets/js/bootstrap.min.js
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     59.192µs|   match|[44m GET     [0m /assets/js/base.js
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     34.365µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput_locale_zh.js
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    406.803µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput.js
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    178.021µs|   match|[44m GET     [0m /assets/js/raphael-min.js
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    126.572µs|   match|[44m GET     [0m /assets/js/plugins/sparkline/jquery.sparkline.min.js
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    131.118µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    327.607µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    175.085µs|   match|[44m GET     [0m /assets/js/plugins/fullcalendar/fullcalendar.min.js
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    343.384µs|   match|[44m GET     [0m /assets/js/plugins/jqueryKnob/jquery.knob.js
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    152.778µs|   match|[44m GET     [0m /assets/js/plugins/daterangepicker/daterangepicker.js
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    184.081µs|   match|[44m GET     [0m /assets/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    118.054µs|   match|[44m GET     [0m /assets/js/plugins/iCheck/icheck.min.js
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    145.927µs|   match|[44m GET     [0m /assets/js/AdminLTE/app.js
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     129.75µs|   match|[44m GET     [0m /assets/js/AdminLTE/dashboard.js
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|      92.51µs|   match|[44m GET     [0m /assets/js/themes/user/list.js
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    115.434µs|   match|[44m GET     [0m /assets/img/avatar3.png
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    239.032µs|   match|[44m GET     [0m /assets/fonts/fontawesome-webfont.woff
+2017/11/22 15:10:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     78.395µs|   match|[44m GET     [0m /assets/fonts/glyphicons-halflings-regular.woff
+2017/11/22 15:11:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  21.599773ms|   match|[44m GET     [0m /permit/list/   r:/permit/list/*
+2017/11/22 15:11:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.466101ms|   match|[44m GET     [0m /assets/css/bootstrap.min.css
+2017/11/22 15:11:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    157.884µs|   match|[44m GET     [0m /assets/css/ionicons.min.css
+2017/11/22 15:11:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     124.44µs|   match|[44m GET     [0m /assets/css/font-awesome.min.css
+2017/11/22 15:11:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     39.978µs|   match|[44m GET     [0m /assets/css/jvectormap/jquery-jvectormap-1.2.2.css
+2017/11/22 15:11:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     66.795µs|   match|[44m GET     [0m /assets/css/morris/morris.css
+2017/11/22 15:11:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     95.415µs|   match|[44m GET     [0m /assets/css/daterangepicker/daterangepicker-bs3.css
+2017/11/22 15:11:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     77.591µs|   match|[44m GET     [0m /assets/css/fullcalendar/fullcalendar.css
+2017/11/22 15:11:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    218.251µs|   match|[44m GET     [0m /assets/css/AdminLTE.css
+2017/11/22 15:11:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   3.309039ms|   match|[44m GET     [0m /assets/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css
+2017/11/22 15:11:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    347.731µs|   match|[44m GET     [0m /assets/css/datatables/dataTables.bootstrap.css
+2017/11/22 15:11:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    300.658µs|   match|[44m GET     [0m /assets/css/fileinput/fileinput.css
+2017/11/22 15:11:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    237.357µs|   match|[44m GET     [0m /assets/js/jquery.min.js
+2017/11/22 15:11:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    741.841µs|   match|[44m GET     [0m /assets/css/iCheck/minimal/blue.css
+2017/11/22 15:11:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    249.379µs|   match|[44m GET     [0m /assets/js/jquery-ui-1.10.3.min.js
+2017/11/22 15:11:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    102.426µs|   match|[44m GET     [0m /assets/js/bootstrap.min.js
+2017/11/22 15:11:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     74.133µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput_locale_zh.js
+2017/11/22 15:11:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    138.378µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput.js
+2017/11/22 15:11:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     59.308µs|   match|[44m GET     [0m /assets/js/base.js
+2017/11/22 15:11:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    210.391µs|   match|[44m GET     [0m /assets/js/raphael-min.js
+2017/11/22 15:11:03 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    172.972µs|   match|[44m GET     [0m /assets/js/plugins/sparkline/jquery.sparkline.min.js
+2017/11/22 15:11:03 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     148.42µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js
+2017/11/22 15:11:03 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    230.541µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js
+2017/11/22 15:11:03 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    225.029µs|   match|[44m GET     [0m /assets/js/plugins/fullcalendar/fullcalendar.min.js
+2017/11/22 15:11:03 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    156.318µs|   match|[44m GET     [0m /assets/js/plugins/jqueryKnob/jquery.knob.js
+2017/11/22 15:11:03 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    189.195µs|   match|[44m GET     [0m /assets/js/plugins/daterangepicker/daterangepicker.js
+2017/11/22 15:11:03 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    204.839µs|   match|[44m GET     [0m /assets/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js
+2017/11/22 15:11:03 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    152.482µs|   match|[44m GET     [0m /assets/js/plugins/iCheck/icheck.min.js
+2017/11/22 15:11:03 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    408.893µs|   match|[44m GET     [0m /assets/js/AdminLTE/app.js
+2017/11/22 15:11:03 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    120.947µs|   match|[44m GET     [0m /assets/js/AdminLTE/dashboard.js
+2017/11/22 15:11:03 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   2.252376ms|   match|[44m GET     [0m /assets/js/plugins/datatables/jquery.dataTables.js
+2017/11/22 15:11:03 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    380.656µs|   match|[44m GET     [0m /assets/js/plugins/datatables/dataTables.bootstrap.js
+2017/11/22 15:11:03 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     328.47µs|   match|[44m GET     [0m /assets/js/themes/permit/list.js
+2017/11/22 15:11:03 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    101.973µs|   match|[44m GET     [0m /assets/img/avatar3.png
+2017/11/22 15:11:03 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    114.362µs|   match|[44m GET     [0m /assets/fonts/fontawesome-webfont.woff
+2017/11/22 15:11:03 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     109.77µs|   match|[44m GET     [0m /assets/fonts/glyphicons-halflings-regular.woff
+2017/11/22 15:11:03 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.088054ms|   match|[44m GET     [0m /assets/css/iCheck/minimal/blue@2x.png
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  18.570875ms|   match|[44m GET     [0m /permit/edit   r:/permit/edit/*
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    135.055µs|   match|[44m GET     [0m /assets/css/font-awesome.min.css
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    195.164µs|   match|[44m GET     [0m /assets/css/bootstrap.min.css
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     58.881µs|   match|[44m GET     [0m /assets/css/jvectormap/jquery-jvectormap-1.2.2.css
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     36.285µs|   match|[44m GET     [0m /assets/css/morris/morris.css
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     80.841µs|   match|[44m GET     [0m /assets/css/ionicons.min.css
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     93.324µs|   match|[44m GET     [0m /assets/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     77.989µs|   match|[44m GET     [0m /assets/css/daterangepicker/daterangepicker-bs3.css
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     89.358µs|   match|[44m GET     [0m /assets/css/fullcalendar/fullcalendar.css
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    151.329µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput.js
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     63.927µs|   match|[44m GET     [0m /assets/js/bootstrap.min.js
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     161.44µs|   match|[44m GET     [0m /assets/js/jquery-ui-1.10.3.min.js
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    104.093µs|   match|[44m GET     [0m /assets/js/jquery.min.js
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|      65.89µs|   match|[44m GET     [0m /assets/css/fileinput/fileinput.css
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|      82.72µs|   match|[44m GET     [0m /assets/css/AdminLTE.css
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     71.793µs|   match|[44m GET     [0m /assets/js/base.js
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     94.789µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput_locale_zh.js
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    254.463µs|   match|[44m GET     [0m /assets/js/raphael-min.js
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    123.227µs|   match|[44m GET     [0m /assets/js/plugins/sparkline/jquery.sparkline.min.js
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    126.711µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    218.367µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    142.448µs|   match|[44m GET     [0m /assets/js/plugins/fullcalendar/fullcalendar.min.js
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     108.73µs|   match|[44m GET     [0m /assets/js/plugins/jqueryKnob/jquery.knob.js
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    137.007µs|   match|[44m GET     [0m /assets/js/plugins/daterangepicker/daterangepicker.js
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    218.549µs|   match|[44m GET     [0m /assets/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    103.926µs|   match|[44m GET     [0m /assets/js/plugins/iCheck/icheck.min.js
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    154.269µs|   match|[44m GET     [0m /assets/js/AdminLTE/app.js
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    101.926µs|   match|[44m GET     [0m /assets/js/AdminLTE/dashboard.js
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     354.42µs|   match|[44m GET     [0m /assets/js/themes/permit/edit.js
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     95.158µs|   match|[44m GET     [0m /assets/img/avatar3.png
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    147.724µs|   match|[44m GET     [0m /assets/fonts/fontawesome-webfont.woff
+2017/11/22 15:11:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     94.357µs|   match|[44m GET     [0m /assets/fonts/glyphicons-halflings-regular.woff
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  24.175747ms|   match|[44m GET     [0m /permit/list/   r:/permit/list/*
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    187.426µs|   match|[44m GET     [0m /assets/css/bootstrap.min.css
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    101.551µs|   match|[44m GET     [0m /assets/css/daterangepicker/daterangepicker-bs3.css
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     68.743µs|   match|[44m GET     [0m /assets/css/fullcalendar/fullcalendar.css
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     30.854µs|   match|[44m GET     [0m /assets/css/jvectormap/jquery-jvectormap-1.2.2.css
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     28.616µs|   match|[44m GET     [0m /assets/css/morris/morris.css
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     72.937µs|   match|[44m GET     [0m /assets/css/ionicons.min.css
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     60.325µs|   match|[44m GET     [0m /assets/css/font-awesome.min.css
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.492654ms|   match|[44m GET     [0m /assets/css/datatables/dataTables.bootstrap.css
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     67.094µs|   match|[44m GET     [0m /assets/css/fileinput/fileinput.css
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     91.266µs|   match|[44m GET     [0m /assets/css/AdminLTE.css
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     34.524µs|   match|[44m GET     [0m /assets/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    138.459µs|   match|[44m GET     [0m /assets/js/jquery.min.js
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     30.724µs|   match|[44m GET     [0m /assets/css/iCheck/minimal/blue.css
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    214.981µs|   match|[44m GET     [0m /assets/js/jquery-ui-1.10.3.min.js
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    119.494µs|   match|[44m GET     [0m /assets/js/bootstrap.min.js
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     77.462µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput_locale_zh.js
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    119.673µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput.js
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     85.167µs|   match|[44m GET     [0m /assets/js/base.js
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    186.475µs|   match|[44m GET     [0m /assets/js/raphael-min.js
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    141.848µs|   match|[44m GET     [0m /assets/js/plugins/sparkline/jquery.sparkline.min.js
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    144.686µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     195.56µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    133.984µs|   match|[44m GET     [0m /assets/js/plugins/fullcalendar/fullcalendar.min.js
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    109.397µs|   match|[44m GET     [0m /assets/js/plugins/jqueryKnob/jquery.knob.js
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    217.128µs|   match|[44m GET     [0m /assets/js/plugins/daterangepicker/daterangepicker.js
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     195.35µs|   match|[44m GET     [0m /assets/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    108.736µs|   match|[44m GET     [0m /assets/js/plugins/iCheck/icheck.min.js
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     240.46µs|   match|[44m GET     [0m /assets/js/AdminLTE/app.js
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     144.37µs|   match|[44m GET     [0m /assets/js/AdminLTE/dashboard.js
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    320.104µs|   match|[44m GET     [0m /assets/js/plugins/datatables/jquery.dataTables.js
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|      93.13µs|   match|[44m GET     [0m /assets/js/plugins/datatables/dataTables.bootstrap.js
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|      62.55µs|   match|[44m GET     [0m /assets/js/themes/permit/list.js
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    115.582µs|   match|[44m GET     [0m /assets/img/avatar3.png
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     137.57µs|   match|[44m GET     [0m /assets/fonts/fontawesome-webfont.woff
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     85.347µs|   match|[44m GET     [0m /assets/fonts/glyphicons-halflings-regular.woff
+2017/11/22 15:11:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|      54.11µs|   match|[44m GET     [0m /assets/css/iCheck/minimal/blue@2x.png
