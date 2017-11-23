@@ -5,6 +5,7 @@ import (
 	modelsAdmin "juetun/common/models/admin"
 	"juetun/common/utils"
 	"net/url"
+
 	//	"strconv"
 )
 
@@ -80,7 +81,6 @@ func (this *PermitController) GetChild() {
 		this.ConContext.OutputResult.Code = 100
 		this.ConContext.OutputResult.Message = "您输入的id为空!"
 	} else {
-		this.Debug(this.ConContext.IsSuperAdmin)
 		permitAdmin := new(modelsAdmin.PermitAdmin)
 		this.ConContext.OutputResult.Data = permitAdmin.GetAllChildByPids(&[]string{id},
 			this.ConContext.IsSuperAdmin,
@@ -116,7 +116,6 @@ func (this *PermitController) Edit() {
 	case "edit":
 		permit := this.getPermitById(id)
 		this.Data["DataSingleton"] = &permit
-		this.Debug(permit)
 		if permit.Id != "" {
 			parent_id = permit.UppermitId
 		} else {
@@ -140,11 +139,11 @@ func (this *PermitController) Edit() {
 	this.LoadCommon("permit/edit.html")
 }
 
+//获得当前的域名配置列表
 func (this *PermitController) getDomainConfig() *[]map[string]string {
 
 	var res = make([]map[string]string, 0)
 	var config = (new(modelsAdmin.Config)).GetConfigByLikeKey("domain_")
-	this.Debug(config)
 	for _, v := range *config {
 		var domain = make(map[string]string)
 		domain["DomainMap"] = v.Key
@@ -158,20 +157,28 @@ func (this *PermitController) getDomainConfig() *[]map[string]string {
 //@author karl.zhao<zhaocj2009@hotmail.com>
 //@date 2017/09/12
 func (this *PermitController) IframeEdit() {
+	//var updateValue = make(map[string]string)
 	var permit = new(modelsAdmin.Permit)
+
 	permit.UppermitId = this.dealUpid()
 	permit.DomainMap = this.GetString("domainMap")
 	permit.Name = this.GetString("name")
 	permit.Controller = this.GetString("controller")
-	//	var err error
 	permit.Obyid = this.GetString("obyid")
-	//	if nil != err {
-	//		panic(err.Error())
-	//	}
 	permit.Mod = this.GetString("module")
 	permit.Action = this.GetString("action ")
+	permit.Csscode = this.GetString("csscode")
+	permit.Id = this.GetString("pid")
+	//	updateValue["uppermit_id"] = this.dealUpid()
+	//	updateValue["domain_map"] = this.GetString("domainMap")
+	//	updateValue["name"] = this.GetString("name")
+	//	updateValue["controller"] = this.GetString("controller")
+	//	updateValue["obyid"] = this.GetString("obyid")
+	//	updateValue["mod"] = this.GetString("module")
+	//	updateValue["action"] = this.GetString("action ")
+	//	updateValue["csscode"] = this.GetString("csscode")
 
-	this.Debug(permit)
+	permit.UpdateDataById(permit)
 	this.LoadCommon("layout/iframe.html")
 }
 func (this *PermitController) dealUpid() string {

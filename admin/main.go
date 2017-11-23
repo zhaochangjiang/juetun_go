@@ -5,6 +5,9 @@ import (
 	_ "juetun/admin/routers"
 	_ "juetun/common/general"
 
+	//引入缓存包
+	_ "github.com/astaxie/beego/cache/redis"
+
 	"github.com/astaxie/beego"
 )
 

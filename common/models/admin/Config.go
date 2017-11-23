@@ -4,8 +4,9 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/astaxie/beego/cache"
+	"juetun/common/utils"
 
+	"github.com/astaxie/beego/cache"
 	"github.com/astaxie/beego/orm"
 )
 
@@ -43,16 +44,22 @@ func (this *Config) GetCachePrefix() string {
 func (this *Config) getCache() *cache.Cache {
 	if nil == bm {
 		var err error
-		bm, err = cache.NewCache("memory", `{"interval":60}`)
+		var redisconfig = new(utils.RedisConfig)
+		var con = redisconfig.GetJsonCode("redisCache", "0")
+		bm, err = cache.NewCache("redis", con)
 		if nil != err {
 			panic(err.Error())
 		}
 	}
 	return &bm
 }
+
+//从redis缓存中读取相应的信息
 func (this *Config) getContentFromCache(key string) interface{} {
 	return (*this.getCache()).Get(key)
 }
+
+//将数据放入redis缓存中。
 func (this *Config) setContentFromCache(key string, content interface{}) {
 	(*this.getCache()).Put(key, content, time.Second*3600)
 }
@@ -66,9 +73,9 @@ func (this *Config) GetConfigByLikeKey(key string) *[]Config {
 	//读取缓存数据，如果缓存数据中为空，才从数据库读取。
 	var ct = this.getContentFromCache(keys)
 	if ct != nil {
-		var c = ct.(string)
+		var c = ct.([]byte)
 		j2 := make([]Config, 0)
-		err = json.Unmarshal([]byte(c), &j2)
+		err = json.Unmarshal(c, &j2)
 		if err != nil {
 			panic(err)
 		}

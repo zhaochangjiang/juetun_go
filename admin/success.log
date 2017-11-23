@@ -2391,3 +2391,677 @@
 2017/11/22 18:53:12 [I] [main.go:12] the server is starting... 
 2017/11/22 18:53:12 [I] [asm_amd64.s:2197] http server Running on http://:8082
 2017/11/22 18:53:15 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  24.647472ms|   match|[44m GET     [0m /permit/edit   r:/permit/edit/*
+2017/11/23 09:42:55 [I] [main.go:12] the server is starting... 
+2017/11/23 09:43:31 [I] [main.go:12] the server is starting... 
+2017/11/23 09:43:31 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 09:43:54 [D] [server.go:2568] |      127.0.0.1|[47m 301 [0m|    830.078µs|   match|[44m GET     [0m /     r:/
+2017/11/23 09:43:54 [D] [server.go:2568] |      127.0.0.1|[47m 301 [0m|    375.689µs|   match|[44m GET     [0m /     r:/
+2017/11/23 09:43:54 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   2.147489ms|   match|[44m GET     [0m /passport/login/   r:/passport/login/*
+2017/11/23 09:43:55 [D] [server.go:2568] |      127.0.0.1|[43m 404 [0m|  29.475849ms| nomatch|[44m GET     [0m /favicon.ico
+2017/11/23 09:43:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  13.663339ms|   match|[46m POST    [0m /passport/iframelogin   r:/passport/iframelogin/*
+2017/11/23 09:43:56 [D] [server.go:2568] |      127.0.0.1|[47m 301 [0m|    284.949µs|   match|[44m GET     [0m /passport/login/   r:/passport/login/*
+2017/11/23 09:43:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  24.111402ms|   match|[44m GET     [0m /     r:/
+2017/11/23 09:43:56 [D] [server.go:2568] |      127.0.0.1|[47m 304 [0m|    290.305µs|   match|[44m GET     [0m /assets/js/base.js
+2017/11/23 09:43:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  17.272903ms|   match|[44m GET     [0m /user/list/   r:/user/list/*
+2017/11/23 09:44:01 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  25.741837ms|   match|[44m GET     [0m /permit/list/   r:/permit/list/*
+2017/11/23 09:44:01 [D] [server.go:2568] |      127.0.0.1|[47m 304 [0m|    290.077µs|   match|[44m GET     [0m /assets/js/themes/permit/list.js
+2017/11/23 09:44:03 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  25.653378ms|   match|[44m GET     [0m /permit/edit   r:/permit/edit/*
+2017/11/23 09:44:03 [D] [server.go:2568] |      127.0.0.1|[47m 304 [0m|   1.208747ms|   match|[44m GET     [0m /assets/js/themes/permit/edit.js
+2017/11/23 09:44:25 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  24.753241ms|   match|[44m GET     [0m /permit/list/   r:/permit/list/*
+2017/11/23 09:44:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  21.379849ms|   match|[44m GET     [0m /permit/edit   r:/permit/edit/*
+2017/11/23 09:46:08 [I] [main.go:12] the server is starting... 
+2017/11/23 09:46:08 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  34.251911ms|   match|[44m GET     [0m /permit/edit   r:/permit/edit/*
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.894101ms|   match|[44m GET     [0m /assets/css/bootstrap.min.css
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.730897ms|   match|[44m GET     [0m /assets/css/ionicons.min.css
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   2.889671ms|   match|[44m GET     [0m /assets/css/morris/morris.css
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   3.360432ms|   match|[44m GET     [0m /assets/css/font-awesome.min.css
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   3.990829ms|   match|[44m GET     [0m /assets/css/fullcalendar/fullcalendar.css
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   4.310784ms|   match|[44m GET     [0m /assets/css/jvectormap/jquery-jvectormap-1.2.2.css
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    2.21151ms|   match|[44m GET     [0m /assets/css/fileinput/fileinput.css
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   2.978658ms|   match|[44m GET     [0m /assets/js/jquery-ui-1.10.3.min.js
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   9.178126ms|   match|[44m GET     [0m /assets/js/jquery.min.js
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   9.798505ms|   match|[44m GET     [0m /assets/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   9.982013ms|   match|[44m GET     [0m /assets/css/AdminLTE.css
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  10.422991ms|   match|[44m GET     [0m /assets/css/daterangepicker/daterangepicker-bs3.css
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     779.19µs|   match|[44m GET     [0m /assets/js/bootstrap.min.js
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    553.751µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput_locale_zh.js
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   4.258803ms|   match|[44m GET     [0m /assets/js/fileinput/fileinput.js
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.180154ms|   match|[44m GET     [0m /assets/js/base.js
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.276845ms|   match|[44m GET     [0m /assets/js/raphael-min.js
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.058163ms|   match|[44m GET     [0m /assets/js/plugins/sparkline/jquery.sparkline.min.js
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   2.238998ms|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.345602ms|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    761.357µs|   match|[44m GET     [0m /assets/js/plugins/fullcalendar/fullcalendar.min.js
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    535.294µs|   match|[44m GET     [0m /assets/js/plugins/jqueryKnob/jquery.knob.js
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    825.378µs|   match|[44m GET     [0m /assets/js/plugins/daterangepicker/daterangepicker.js
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.275179ms|   match|[44m GET     [0m /assets/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    430.453µs|   match|[44m GET     [0m /assets/js/plugins/iCheck/icheck.min.js
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    975.759µs|   match|[44m GET     [0m /assets/js/AdminLTE/app.js
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    506.491µs|   match|[44m GET     [0m /assets/js/AdminLTE/dashboard.js
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    130.321µs|   match|[44m GET     [0m /assets/js/themes/permit/edit.js
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    575.334µs|   match|[44m GET     [0m /assets/img/avatar3.png
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.536319ms|   match|[44m GET     [0m /assets/fonts/fontawesome-webfont.woff
+2017/11/23 09:46:13 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.717871ms|   match|[44m GET     [0m /assets/fonts/glyphicons-halflings-regular.woff
+2017/11/23 09:47:02 [I] [main.go:12] the server is starting... 
+2017/11/23 09:47:02 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 09:47:09 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  38.972773ms|   match|[44m GET     [0m /permit/edit   r:/permit/edit/*
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    540.303µs|   match|[44m GET     [0m /assets/css/bootstrap.min.css
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    277.439µs|   match|[44m GET     [0m /assets/css/fullcalendar/fullcalendar.css
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    124.493µs|   match|[44m GET     [0m /assets/css/jvectormap/jquery-jvectormap-1.2.2.css
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    114.022µs|   match|[44m GET     [0m /assets/css/morris/morris.css
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    278.667µs|   match|[44m GET     [0m /assets/css/ionicons.min.css
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    235.652µs|   match|[44m GET     [0m /assets/css/font-awesome.min.css
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     720.18µs|   match|[44m GET     [0m /assets/js/jquery-ui-1.10.3.min.js
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.591266ms|   match|[44m GET     [0m /assets/js/jquery.min.js
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    362.181µs|   match|[44m GET     [0m /assets/css/AdminLTE.css
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    131.608µs|   match|[44m GET     [0m /assets/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    163.171µs|   match|[44m GET     [0m /assets/css/daterangepicker/daterangepicker-bs3.css
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    407.723µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput.js
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    844.641µs|   match|[44m GET     [0m /assets/css/fileinput/fileinput.css
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   3.388435ms|   match|[44m GET     [0m /assets/js/bootstrap.min.js
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   3.163099ms|   match|[44m GET     [0m /assets/js/fileinput/fileinput_locale_zh.js
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    791.294µs|   match|[44m GET     [0m /assets/js/base.js
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     479.38µs|   match|[44m GET     [0m /assets/js/raphael-min.js
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    420.579µs|   match|[44m GET     [0m /assets/js/plugins/sparkline/jquery.sparkline.min.js
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    244.109µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    551.675µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    251.355µs|   match|[44m GET     [0m /assets/js/plugins/fullcalendar/fullcalendar.min.js
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    216.712µs|   match|[44m GET     [0m /assets/js/plugins/jqueryKnob/jquery.knob.js
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    305.308µs|   match|[44m GET     [0m /assets/js/plugins/daterangepicker/daterangepicker.js
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    461.217µs|   match|[44m GET     [0m /assets/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    144.002µs|   match|[44m GET     [0m /assets/js/plugins/iCheck/icheck.min.js
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    229.547µs|   match|[44m GET     [0m /assets/js/AdminLTE/app.js
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    148.955µs|   match|[44m GET     [0m /assets/js/AdminLTE/dashboard.js
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    118.859µs|   match|[44m GET     [0m /assets/js/themes/permit/edit.js
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    287.149µs|   match|[44m GET     [0m /assets/img/avatar3.png
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    244.479µs|   match|[44m GET     [0m /assets/fonts/fontawesome-webfont.woff
+2017/11/23 09:47:10 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    143.653µs|   match|[44m GET     [0m /assets/fonts/glyphicons-halflings-regular.woff
+2017/11/23 09:47:47 [I] [main.go:12] the server is starting... 
+2017/11/23 09:47:47 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  31.486056ms|   match|[44m GET     [0m /permit/edit   r:/permit/edit/*
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    680.368µs|   match|[44m GET     [0m /assets/css/bootstrap.min.css
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     222.15µs|   match|[44m GET     [0m /assets/css/morris/morris.css
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.323408ms|   match|[44m GET     [0m /assets/css/ionicons.min.css
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    114.758µs|   match|[44m GET     [0m /assets/css/jvectormap/jquery-jvectormap-1.2.2.css
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    293.963µs|   match|[44m GET     [0m /assets/css/font-awesome.min.css
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   2.962096ms|   match|[44m GET     [0m /assets/css/fullcalendar/fullcalendar.css
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    208.194µs|   match|[44m GET     [0m /assets/css/fileinput/fileinput.css
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    415.488µs|   match|[44m GET     [0m /assets/css/AdminLTE.css
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   3.919176ms|   match|[44m GET     [0m /assets/css/daterangepicker/daterangepicker-bs3.css
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    3.88882ms|   match|[44m GET     [0m /assets/js/jquery.min.js
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   4.172241ms|   match|[44m GET     [0m /assets/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     345.56µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput.js
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    316.768µs|   match|[44m GET     [0m /assets/js/bootstrap.min.js
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    559.034µs|   match|[44m GET     [0m /assets/js/jquery-ui-1.10.3.min.js
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    120.215µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput_locale_zh.js
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    231.994µs|   match|[44m GET     [0m /assets/js/base.js
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    488.421µs|   match|[44m GET     [0m /assets/js/raphael-min.js
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    264.606µs|   match|[44m GET     [0m /assets/js/plugins/sparkline/jquery.sparkline.min.js
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    243.649µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    464.367µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    268.671µs|   match|[44m GET     [0m /assets/js/plugins/fullcalendar/fullcalendar.min.js
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    247.665µs|   match|[44m GET     [0m /assets/js/plugins/jqueryKnob/jquery.knob.js
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    642.194µs|   match|[44m GET     [0m /assets/js/plugins/daterangepicker/daterangepicker.js
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    567.099µs|   match|[44m GET     [0m /assets/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    133.556µs|   match|[44m GET     [0m /assets/js/plugins/iCheck/icheck.min.js
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    274.183µs|   match|[44m GET     [0m /assets/js/AdminLTE/app.js
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    262.333µs|   match|[44m GET     [0m /assets/js/AdminLTE/dashboard.js
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    171.012µs|   match|[44m GET     [0m /assets/js/themes/permit/edit.js
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    665.854µs|   match|[44m GET     [0m /assets/img/avatar3.png
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    239.755µs|   match|[44m GET     [0m /assets/fonts/fontawesome-webfont.woff
+2017/11/23 09:47:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    194.605µs|   match|[44m GET     [0m /assets/fonts/glyphicons-halflings-regular.woff
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    36.2423ms|   match|[44m GET     [0m /permit/edit   r:/permit/edit/*
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    122.315µs|   match|[44m GET     [0m /assets/css/jvectormap/jquery-jvectormap-1.2.2.css
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     60.169µs|   match|[44m GET     [0m /assets/css/morris/morris.css
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    117.319µs|   match|[44m GET     [0m /assets/css/ionicons.min.css
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    149.389µs|   match|[44m GET     [0m /assets/css/fullcalendar/fullcalendar.css
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|      71.08µs|   match|[44m GET     [0m /assets/css/font-awesome.min.css
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    125.899µs|   match|[44m GET     [0m /assets/css/bootstrap.min.css
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    318.396µs|   match|[44m GET     [0m /assets/css/fileinput/fileinput.css
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|      44.99µs|   match|[44m GET     [0m /assets/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    130.981µs|   match|[44m GET     [0m /assets/css/AdminLTE.css
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     53.417µs|   match|[44m GET     [0m /assets/css/daterangepicker/daterangepicker-bs3.css
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    197.231µs|   match|[44m GET     [0m /assets/js/jquery.min.js
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    251.038µs|   match|[44m GET     [0m /assets/js/jquery-ui-1.10.3.min.js
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    137.002µs|   match|[44m GET     [0m /assets/js/bootstrap.min.js
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    180.113µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput.js
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     77.464µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput_locale_zh.js
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     74.653µs|   match|[44m GET     [0m /assets/js/base.js
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    227.495µs|   match|[44m GET     [0m /assets/js/raphael-min.js
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    125.305µs|   match|[44m GET     [0m /assets/js/plugins/sparkline/jquery.sparkline.min.js
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    141.836µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    212.117µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    133.393µs|   match|[44m GET     [0m /assets/js/plugins/fullcalendar/fullcalendar.min.js
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    123.431µs|   match|[44m GET     [0m /assets/js/plugins/jqueryKnob/jquery.knob.js
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    136.643µs|   match|[44m GET     [0m /assets/js/plugins/daterangepicker/daterangepicker.js
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    242.255µs|   match|[44m GET     [0m /assets/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    115.328µs|   match|[44m GET     [0m /assets/js/plugins/iCheck/icheck.min.js
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    157.466µs|   match|[44m GET     [0m /assets/js/AdminLTE/app.js
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     95.547µs|   match|[44m GET     [0m /assets/js/AdminLTE/dashboard.js
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|      75.94µs|   match|[44m GET     [0m /assets/js/themes/permit/edit.js
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    126.521µs|   match|[44m GET     [0m /assets/img/avatar3.png
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    209.797µs|   match|[44m GET     [0m /assets/fonts/fontawesome-webfont.woff
+2017/11/23 09:49:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    138.589µs|   match|[44m GET     [0m /assets/fonts/glyphicons-halflings-regular.woff
+2017/11/23 09:49:11 [I] [main.go:12] the server is starting... 
+2017/11/23 09:49:12 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 09:54:54 [I] [main.go:12] the server is starting... 
+2017/11/23 09:54:54 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 10:17:14 [I] [main.go:12] the server is starting... 
+2017/11/23 10:17:14 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 10:17:28 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  14.131454ms|   match|[46m POST    [0m /permit/iframeedit   r:/permit/iframeedit/*
+2017/11/23 10:17:28 [D] [server.go:2568] |      127.0.0.1|[43m 404 [0m|  19.824584ms| nomatch|[44m GET     [0m /assets/js/themes/permit/iframeedit.js
+2017/11/23 10:17:28 [D] [server.go:2568] |      127.0.0.1|[43m 404 [0m|  12.693649ms| nomatch|[44m GET     [0m /assets/js/themes/permit/iframeedit.js
+2017/11/23 10:18:14 [I] [main.go:12] the server is starting... 
+2017/11/23 10:18:14 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 10:18:19 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  14.020201ms|   match|[46m POST    [0m /permit/iframeedit   r:/permit/iframeedit/*
+2017/11/23 10:18:19 [D] [server.go:2568] |      127.0.0.1|[43m 404 [0m|  29.153219ms| nomatch|[44m GET     [0m /assets/js/themes/permit/iframeedit.js
+2017/11/23 10:18:19 [D] [server.go:2568] |      127.0.0.1|[43m 404 [0m|   11.27062ms| nomatch|[44m GET     [0m /assets/js/themes/permit/iframeedit.js
+2017/11/23 10:19:13 [I] [main.go:12] the server is starting... 
+2017/11/23 10:19:13 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 10:19:20 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  14.153954ms|   match|[46m POST    [0m /permit/iframeedit   r:/permit/iframeedit/*
+2017/11/23 10:19:20 [D] [server.go:2568] |      127.0.0.1|[43m 404 [0m|  27.560952ms| nomatch|[44m GET     [0m /assets/js/themes/permit/iframeedit.js
+2017/11/23 10:19:21 [D] [server.go:2568] |      127.0.0.1|[43m 404 [0m|   12.14563ms| nomatch|[44m GET     [0m /assets/js/themes/permit/iframeedit.js
+2017/11/23 14:21:09 [D] [server.go:2568] |      127.0.0.1|[47m 301 [0m|   2.330538ms|   match|[44m GET     [0m /permit/edit   r:/permit/edit/*
+2017/11/23 14:21:09 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   2.795952ms|   match|[44m GET     [0m /passport/login/   r:/passport/login/*
+2017/11/23 14:21:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   6.875675ms|   match|[46m POST    [0m /passport/iframelogin   r:/passport/iframelogin/*
+2017/11/23 14:21:11 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  14.622993ms|   match|[44m GET     [0m /     r:/
+2017/11/23 14:21:11 [D] [server.go:2568] |      127.0.0.1|[47m 304 [0m|    864.519µs|   match|[44m GET     [0m /assets/js/base.js
+2017/11/23 14:21:16 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  19.308433ms|   match|[44m GET     [0m /user/list/   r:/user/list/*
+2017/11/23 14:21:17 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  25.083999ms|   match|[44m GET     [0m /permit/list/   r:/permit/list/*
+2017/11/23 14:21:17 [D] [server.go:2568] |      127.0.0.1|[47m 304 [0m|    365.027µs|   match|[44m GET     [0m /assets/js/themes/permit/list.js
+2017/11/23 14:21:46 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  21.973684ms|   match|[44m GET     [0m /permit/edit   r:/permit/edit/*
+2017/11/23 14:21:46 [D] [server.go:2568] |      127.0.0.1|[47m 304 [0m|    375.887µs|   match|[44m GET     [0m /assets/js/themes/permit/edit.js
+2017/11/23 14:27:28 [I] [main.go:12] the server is starting... 
+2017/11/23 14:27:28 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 14:30:14 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  22.018154ms|   match|[44m GET     [0m /permit/edit   r:/permit/edit/*
+2017/11/23 14:31:31 [I] [main.go:12] the server is starting... 
+2017/11/23 14:31:31 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 14:31:38 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  22.377953ms|   match|[44m GET     [0m /permit/edit   r:/permit/edit/*
+2017/11/23 14:37:00 [I] [main.go:12] the server is starting... 
+2017/11/23 14:37:00 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 14:37:07 [C] [asm_amd64.s:514] the request url is  /permit/edit
+2017/11/23 14:37:07 [C] [asm_amd64.s:514] Handler crashed with error cache: unknown adapter name "redis" (forgot to import?)
+2017/11/23 14:37:07 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:514
+2017/11/23 14:37:07 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/panic.go:489
+2017/11/23 14:37:07 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/common/models/admin/Config.go:48
+2017/11/23 14:37:07 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/common/models/admin/Config.go:56
+2017/11/23 14:37:07 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/common/models/admin/Config.go:71
+2017/11/23 14:37:07 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/admin/controllers/PermitController.go:145
+2017/11/23 14:37:07 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/admin/controllers/PermitController.go:132
+2017/11/23 14:37:07 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:514
+2017/11/23 14:37:07 [C] [asm_amd64.s:514] /usr/local/go/src/reflect/value.go:434
+2017/11/23 14:37:07 [C] [asm_amd64.s:514] /usr/local/go/src/reflect/value.go:302
+2017/11/23 14:37:07 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/github.com/astaxie/beego/router.go:809
+2017/11/23 14:37:07 [C] [asm_amd64.s:514] /usr/local/go/src/net/http/server.go:2568
+2017/11/23 14:37:07 [C] [asm_amd64.s:514] /usr/local/go/src/net/http/server.go:1825
+2017/11/23 14:37:07 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:2197
+2017/11/23 14:40:44 [C] [asm_amd64.s:514] the request url is  /permit/edit
+2017/11/23 14:40:44 [C] [asm_amd64.s:514] Handler crashed with error cache: unknown adapter name "redis" (forgot to import?)
+2017/11/23 14:40:44 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:514
+2017/11/23 14:40:44 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/panic.go:489
+2017/11/23 14:40:44 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/common/models/admin/Config.go:48
+2017/11/23 14:40:44 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/common/models/admin/Config.go:56
+2017/11/23 14:40:44 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/common/models/admin/Config.go:71
+2017/11/23 14:40:44 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/admin/controllers/PermitController.go:145
+2017/11/23 14:40:44 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/admin/controllers/PermitController.go:132
+2017/11/23 14:40:44 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:514
+2017/11/23 14:40:44 [C] [asm_amd64.s:514] /usr/local/go/src/reflect/value.go:434
+2017/11/23 14:40:44 [C] [asm_amd64.s:514] /usr/local/go/src/reflect/value.go:302
+2017/11/23 14:40:44 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/github.com/astaxie/beego/router.go:809
+2017/11/23 14:40:44 [C] [asm_amd64.s:514] /usr/local/go/src/net/http/server.go:2568
+2017/11/23 14:40:44 [C] [asm_amd64.s:514] /usr/local/go/src/net/http/server.go:1825
+2017/11/23 14:40:44 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:2197
+2017/11/23 14:40:53 [I] [main.go:12] the server is starting... 
+2017/11/23 14:40:53 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 14:41:06 [C] [asm_amd64.s:514] the request url is  /permit/edit
+2017/11/23 14:41:06 [C] [asm_amd64.s:514] Handler crashed with error cache: unknown adapter name "redis" (forgot to import?)
+2017/11/23 14:41:06 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:514
+2017/11/23 14:41:06 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/panic.go:489
+2017/11/23 14:41:06 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/common/models/admin/Config.go:48
+2017/11/23 14:41:06 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/common/models/admin/Config.go:56
+2017/11/23 14:41:06 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/common/models/admin/Config.go:71
+2017/11/23 14:41:06 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/admin/controllers/PermitController.go:145
+2017/11/23 14:41:06 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/admin/controllers/PermitController.go:132
+2017/11/23 14:41:06 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:514
+2017/11/23 14:41:06 [C] [asm_amd64.s:514] /usr/local/go/src/reflect/value.go:434
+2017/11/23 14:41:06 [C] [asm_amd64.s:514] /usr/local/go/src/reflect/value.go:302
+2017/11/23 14:41:06 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/github.com/astaxie/beego/router.go:809
+2017/11/23 14:41:06 [C] [asm_amd64.s:514] /usr/local/go/src/net/http/server.go:2568
+2017/11/23 14:41:06 [C] [asm_amd64.s:514] /usr/local/go/src/net/http/server.go:1825
+2017/11/23 14:41:06 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:2197
+2017/11/23 14:50:57 [I] [main.go:12] the server is starting... 
+2017/11/23 14:50:57 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 14:51:09 [C] [asm_amd64.s:514] the request url is  /permit/edit
+2017/11/23 14:51:09 [C] [asm_amd64.s:514] Handler crashed with error unexpected end of JSON input
+2017/11/23 14:51:09 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:514
+2017/11/23 14:51:09 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/panic.go:489
+2017/11/23 14:51:09 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/common/models/admin/Config.go:78
+2017/11/23 14:51:09 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/admin/controllers/PermitController.go:145
+2017/11/23 14:51:09 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/admin/controllers/PermitController.go:132
+2017/11/23 14:51:09 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:514
+2017/11/23 14:51:09 [C] [asm_amd64.s:514] /usr/local/go/src/reflect/value.go:434
+2017/11/23 14:51:09 [C] [asm_amd64.s:514] /usr/local/go/src/reflect/value.go:302
+2017/11/23 14:51:09 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/github.com/astaxie/beego/router.go:809
+2017/11/23 14:51:09 [C] [asm_amd64.s:514] /usr/local/go/src/net/http/server.go:2568
+2017/11/23 14:51:09 [C] [asm_amd64.s:514] /usr/local/go/src/net/http/server.go:1825
+2017/11/23 14:51:09 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:2197
+2017/11/23 14:52:51 [I] [main.go:12] the server is starting... 
+2017/11/23 14:52:51 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 14:52:59 [C] [asm_amd64.s:514] the request url is  /permit/edit
+2017/11/23 14:52:59 [C] [asm_amd64.s:514] Handler crashed with error unexpected end of JSON input
+2017/11/23 14:52:59 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:514
+2017/11/23 14:52:59 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/panic.go:489
+2017/11/23 14:52:59 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/common/models/admin/Config.go:78
+2017/11/23 14:52:59 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/admin/controllers/PermitController.go:145
+2017/11/23 14:52:59 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/admin/controllers/PermitController.go:132
+2017/11/23 14:52:59 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:514
+2017/11/23 14:52:59 [C] [asm_amd64.s:514] /usr/local/go/src/reflect/value.go:434
+2017/11/23 14:52:59 [C] [asm_amd64.s:514] /usr/local/go/src/reflect/value.go:302
+2017/11/23 14:52:59 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/github.com/astaxie/beego/router.go:809
+2017/11/23 14:52:59 [C] [asm_amd64.s:514] /usr/local/go/src/net/http/server.go:2568
+2017/11/23 14:52:59 [C] [asm_amd64.s:514] /usr/local/go/src/net/http/server.go:1825
+2017/11/23 14:52:59 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:2197
+2017/11/23 14:54:40 [I] [main.go:12] the server is starting... 
+2017/11/23 14:54:40 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 14:54:47 [C] [asm_amd64.s:514] the request url is  /permit/edit
+2017/11/23 14:54:47 [C] [asm_amd64.s:514] Handler crashed with error cache: unknown adapter name "redis" (forgot to import?)
+2017/11/23 14:54:47 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:514
+2017/11/23 14:54:47 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/panic.go:489
+2017/11/23 14:54:47 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/common/models/admin/Config.go:49
+2017/11/23 14:54:47 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/common/models/admin/Config.go:57
+2017/11/23 14:54:47 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/common/models/admin/Config.go:72
+2017/11/23 14:54:47 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/admin/controllers/PermitController.go:145
+2017/11/23 14:54:47 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/admin/controllers/PermitController.go:132
+2017/11/23 14:54:47 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:514
+2017/11/23 14:54:47 [C] [asm_amd64.s:514] /usr/local/go/src/reflect/value.go:434
+2017/11/23 14:54:47 [C] [asm_amd64.s:514] /usr/local/go/src/reflect/value.go:302
+2017/11/23 14:54:47 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/github.com/astaxie/beego/router.go:809
+2017/11/23 14:54:47 [C] [asm_amd64.s:514] /usr/local/go/src/net/http/server.go:2568
+2017/11/23 14:54:47 [C] [asm_amd64.s:514] /usr/local/go/src/net/http/server.go:1825
+2017/11/23 14:54:47 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:2197
+2017/11/23 15:03:35 [I] [main.go:12] the server is starting... 
+2017/11/23 15:03:35 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 15:03:57 [C] [asm_amd64.s:514] the request url is  /permit/edit
+2017/11/23 15:03:57 [C] [asm_amd64.s:514] Handler crashed with error cache: unknown adapter name "redis" (forgot to import?)
+2017/11/23 15:03:57 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:514
+2017/11/23 15:03:57 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/panic.go:489
+2017/11/23 15:03:57 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/common/models/admin/Config.go:49
+2017/11/23 15:03:57 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/common/models/admin/Config.go:57
+2017/11/23 15:03:57 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/common/models/admin/Config.go:72
+2017/11/23 15:03:57 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/admin/controllers/PermitController.go:146
+2017/11/23 15:03:57 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/admin/controllers/PermitController.go:133
+2017/11/23 15:03:57 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:514
+2017/11/23 15:03:57 [C] [asm_amd64.s:514] /usr/local/go/src/reflect/value.go:434
+2017/11/23 15:03:57 [C] [asm_amd64.s:514] /usr/local/go/src/reflect/value.go:302
+2017/11/23 15:03:57 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/github.com/astaxie/beego/router.go:809
+2017/11/23 15:03:57 [C] [asm_amd64.s:514] /usr/local/go/src/net/http/server.go:2568
+2017/11/23 15:03:57 [C] [asm_amd64.s:514] /usr/local/go/src/net/http/server.go:1825
+2017/11/23 15:03:57 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:2197
+2017/11/23 15:03:59 [C] [asm_amd64.s:514] the request url is  /permit/edit
+2017/11/23 15:03:59 [C] [asm_amd64.s:514] Handler crashed with error cache: unknown adapter name "redis" (forgot to import?)
+2017/11/23 15:03:59 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:514
+2017/11/23 15:03:59 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/panic.go:489
+2017/11/23 15:03:59 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/common/models/admin/Config.go:49
+2017/11/23 15:03:59 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/common/models/admin/Config.go:57
+2017/11/23 15:03:59 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/common/models/admin/Config.go:72
+2017/11/23 15:03:59 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/admin/controllers/PermitController.go:146
+2017/11/23 15:03:59 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/admin/controllers/PermitController.go:133
+2017/11/23 15:03:59 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:514
+2017/11/23 15:03:59 [C] [asm_amd64.s:514] /usr/local/go/src/reflect/value.go:434
+2017/11/23 15:03:59 [C] [asm_amd64.s:514] /usr/local/go/src/reflect/value.go:302
+2017/11/23 15:03:59 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/github.com/astaxie/beego/router.go:809
+2017/11/23 15:03:59 [C] [asm_amd64.s:514] /usr/local/go/src/net/http/server.go:2568
+2017/11/23 15:03:59 [C] [asm_amd64.s:514] /usr/local/go/src/net/http/server.go:1825
+2017/11/23 15:03:59 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:2197
+2017/11/23 15:04:19 [I] [main.go:14] the server is starting... 
+2017/11/23 15:04:19 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 15:04:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  21.812774ms|   match|[44m GET     [0m /permit/edit   r:/permit/edit/*
+2017/11/23 15:04:56 [I] [main.go:14] the server is starting... 
+2017/11/23 15:04:56 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 15:04:57 [I] [main.go:15] the server is starting... 
+2017/11/23 15:04:57 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 15:11:23 [I] [main.go:15] the server is starting... 
+2017/11/23 15:11:23 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 15:11:27 [C] [asm_amd64.s:514] the request url is  /permit/edit
+2017/11/23 15:11:27 [C] [asm_amd64.s:514] Handler crashed with error interface conversion: interface {} is []uint8, not string
+2017/11/23 15:11:27 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:514
+2017/11/23 15:11:27 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/panic.go:489
+2017/11/23 15:11:27 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/iface.go:172
+2017/11/23 15:11:27 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/common/models/admin/Config.go:74
+2017/11/23 15:11:27 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/admin/controllers/PermitController.go:146
+2017/11/23 15:11:27 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/admin/controllers/PermitController.go:133
+2017/11/23 15:11:27 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:514
+2017/11/23 15:11:27 [C] [asm_amd64.s:514] /usr/local/go/src/reflect/value.go:434
+2017/11/23 15:11:27 [C] [asm_amd64.s:514] /usr/local/go/src/reflect/value.go:302
+2017/11/23 15:11:27 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/github.com/astaxie/beego/router.go:809
+2017/11/23 15:11:27 [C] [asm_amd64.s:514] /usr/local/go/src/net/http/server.go:2568
+2017/11/23 15:11:27 [C] [asm_amd64.s:514] /usr/local/go/src/net/http/server.go:1825
+2017/11/23 15:11:27 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:2197
+2017/11/23 15:48:01 [I] [main.go:15] the server is starting... 
+2017/11/23 15:48:01 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 15:48:07 [C] [asm_amd64.s:514] the request url is  /permit/edit
+2017/11/23 15:48:07 [C] [asm_amd64.s:514] Handler crashed with error interface conversion: interface {} is []uint8, not string
+2017/11/23 15:48:07 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:514
+2017/11/23 15:48:07 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/panic.go:489
+2017/11/23 15:48:07 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/iface.go:172
+2017/11/23 15:48:07 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/common/models/admin/Config.go:80
+2017/11/23 15:48:07 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/admin/controllers/PermitController.go:146
+2017/11/23 15:48:07 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/admin/controllers/PermitController.go:133
+2017/11/23 15:48:07 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:514
+2017/11/23 15:48:07 [C] [asm_amd64.s:514] /usr/local/go/src/reflect/value.go:434
+2017/11/23 15:48:07 [C] [asm_amd64.s:514] /usr/local/go/src/reflect/value.go:302
+2017/11/23 15:48:07 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/github.com/astaxie/beego/router.go:809
+2017/11/23 15:48:07 [C] [asm_amd64.s:514] /usr/local/go/src/net/http/server.go:2568
+2017/11/23 15:48:07 [C] [asm_amd64.s:514] /usr/local/go/src/net/http/server.go:1825
+2017/11/23 15:48:07 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:2197
+2017/11/23 15:49:50 [I] [main.go:15] the server is starting... 
+2017/11/23 15:49:50 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 15:49:58 [C] [asm_amd64.s:514] the request url is  /permit/edit
+2017/11/23 15:49:58 [C] [asm_amd64.s:514] Handler crashed with error config has no conn key
+2017/11/23 15:49:58 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:514
+2017/11/23 15:49:58 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/panic.go:489
+2017/11/23 15:49:58 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/common/models/admin/Config.go:51
+2017/11/23 15:49:58 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/common/models/admin/Config.go:59
+2017/11/23 15:49:58 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/common/models/admin/Config.go:74
+2017/11/23 15:49:58 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/admin/controllers/PermitController.go:146
+2017/11/23 15:49:58 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/admin/controllers/PermitController.go:133
+2017/11/23 15:49:58 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:514
+2017/11/23 15:49:58 [C] [asm_amd64.s:514] /usr/local/go/src/reflect/value.go:434
+2017/11/23 15:49:58 [C] [asm_amd64.s:514] /usr/local/go/src/reflect/value.go:302
+2017/11/23 15:49:58 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/github.com/astaxie/beego/router.go:809
+2017/11/23 15:49:58 [C] [asm_amd64.s:514] /usr/local/go/src/net/http/server.go:2568
+2017/11/23 15:49:58 [C] [asm_amd64.s:514] /usr/local/go/src/net/http/server.go:1825
+2017/11/23 15:49:58 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:2197
+2017/11/23 15:52:25 [I] [main.go:15] the server is starting... 
+2017/11/23 15:52:25 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 15:52:30 [C] [asm_amd64.s:514] the request url is  /permit/edit
+2017/11/23 15:52:30 [C] [asm_amd64.s:514] Handler crashed with error interface conversion: interface {} is []uint8, not string
+2017/11/23 15:52:30 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:514
+2017/11/23 15:52:30 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/panic.go:489
+2017/11/23 15:52:30 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/iface.go:172
+2017/11/23 15:52:30 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/common/models/admin/Config.go:76
+2017/11/23 15:52:30 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/admin/controllers/PermitController.go:146
+2017/11/23 15:52:30 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/juetun/admin/controllers/PermitController.go:133
+2017/11/23 15:52:30 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:514
+2017/11/23 15:52:30 [C] [asm_amd64.s:514] /usr/local/go/src/reflect/value.go:434
+2017/11/23 15:52:30 [C] [asm_amd64.s:514] /usr/local/go/src/reflect/value.go:302
+2017/11/23 15:52:30 [C] [asm_amd64.s:514] /Users/changjiang/Documents/GO_APP/src/github.com/astaxie/beego/router.go:809
+2017/11/23 15:52:30 [C] [asm_amd64.s:514] /usr/local/go/src/net/http/server.go:2568
+2017/11/23 15:52:30 [C] [asm_amd64.s:514] /usr/local/go/src/net/http/server.go:1825
+2017/11/23 15:52:30 [C] [asm_amd64.s:514] /usr/local/go/src/runtime/asm_amd64.s:2197
+2017/11/23 15:57:02 [I] [main.go:15] the server is starting... 
+2017/11/23 15:57:02 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 15:57:06 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  21.718166ms|   match|[44m GET     [0m /permit/edit   r:/permit/edit/*
+2017/11/23 15:57:17 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  35.686159ms|   match|[44m GET     [0m /permit/edit   r:/permit/edit/*
+2017/11/23 15:58:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  15.423776ms|   match|[46m POST    [0m /permit/iframeedit   r:/permit/iframeedit/*
+2017/11/23 15:58:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   2.022036ms|   match|[44m GET     [0m /assets/js/jquery-ui-1.10.3.min.js
+2017/11/23 15:58:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   4.951268ms|   match|[44m GET     [0m /assets/js/jquery.min.js
+2017/11/23 15:58:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    761.892µs|   match|[44m GET     [0m /assets/js/bootstrap.min.js
+2017/11/23 15:58:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.057742ms|   match|[44m GET     [0m /assets/js/fileinput/fileinput.js
+2017/11/23 15:58:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    820.516µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput_locale_zh.js
+2017/11/23 15:58:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    130.678µs|   match|[44m GET     [0m /assets/js/base.js
+2017/11/23 15:58:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.307451ms|   match|[44m GET     [0m /assets/js/raphael-min.js
+2017/11/23 15:58:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.805198ms|   match|[44m GET     [0m /assets/js/plugins/sparkline/jquery.sparkline.min.js
+2017/11/23 15:58:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    763.709µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js
+2017/11/23 15:58:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.257721ms|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js
+2017/11/23 15:58:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    785.221µs|   match|[44m GET     [0m /assets/js/plugins/fullcalendar/fullcalendar.min.js
+2017/11/23 15:58:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    618.282µs|   match|[44m GET     [0m /assets/js/plugins/jqueryKnob/jquery.knob.js
+2017/11/23 15:58:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    859.248µs|   match|[44m GET     [0m /assets/js/plugins/daterangepicker/daterangepicker.js
+2017/11/23 15:58:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    1.51064ms|   match|[44m GET     [0m /assets/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js
+2017/11/23 15:58:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    401.816µs|   match|[44m GET     [0m /assets/js/plugins/iCheck/icheck.min.js
+2017/11/23 15:58:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    941.189µs|   match|[44m GET     [0m /assets/js/AdminLTE/app.js
+2017/11/23 15:58:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    514.966µs|   match|[44m GET     [0m /assets/js/AdminLTE/dashboard.js
+2017/11/23 15:58:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     526.05µs|   match|[44m GET     [0m /assets/img/avatar3.png
+2017/11/23 15:58:30 [D] [server.go:2568] |      127.0.0.1|[43m 404 [0m|  28.321777ms| nomatch|[44m GET     [0m /assets/js/themes/permit/iframeedit.js
+2017/11/23 15:58:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.510199ms|   match|[44m GET     [0m /assets/fonts/fontawesome-webfont.woff
+2017/11/23 15:58:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.707198ms|   match|[44m GET     [0m /assets/fonts/glyphicons-halflings-regular.woff
+2017/11/23 15:58:30 [D] [server.go:2568] |      127.0.0.1|[43m 404 [0m|  17.136799ms| nomatch|[44m GET     [0m /assets/js/themes/permit/iframeedit.js
+2017/11/23 16:03:58 [I] [main.go:15] the server is starting... 
+2017/11/23 16:03:58 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 16:04:04 [I] [main.go:15] the server is starting... 
+2017/11/23 16:04:05 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  34.293937ms|   match|[44m GET     [0m /permit/edit   r:/permit/edit/*
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    2.20789ms|   match|[44m GET     [0m /assets/css/bootstrap.min.css
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   2.238941ms|   match|[44m GET     [0m /assets/css/ionicons.min.css
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   2.862449ms|   match|[44m GET     [0m /assets/css/font-awesome.min.css
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   3.136366ms|   match|[44m GET     [0m /assets/css/morris/morris.css
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  17.116958ms|   match|[44m GET     [0m /assets/css/jvectormap/jquery-jvectormap-1.2.2.css
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.056461ms|   match|[44m GET     [0m /assets/css/AdminLTE.css
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.149971ms|   match|[44m GET     [0m /assets/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   18.87783ms|   match|[44m GET     [0m /assets/css/fullcalendar/fullcalendar.css
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   2.249506ms|   match|[44m GET     [0m /assets/css/daterangepicker/daterangepicker-bs3.css
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    2.20536ms|   match|[44m GET     [0m /assets/css/fileinput/fileinput.css
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    130.435µs|   match|[44m GET     [0m /assets/js/base.js
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     97.069µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput_locale_zh.js
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    317.997µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput.js
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    191.808µs|   match|[44m GET     [0m /assets/js/bootstrap.min.js
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    496.782µs|   match|[44m GET     [0m /assets/js/jquery-ui-1.10.3.min.js
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    416.994µs|   match|[44m GET     [0m /assets/js/jquery.min.js
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    472.899µs|   match|[44m GET     [0m /assets/js/raphael-min.js
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    240.387µs|   match|[44m GET     [0m /assets/js/plugins/sparkline/jquery.sparkline.min.js
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     249.54µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    679.487µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    298.616µs|   match|[44m GET     [0m /assets/js/plugins/fullcalendar/fullcalendar.min.js
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    296.974µs|   match|[44m GET     [0m /assets/js/plugins/jqueryKnob/jquery.knob.js
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    285.591µs|   match|[44m GET     [0m /assets/js/plugins/daterangepicker/daterangepicker.js
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    507.576µs|   match|[44m GET     [0m /assets/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    193.284µs|   match|[44m GET     [0m /assets/js/plugins/iCheck/icheck.min.js
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    302.177µs|   match|[44m GET     [0m /assets/js/AdminLTE/app.js
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    182.209µs|   match|[44m GET     [0m /assets/js/AdminLTE/dashboard.js
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    308.511µs|   match|[44m GET     [0m /assets/js/themes/permit/edit.js
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    303.718µs|   match|[44m GET     [0m /assets/img/avatar3.png
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    292.469µs|   match|[44m GET     [0m /assets/fonts/fontawesome-webfont.woff
+2017/11/23 16:04:26 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|      186.6µs|   match|[44m GET     [0m /assets/fonts/glyphicons-halflings-regular.woff
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  27.983036ms|   match|[44m GET     [0m /permit/edit   r:/permit/edit/*
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    117.837µs|   match|[44m GET     [0m /assets/css/fullcalendar/fullcalendar.css
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     49.009µs|   match|[44m GET     [0m /assets/css/jvectormap/jquery-jvectormap-1.2.2.css
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     41.132µs|   match|[44m GET     [0m /assets/css/morris/morris.css
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     94.164µs|   match|[44m GET     [0m /assets/css/ionicons.min.css
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     120.18µs|   match|[44m GET     [0m /assets/css/font-awesome.min.css
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    142.425µs|   match|[44m GET     [0m /assets/css/bootstrap.min.css
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    327.899µs|   match|[44m GET     [0m /assets/js/jquery.min.js
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    270.468µs|   match|[44m GET     [0m /assets/css/fileinput/fileinput.css
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     596.63µs|   match|[44m GET     [0m /assets/css/AdminLTE.css
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     88.388µs|   match|[44m GET     [0m /assets/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    134.814µs|   match|[44m GET     [0m /assets/css/daterangepicker/daterangepicker-bs3.css
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    267.722µs|   match|[44m GET     [0m /assets/js/jquery-ui-1.10.3.min.js
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     57.412µs|   match|[44m GET     [0m /assets/js/base.js
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     49.657µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput_locale_zh.js
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    162.246µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput.js
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     87.011µs|   match|[44m GET     [0m /assets/js/bootstrap.min.js
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    192.838µs|   match|[44m GET     [0m /assets/js/raphael-min.js
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    118.079µs|   match|[44m GET     [0m /assets/js/plugins/sparkline/jquery.sparkline.min.js
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    129.046µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    227.465µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    158.551µs|   match|[44m GET     [0m /assets/js/plugins/fullcalendar/fullcalendar.min.js
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     99.838µs|   match|[44m GET     [0m /assets/js/plugins/jqueryKnob/jquery.knob.js
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    191.165µs|   match|[44m GET     [0m /assets/js/plugins/daterangepicker/daterangepicker.js
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    214.664µs|   match|[44m GET     [0m /assets/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    202.961µs|   match|[44m GET     [0m /assets/js/plugins/iCheck/icheck.min.js
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    216.943µs|   match|[44m GET     [0m /assets/js/AdminLTE/app.js
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    116.497µs|   match|[44m GET     [0m /assets/js/AdminLTE/dashboard.js
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|      63.41µs|   match|[44m GET     [0m /assets/js/themes/permit/edit.js
+2017/11/23 16:04:29 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    114.838µs|   match|[44m GET     [0m /assets/img/avatar3.png
+2017/11/23 16:04:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    139.755µs|   match|[44m GET     [0m /assets/fonts/fontawesome-webfont.woff
+2017/11/23 16:04:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    104.163µs|   match|[44m GET     [0m /assets/fonts/glyphicons-halflings-regular.woff
+2017/11/23 16:04:56 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   2.999202ms|   match|[46m POST    [0m /permit/getchild   r:/permit/getchild/*
+2017/11/23 16:04:58 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.796247ms|   match|[46m POST    [0m /permit/getchild   r:/permit/getchild/*
+2017/11/23 16:05:00 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.099245ms|   match|[46m POST    [0m /permit/getchild   r:/permit/getchild/*
+2017/11/23 16:05:02 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.216837ms|   match|[46m POST    [0m /permit/getchild   r:/permit/getchild/*
+2017/11/23 16:05:04 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.468159ms|   match|[46m POST    [0m /permit/getchild   r:/permit/getchild/*
+2017/11/23 16:06:00 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  25.667218ms|   match|[44m GET     [0m /permit/edit   r:/permit/edit/*
+2017/11/23 16:06:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  29.161551ms|   match|[44m GET     [0m /permit/list/   r:/permit/list/*
+2017/11/23 16:06:25 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  20.698869ms|   match|[44m GET     [0m /permit/edit   r:/permit/edit/*
+2017/11/23 16:07:08 [I] [main.go:15] the server is starting... 
+2017/11/23 16:07:08 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 16:07:15 [I] [main.go:15] the server is starting... 
+2017/11/23 16:07:15 [I] [asm_amd64.s:2197] http server Running on http://:8082
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[43m 404 [0m|  13.553544ms| nomatch|[44m GET     [0m /PictureCategory/list/
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    627.456µs|   match|[44m GET     [0m /assets/css/bootstrap.min.css
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    281.184µs|   match|[44m GET     [0m /assets/css/jvectormap/jquery-jvectormap-1.2.2.css
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    310.158µs|   match|[44m GET     [0m /assets/css/font-awesome.min.css
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    288.264µs|   match|[44m GET     [0m /assets/css/ionicons.min.css
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    126.156µs|   match|[44m GET     [0m /assets/css/morris/morris.css
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    220.221µs|   match|[44m GET     [0m /assets/css/fullcalendar/fullcalendar.css
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    190.379µs|   match|[44m GET     [0m /assets/css/daterangepicker/daterangepicker-bs3.css
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    780.268µs|   match|[44m GET     [0m /assets/css/AdminLTE.css
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    117.813µs|   match|[44m GET     [0m /assets/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    571.471µs|   match|[44m GET     [0m /assets/css/fileinput/fileinput.css
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    661.169µs|   match|[44m GET     [0m /assets/js/jquery-ui-1.10.3.min.js
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    527.208µs|   match|[44m GET     [0m /assets/js/jquery.min.js
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.719865ms|   match|[44m GET     [0m /assets/js/fileinput/fileinput.js
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   7.342156ms|   match|[44m GET     [0m /assets/js/bootstrap.min.js
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    149.387µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput_locale_zh.js
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|      95.04µs|   match|[44m GET     [0m /assets/js/base.js
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     236.38µs|   match|[44m GET     [0m /assets/js/plugins/sparkline/jquery.sparkline.min.js
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     480.16µs|   match|[44m GET     [0m /assets/js/raphael-min.js
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     479.48µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    166.202µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    178.426µs|   match|[44m GET     [0m /assets/js/plugins/jqueryKnob/jquery.knob.js
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     221.36µs|   match|[44m GET     [0m /assets/js/plugins/fullcalendar/fullcalendar.min.js
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    246.665µs|   match|[44m GET     [0m /assets/js/plugins/daterangepicker/daterangepicker.js
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    233.215µs|   match|[44m GET     [0m /assets/js/plugins/iCheck/icheck.min.js
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    718.695µs|   match|[44m GET     [0m /assets/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    507.623µs|   match|[44m GET     [0m /assets/js/AdminLTE/dashboard.js
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    931.264µs|   match|[44m GET     [0m /assets/js/AdminLTE/app.js
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[43m 404 [0m|  33.919687ms| nomatch|[44m GET     [0m /assets/js/themes/error/error404.js
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    164.904µs|   match|[44m GET     [0m /assets/fonts/glyphicons-halflings-regular.woff
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    168.233µs|   match|[44m GET     [0m /assets/fonts/fontawesome-webfont.woff
+2017/11/23 16:09:21 [D] [server.go:2568] |      127.0.0.1|[43m 404 [0m|  14.983397ms| nomatch|[44m GET     [0m /assets/js/themes/error/error404.js
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    157.129µs|   match|[44m GET     [0m /assets/css/ionicons.min.css
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     77.869µs|   match|[44m GET     [0m /assets/css/font-awesome.min.css
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    148.158µs|   match|[44m GET     [0m /assets/css/bootstrap.min.css
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     88.753µs|   match|[44m GET     [0m /assets/css/fullcalendar/fullcalendar.css
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     46.427µs|   match|[44m GET     [0m /assets/css/jvectormap/jquery-jvectormap-1.2.2.css
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|      48.33µs|   match|[44m GET     [0m /assets/css/morris/morris.css
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    112.265µs|   match|[44m GET     [0m /assets/css/daterangepicker/daterangepicker-bs3.css
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     49.584µs|   match|[44m GET     [0m /assets/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    141.746µs|   match|[44m GET     [0m /assets/css/AdminLTE.css
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    324.666µs|   match|[44m GET     [0m /assets/css/fileinput/fileinput.css
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    172.917µs|   match|[44m GET     [0m /assets/js/jquery.min.js
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    190.756µs|   match|[44m GET     [0m /assets/js/jquery-ui-1.10.3.min.js
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     103.43µs|   match|[44m GET     [0m /assets/js/bootstrap.min.js
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    139.296µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput.js
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     80.163µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput_locale_zh.js
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     62.111µs|   match|[44m GET     [0m /assets/js/base.js
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    197.449µs|   match|[44m GET     [0m /assets/js/raphael-min.js
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    132.774µs|   match|[44m GET     [0m /assets/js/plugins/sparkline/jquery.sparkline.min.js
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    109.737µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    183.261µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     133.87µs|   match|[44m GET     [0m /assets/js/plugins/fullcalendar/fullcalendar.min.js
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    102.837µs|   match|[44m GET     [0m /assets/js/plugins/jqueryKnob/jquery.knob.js
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    124.515µs|   match|[44m GET     [0m /assets/js/plugins/daterangepicker/daterangepicker.js
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    252.346µs|   match|[44m GET     [0m /assets/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    107.838µs|   match|[44m GET     [0m /assets/js/plugins/iCheck/icheck.min.js
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     198.35µs|   match|[44m GET     [0m /assets/js/AdminLTE/app.js
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    116.236µs|   match|[44m GET     [0m /assets/js/AdminLTE/dashboard.js
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    162.733µs|   match|[44m GET     [0m /assets/js/themes/permit/edit.js
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    253.259µs|   match|[44m GET     [0m /assets/img/avatar3.png
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    137.124µs|   match|[44m GET     [0m /assets/fonts/fontawesome-webfont.woff
+2017/11/23 16:09:23 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    122.275µs|   match|[44m GET     [0m /assets/fonts/glyphicons-halflings-regular.woff
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[43m 404 [0m|  13.586758ms| nomatch|[44m GET     [0m /PictureCategory/list/
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    146.247µs|   match|[44m GET     [0m /assets/css/ionicons.min.css
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     86.864µs|   match|[44m GET     [0m /assets/css/font-awesome.min.css
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    141.869µs|   match|[44m GET     [0m /assets/css/bootstrap.min.css
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     85.001µs|   match|[44m GET     [0m /assets/css/fullcalendar/fullcalendar.css
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     73.907µs|   match|[44m GET     [0m /assets/css/jvectormap/jquery-jvectormap-1.2.2.css
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     45.655µs|   match|[44m GET     [0m /assets/css/morris/morris.css
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    111.226µs|   match|[44m GET     [0m /assets/css/daterangepicker/daterangepicker-bs3.css
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     186.14µs|   match|[44m GET     [0m /assets/js/jquery.min.js
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     97.075µs|   match|[44m GET     [0m /assets/css/fileinput/fileinput.css
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    136.306µs|   match|[44m GET     [0m /assets/css/AdminLTE.css
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     52.586µs|   match|[44m GET     [0m /assets/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    204.754µs|   match|[44m GET     [0m /assets/js/jquery-ui-1.10.3.min.js
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     125.98µs|   match|[44m GET     [0m /assets/js/bootstrap.min.js
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    388.323µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput.js
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     114.24µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput_locale_zh.js
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     40.086µs|   match|[44m GET     [0m /assets/js/base.js
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    199.225µs|   match|[44m GET     [0m /assets/js/raphael-min.js
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    149.743µs|   match|[44m GET     [0m /assets/js/plugins/sparkline/jquery.sparkline.min.js
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    116.403µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    189.208µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    133.055µs|   match|[44m GET     [0m /assets/js/plugins/fullcalendar/fullcalendar.min.js
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    126.274µs|   match|[44m GET     [0m /assets/js/plugins/jqueryKnob/jquery.knob.js
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    153.961µs|   match|[44m GET     [0m /assets/js/plugins/daterangepicker/daterangepicker.js
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    193.773µs|   match|[44m GET     [0m /assets/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     82.729µs|   match|[44m GET     [0m /assets/js/plugins/iCheck/icheck.min.js
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    117.263µs|   match|[44m GET     [0m /assets/js/AdminLTE/app.js
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    103.808µs|   match|[44m GET     [0m /assets/js/AdminLTE/dashboard.js
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[43m 404 [0m|   21.54702ms| nomatch|[44m GET     [0m /assets/js/themes/error/error404.js
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    111.152µs|   match|[44m GET     [0m /assets/fonts/glyphicons-halflings-regular.woff
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|      136.6µs|   match|[44m GET     [0m /assets/fonts/fontawesome-webfont.woff
+2017/11/23 16:09:30 [D] [server.go:2568] |      127.0.0.1|[43m 404 [0m|  17.515217ms| nomatch|[44m GET     [0m /assets/js/themes/error/error404.js
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    216.466µs|   match|[44m GET     [0m /assets/css/bootstrap.min.css
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     89.133µs|   match|[44m GET     [0m /assets/css/ionicons.min.css
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     76.056µs|   match|[44m GET     [0m /assets/css/font-awesome.min.css
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     77.542µs|   match|[44m GET     [0m /assets/css/morris/morris.css
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    134.236µs|   match|[44m GET     [0m /assets/css/fullcalendar/fullcalendar.css
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     39.229µs|   match|[44m GET     [0m /assets/css/jvectormap/jquery-jvectormap-1.2.2.css
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    103.106µs|   match|[44m GET     [0m /assets/css/daterangepicker/daterangepicker-bs3.css
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    340.092µs|   match|[44m GET     [0m /assets/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    173.752µs|   match|[44m GET     [0m /assets/js/bootstrap.min.js
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    245.145µs|   match|[44m GET     [0m /assets/js/jquery-ui-1.10.3.min.js
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    169.831µs|   match|[44m GET     [0m /assets/js/jquery.min.js
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     80.316µs|   match|[44m GET     [0m /assets/css/fileinput/fileinput.css
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    129.802µs|   match|[44m GET     [0m /assets/css/AdminLTE.css
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    115.381µs|   match|[44m GET     [0m /assets/js/base.js
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     89.622µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput_locale_zh.js
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    244.363µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput.js
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     193.94µs|   match|[44m GET     [0m /assets/js/raphael-min.js
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    118.558µs|   match|[44m GET     [0m /assets/js/plugins/sparkline/jquery.sparkline.min.js
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    109.396µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    412.441µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    122.248µs|   match|[44m GET     [0m /assets/js/plugins/fullcalendar/fullcalendar.min.js
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    116.211µs|   match|[44m GET     [0m /assets/js/plugins/jqueryKnob/jquery.knob.js
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    437.821µs|   match|[44m GET     [0m /assets/js/plugins/daterangepicker/daterangepicker.js
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    187.017µs|   match|[44m GET     [0m /assets/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     96.418µs|   match|[44m GET     [0m /assets/js/plugins/iCheck/icheck.min.js
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     123.21µs|   match|[44m GET     [0m /assets/js/AdminLTE/app.js
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    345.777µs|   match|[44m GET     [0m /assets/js/AdminLTE/dashboard.js
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|      62.43µs|   match|[44m GET     [0m /assets/js/themes/permit/edit.js
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    150.479µs|   match|[44m GET     [0m /assets/img/avatar3.png
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    136.319µs|   match|[44m GET     [0m /assets/fonts/fontawesome-webfont.woff
+2017/11/23 16:09:32 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     96.896µs|   match|[44m GET     [0m /assets/fonts/glyphicons-halflings-regular.woff
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  20.056415ms|   match|[44m GET     [0m /permit/list/   r:/permit/list/*
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    257.143µs|   match|[44m GET     [0m /assets/css/bootstrap.min.css
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    136.942µs|   match|[44m GET     [0m /assets/css/font-awesome.min.css
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    131.033µs|   match|[44m GET     [0m /assets/css/morris/morris.css
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    147.724µs|   match|[44m GET     [0m /assets/css/ionicons.min.css
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|      84.98µs|   match|[44m GET     [0m /assets/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    121.872µs|   match|[44m GET     [0m /assets/css/daterangepicker/daterangepicker-bs3.css
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     84.011µs|   match|[44m GET     [0m /assets/css/fullcalendar/fullcalendar.css
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     52.657µs|   match|[44m GET     [0m /assets/css/jvectormap/jquery-jvectormap-1.2.2.css
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    142.488µs|   match|[44m GET     [0m /assets/css/AdminLTE.css
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    102.113µs|   match|[44m GET     [0m /assets/css/fileinput/fileinput.css
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    361.734µs|   match|[44m GET     [0m /assets/css/datatables/dataTables.bootstrap.css
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    410.319µs|   match|[44m GET     [0m /assets/css/iCheck/minimal/blue.css
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    152.591µs|   match|[44m GET     [0m /assets/js/jquery.min.js
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    196.719µs|   match|[44m GET     [0m /assets/js/jquery-ui-1.10.3.min.js
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    788.941µs|   match|[44m GET     [0m /assets/js/bootstrap.min.js
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    158.583µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput.js
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     72.624µs|   match|[44m GET     [0m /assets/js/fileinput/fileinput_locale_zh.js
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    102.462µs|   match|[44m GET     [0m /assets/js/base.js
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     177.96µs|   match|[44m GET     [0m /assets/js/raphael-min.js
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    119.504µs|   match|[44m GET     [0m /assets/js/plugins/sparkline/jquery.sparkline.min.js
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     97.989µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    163.923µs|   match|[44m GET     [0m /assets/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    137.923µs|   match|[44m GET     [0m /assets/js/plugins/fullcalendar/fullcalendar.min.js
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    112.593µs|   match|[44m GET     [0m /assets/js/plugins/jqueryKnob/jquery.knob.js
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    146.638µs|   match|[44m GET     [0m /assets/js/plugins/daterangepicker/daterangepicker.js
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    211.435µs|   match|[44m GET     [0m /assets/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     96.926µs|   match|[44m GET     [0m /assets/js/plugins/iCheck/icheck.min.js
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    162.655µs|   match|[44m GET     [0m /assets/js/AdminLTE/app.js
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     137.02µs|   match|[44m GET     [0m /assets/js/AdminLTE/dashboard.js
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   2.239964ms|   match|[44m GET     [0m /assets/js/plugins/datatables/jquery.dataTables.js
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|     436.11µs|   match|[44m GET     [0m /assets/js/plugins/datatables/dataTables.bootstrap.js
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    450.734µs|   match|[44m GET     [0m /assets/js/themes/permit/list.js
+2017/11/23 16:09:35 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    110.724µs|   match|[44m GET     [0m /assets/img/avatar3.png
+2017/11/23 16:09:36 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    167.051µs|   match|[44m GET     [0m /assets/fonts/fontawesome-webfont.woff
+2017/11/23 16:09:36 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|    115.355µs|   match|[44m GET     [0m /assets/fonts/glyphicons-halflings-regular.woff
+2017/11/23 16:09:36 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|   1.090688ms|   match|[44m GET     [0m /assets/css/iCheck/minimal/blue@2x.png
+2017/11/23 16:09:49 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  25.432853ms|   match|[44m GET     [0m /permit/list/   r:/permit/list/*
+2017/11/23 16:09:50 [D] [server.go:2568] |      127.0.0.1|[43m 404 [0m|  11.770806ms| nomatch|[44m GET     [0m /PictureCategory/list/
+2017/11/23 16:09:50 [D] [server.go:2568] |      127.0.0.1|[43m 404 [0m|  16.303691ms| nomatch|[44m GET     [0m /assets/js/themes/error/error404.js
+2017/11/23 16:09:50 [D] [server.go:2568] |      127.0.0.1|[43m 404 [0m|  18.993939ms| nomatch|[44m GET     [0m /assets/js/themes/error/error404.js
+2017/11/23 16:09:54 [D] [server.go:2568] |      127.0.0.1|[42m 200 [0m|  22.130626ms|   match|[44m GET     [0m /permit/edit   r:/permit/edit/*
