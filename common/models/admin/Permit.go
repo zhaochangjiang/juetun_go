@@ -688,14 +688,17 @@ func (this *Permit) getDefaultArgs(args *map[string]interface{}) (string, bool, 
 //更新数据
 func (this *Permit) UpdateDataById(update *Permit) int64 {
 	var o = this.getOrm()
-	var permit = o.Read(&Permit{Id: update.Id})
-	if permit == nil {
-		update.Id = this.Id
-		if num, err := o.Update(update); err == nil {
-			return num
-		} else {
-			panic(err.Error())
-		}
+
+	var e = o.Read(&Permit{Id: update.Id})
+	if nil != e {
+		panic(e.Error())
 	}
+	update.Id = this.Id
+	if num, err := o.Update(update); err == nil {
+		return num
+	} else {
+		panic(err.Error())
+	}
+
 	return 0
 }

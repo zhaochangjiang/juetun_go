@@ -2,10 +2,10 @@ package controllers
 
 import (
 	acommon "juetun/admin/common"
+	"juetun/common/general"
 	modelsAdmin "juetun/common/models/admin"
 	"juetun/common/utils"
 	"net/url"
-
 	//	"strconv"
 )
 
@@ -169,16 +169,19 @@ func (this *PermitController) IframeEdit() {
 	permit.Action = this.GetString("action ")
 	permit.Csscode = this.GetString("csscode")
 	permit.Id = this.GetString("pid")
-	//	updateValue["uppermit_id"] = this.dealUpid()
-	//	updateValue["domain_map"] = this.GetString("domainMap")
-	//	updateValue["name"] = this.GetString("name")
-	//	updateValue["controller"] = this.GetString("controller")
-	//	updateValue["obyid"] = this.GetString("obyid")
-	//	updateValue["mod"] = this.GetString("module")
-	//	updateValue["action"] = this.GetString("action ")
-	//	updateValue["csscode"] = this.GetString("csscode")
-
-	permit.UpdateDataById(permit)
+	var id = permit.UpdateDataById(permit)
+	var res = new(general.Result)
+	var returnValue = make(map[string]string)
+	if id != 0 {
+		res.Message = "操作成功"
+		returnValue["Goto"] = this.GetString("goto")
+	} else {
+		res.Code = 1001
+		res.Message = "操作失败"
+	}
+	res.Data = returnValue
+	this.Data["Result"] = res
+	this.Debug(this.Data["Result"])
 	this.LoadCommon("layout/iframe.html")
 }
 func (this *PermitController) dealUpid() string {

@@ -24,7 +24,7 @@
 		},1000);
 		</script>
 	{{else}}
-	<form class="form-horizontal" action="{{urlfor "PermitController.IframeEdit" "act" "add"}}" method="post" target="iframe-s">
+	<form class="form-horizontal" action="{{urlfor "PermitController.IframeEdit" "act" "add" "pid" .Pid "goto" .Goto}}" method="post" target="iframe-s">
 	  <div class="form-group" loadUppid="{{urlfor "PermitController.GetChild"}}" id="loadUppid">
 	    <label class="col-xs-2 control-label">上级权限</label>
 		{{range $key,$value:=.PList}}

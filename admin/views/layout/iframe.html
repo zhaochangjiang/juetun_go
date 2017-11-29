@@ -1,0 +1,19 @@
+<div id="message">提示信息：{{.Result.Message}}<div>
+<div id="goto">{{.Result.Data.Goto}}</div>
+<div id="code">{{.Result.Code}}</div>
+<script type="text/javascript">
+
+var code =document.getElementById("code").innerHTML;
+if(parseInt(code)==0){
+	var got=document.getElementById("goto").innerHTML;
+	if(got!=""){
+		parent.location.href=got
+	}else{
+		parent.showerror(document.getElementById("message").innerHTML);
+	}
+}else{
+	parent.showerror(document.getElementById("message").innerHTML);
+}
+
+
+</script>
