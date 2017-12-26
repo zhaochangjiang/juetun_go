@@ -94,7 +94,7 @@ func getThreeParams(p []interface{}) string {
 		params := make([]string, 0)
 		p2 := p[2].(map[string]string)
 		for k, v := range p2 {
-			params = append(params, k+"-"+v)
+			params = append(params, k+"_"+v)
 		}
 		url += strings.Join(params, "&")
 	default:

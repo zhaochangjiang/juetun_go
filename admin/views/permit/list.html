@@ -31,11 +31,11 @@
 			    {{end}}                        
             </div>
             <div class="box-body table-responsive">
+            	{{if ne 0 (.NowChidList|len)}}
                 <table id="example2" class="table table-bordered table-hover table-mailbox">
                     <thead>
                         <tr class="">
-						<!--	<th class="text-center"><label><input type="checkbox" id="check-all"/></label></th>-->
-							<th class="text-center">-</th>
+							{{if $permitDelete}}<th class="text-center">-</th>{{end}}
                             <th class="text-center">名称</th>
                             <th class="text-center">模块</th>
                             <th class="text-center">控制器</th>
@@ -53,11 +53,11 @@
 					{{range $index, $elem :=.NowChidList}}
                         <tr>
 						<!--    <td class="text-center small-col"><input type="checkbox" name="pids[]" value="{{$elem.Id}}"/></td>-->
-							<td class="text-center">{{if $permitDelete}}
+							{{if $permitDelete}}<td class="text-center">
 									{{$delUrl:=urlfor "PermitController.Del" "pid" $elem.Id}}
 									<a class="fa fa-times" onclick="deletePermit('{{$delUrl}}','{{$currenturl}}');return;" href="javascript:void(0);"  title="删除"></a>
-									{{end}}
 							</td>
+							{{end}}
                             <td class="text-center">{{$elem.Name}}</td>
                             <td class="text-center">{{$elem.Mod}}</td>
                             <td class="text-center">{{$elem.Controller}}</td>
@@ -70,6 +70,7 @@
 							 <td class="text-center" style="font-size:1.2em;">
 								{{if $permitEdit}}
 								<a class="fa fa-edit" href="{{urlfor "PermitController.Edit"  "pid" $elem.Id "act" "edit" "goto" $currenturl}}" title="编辑"></a>
+								
 								{{end}}
 							</td>
 							{{end}}
@@ -77,6 +78,9 @@
 					{{end}}
                     </tbody>
                 </table>
+                {{else}}
+                 {{template "layout/nodata.html" .}}
+                {{end}}
             </div><!-- /.box-body -->
        
 	<!--

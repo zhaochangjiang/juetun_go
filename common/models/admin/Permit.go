@@ -1,12 +1,14 @@
 package admin
 
 import (
+	"encoding/json"
 	"fmt"
+	"github.com/astaxie/beego/cache"
+	"github.com/astaxie/beego/orm"
 	"juetun/common/general"
 	"juetun/common/utils"
 	"strings"
-
-	"github.com/astaxie/beego/orm"
+	"time"
 )
 
 type Permit struct {
@@ -38,6 +40,12 @@ type PermitAdmin struct {
 	Active    bool              //当前是否为选中项
 }
 
+func (p *Permit) GetCacheKeys(key string) string {
+	if key == "" {
+		panic("cache key must be not null!")
+	}
+	return "per_" + key
+}
 func init() {
 	permit := new(Permit)
 	orm.RegisterModelWithPrefix(permit.GetTablePrefix(), permit)
@@ -55,17 +63,91 @@ func (this *Permit) getQuerySeter() orm.QuerySeter {
 	return this.getOrm().QueryTable(this)
 }
 
+//从redis缓存中读取相应的信息
+func (this *Permit) GetContentFromCache(key string) interface{} {
+
+	var cache = *this.GetCache()
+	return cache.Get(key)
+}
+
+//将数据放入redis缓存中。
+func (this *Permit) SetContentFromCache(key string, content interface{}, lifeTime time.Duration) {
+	(*this.GetCache()).Put(key, content, lifeTime) //time.Second*3600
+}
+
+func (this *Permit) GetRedisConfig() (string, string, string) {
+
+	var cacheType = "redis"
+	var redisName = "redisCache"
+	var dbNumber = "0"
+	return cacheType, redisName, dbNumber
+}
+
+//获得redis缓存中的内容
+func (this *Permit) GetCache() *cache.Cache {
+	if nil == bm {
+
+		cacheType, redisName, dbNumber := this.GetRedisConfig()
+		var err error
+		var redisconfig = new(utils.RedisConfig)
+		var con = redisconfig.GetJsonCode(redisName, dbNumber)
+		bm, err = cache.NewCache(cacheType, con)
+		if nil != err {
+			panic(err.Error())
+		}
+	}
+	return &bm
+}
+
 //根据上级权限，查询所有下级权限
 func (this *Permit) FetchPermitListByUponId(uponid *[]string) (*[]PermitAdmin, int64, error) {
-	var permitList []Permit
 
+	var err error
+	var permitList = make([]Permit, 0)
 	var uponidParams = make([]interface{}, 0)
-	for _, v := range *uponid {
-		uponidParams = append(uponidParams, v)
-	}
-	num, err := this.getQuerySeter().Filter("uppermit_id__in", uponidParams...).OrderBy("-id").All(&permitList)
+	var cachePrefix = this.GetCacheKeys("p_")
+	var result = make([]PermitAdmin, 0)
+	var num int64 = 0
 
-	result := make([]PermitAdmin, 0)
+	for _, v := range *uponid {
+		var cachekey = cachePrefix + v
+		var ct = this.GetContentFromCache(cachekey)
+
+		if ct == nil {
+			uponidParams = append(uponidParams, v)
+			continue
+		}
+
+		var c = ct.([]byte)
+		j2 := new(Permit)
+		err = json.Unmarshal(c, j2)
+		if err != nil { //如果错误信息存在，则说明数据异常，直接从数据库中取数据
+			uponidParams = append(uponidParams, v)
+			continue
+		}
+		//如果缓存中不存在，则从数据库中查询
+		permitList = append(permitList, *j2)
+
+	}
+	if len(uponidParams) == 0 {
+		return &result, num, err
+	}
+	var opermitList []Permit
+	num, err = this.getQuerySeter().Filter("uppermit_id__in", uponidParams...).All(&opermitList) //OrderBy("-id")
+
+	if err != nil {
+		return &result, num, err
+	}
+	for _, v := range opermitList {
+		permitList = append(permitList, v)
+
+		//将数据转换为json字符串。
+		js1, err := json.Marshal(v)
+		if err == nil { //只有没有错误的时候才保存到redis中
+			this.SetContentFromCache(cachePrefix+v.Id, string(js1[:]), time.Second*3600)
+		}
+	}
+
 	for _, v := range permitList {
 		params := make(map[string]string)
 		params["mod"] = v.Mod
@@ -686,7 +768,7 @@ func (this *Permit) getDefaultArgs(args *map[string]interface{}) (string, bool, 
 }
 
 //更新数据
-func (this *Permit) UpdateDataById(update *Permit) int64 {
+func (this *Permit) UpdateDataById(update *Permit) bool {
 	var o = this.getOrm()
 
 	var e = o.Read(&Permit{Id: update.Id})
@@ -694,11 +776,12 @@ func (this *Permit) UpdateDataById(update *Permit) int64 {
 		panic(e.Error())
 	}
 	update.Id = this.Id
-	if num, err := o.Update(update); err == nil {
-		return num
+	if _, err := o.Update(update); err == nil {
+		return true
 	} else {
-		panic(err.Error())
+		return false
+		//panic(err.Error())
 	}
 
-	return 0
+	return true
 }

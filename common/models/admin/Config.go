@@ -2,16 +2,10 @@ package admin
 
 import (
 	"encoding/json"
-	"time"
-
-	"juetun/common/utils"
-
 	"github.com/astaxie/beego/cache"
 	"github.com/astaxie/beego/orm"
-)
-
-var (
-	bm cache.Cache
+	"juetun/common/utils"
+	"time"
 )
 
 type Config struct {
@@ -41,29 +35,6 @@ func (this *Config) GetCachePrefix() string {
 	return "adminconfig"
 }
 
-func (this *Config) getCache() *cache.Cache {
-	if nil == bm {
-		var err error
-		var redisconfig = new(utils.RedisConfig)
-		var con = redisconfig.GetJsonCode("redisCache", "0")
-		bm, err = cache.NewCache("redis", con)
-		if nil != err {
-			panic(err.Error())
-		}
-	}
-	return &bm
-}
-
-//从redis缓存中读取相应的信息
-func (this *Config) getContentFromCache(key string) interface{} {
-	return (*this.getCache()).Get(key)
-}
-
-//将数据放入redis缓存中。
-func (this *Config) setContentFromCache(key string, content interface{}) {
-	(*this.getCache()).Put(key, content, time.Second*3600)
-}
-
 //根据key的前缀查询配置列表
 func (this *Config) GetConfigByLikeKey(key string) *[]Config {
 	var configList = make([]Config, 0)
@@ -71,7 +42,7 @@ func (this *Config) GetConfigByLikeKey(key string) *[]Config {
 	var err error
 
 	//读取缓存数据，如果缓存数据中为空，才从数据库读取。
-	var ct = this.getContentFromCache(keys)
+	var ct = this.GetContentFromCache(keys)
 	if ct != nil {
 		var c = ct.([]byte)
 		j2 := make([]Config, 0)
@@ -93,7 +64,44 @@ func (this *Config) GetConfigByLikeKey(key string) *[]Config {
 	if err != nil {
 		panic(err)
 	}
-	this.setContentFromCache(keys, string(js1[:]))
+	this.SetContentFromCache(keys, string(js1[:]), time.Second*3600)
 
 	return &configList
+}
+
+//从redis缓存中读取相应的信息
+func (this *Config) GetContentFromCache(key string) interface{} {
+
+	var cache = *this.GetCache()
+
+	return cache.Get(key)
+}
+
+//将数据放入redis缓存中。
+func (this *Config) SetContentFromCache(key string, content interface{}, lifeTime time.Duration) {
+	(*this.GetCache()).Put(key, content, lifeTime) //time.Second*3600
+}
+
+func (this *Config) GetRedisConfig() (string, string, string) {
+
+	var cacheType = "redis"
+	var redisName = "redisCache"
+	var dbNumber = "0"
+	return cacheType, redisName, dbNumber
+}
+
+//获得redis缓存中的内容
+func (this *Config) GetCache() *cache.Cache {
+	if nil == bm {
+
+		cacheType, redisName, dbNumber := this.GetRedisConfig()
+		var err error
+		var redisconfig = new(utils.RedisConfig)
+		var con = redisconfig.GetJsonCode(redisName, dbNumber)
+		bm, err = cache.NewCache(cacheType, con)
+		if nil != err {
+			panic(err.Error())
+		}
+	}
+	return &bm
 }

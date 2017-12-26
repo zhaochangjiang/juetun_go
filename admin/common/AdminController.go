@@ -97,15 +97,16 @@ func (this *AdminController) InitPermitItem() {
 		getLeftPermitArgs["GroupIds"] = this.ConContext.GroupIds
 
 	} else { //如果是超级管理员
-
+		this.Debug("kkk")
 		// 获得当前页面的所有上级权限
 		permitUpon, activeUponId, nowChildList, _ = this.getNowAndAllUponPermit()
-
+		this.Debug("bbb")
 		//如果当前权限没查到,则直接跳转404
 		if len(activeUponId) <= 0 {
 			this.Data["Permit"] = permit
 			return
 		}
+
 		//获得页面头部的信息
 		headerPermit, _, _ = this.PermitService.FetchPermitListByUponId(&[]string{""})
 
@@ -221,6 +222,7 @@ func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []string,
 	var nowChildList = new([]modelsAdmin.PermitAdmin)
 
 	permitModel := new(modelsAdmin.Permit)
+	//获得当前的权限
 	permitData, _ := this.getNowPermitData()
 	if nil == permitData {
 		//默认的上级机构必须查询
@@ -228,6 +230,7 @@ func (this *AdminController) getNowAndAllUponPermit() (*[]interface{}, []string,
 		return &result, uponPermitId, nowChildList, nil
 	}
 
+	//获得当前页面的子权限
 	var ids = []string{permitData.Id}
 	nowChildList = permitModel.GetAllChildListByPids(&ids, this.ConContext.IsSuperAdmin, &this.ConContext.GroupIds)
 
@@ -511,7 +514,7 @@ func (this *AdminController) Prepare() {
 
 	//初始化一些必要的参数
 	this.initConContextControllerAndAction()
-	this.ConContext.NeedRenderJs = true
+	this.ConContext.NeedRenderJs = false
 
 	this.ConContext.OutputResult.Code = 0
 	this.ConContext.OutputResult.Message = "操作成功"
@@ -545,6 +548,7 @@ func (this *AdminController) Prepare() {
 		this.Redirect(gotoUrl, 301)
 		return
 	}
+
 	//初始化当前用户是否为超级管理员
 	if !this.authSuperAdmin() {
 		//获得当前用户的用户组ID列表
@@ -553,12 +557,10 @@ func (this *AdminController) Prepare() {
 
 	//处理用户默认信息，比如头像
 	this.UserDataDefault()
-
 	if this.ConContext.NotNeedValidatePermit == false {
 		//加上权限管理
 		this.InitPermitItem()
 	}
-
 	//引入父类的处理逻辑
 	this.BaseController.Prepare()
 	return

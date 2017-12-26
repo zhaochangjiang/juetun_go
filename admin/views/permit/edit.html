@@ -69,7 +69,7 @@
 		<option value="">--请选择--</option>
 		{{$dmap:=.DataSingleton.DomainMap}}
 		{{range $key,$value:=.DomainConfig}}
-		<option 	{{if(ne $dmap $value.DomainMap) }} selected="selected" {{end}} value="{{$value.DomainMap}}">{{$value.Name}}</option>
+		<option {{if(eq $dmap $value.DomainMap) }}  selected="selected" {{end}} value="{{$value.DomainMap}}">{{$value.Name}}</option>
 		{{end}}
 		</select>
 	    </div>
